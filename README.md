@@ -194,3 +194,8 @@ DELIMITER ;
 `./run.py`
 navigate to localhost:5000 in your web browser
 
+## Old resources
+This project was moved from another repository, and in order to browse the various issues and PRs, the following links may help
++ [Initialize a virtual lab framework](https://github.com/fossasia/pslab-desktop-apps/pull/165)
++ [Sign-up process](https://github.com/fossasia/pslab-desktop-apps/pull/169)
++ [vlab sign-in process](https://github.com/fossasia/pslab-desktop-apps/pull/173)
