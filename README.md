@@ -1,3 +1,4 @@
+[Heroku App](https://pslab-test1.herokuapp.com/)
 # PSLab Remote Experiments
 
 ## Introduction to the Virtual Lab
@@ -39,7 +40,7 @@ sudo pip install flask
 sudo pip install flask-mysql
 
 
-## Running the app
+## Running the app locally
 
 `gunicorn app:app`
 navigate to localhost:8000 in your web browser
