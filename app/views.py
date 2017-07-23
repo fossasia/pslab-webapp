@@ -43,7 +43,43 @@ def signUp():
 			print ("Message: " , reason)
 			return json.dumps({'error':str(reason)})
 
-		print (User.query.all())
+
+
+@app.route('/showSignIn')
+@app.route('/showSignin')
+def showSignin():
+    return render_template('signin.html')
+
+
+@app.route('/validateLogin',methods=['POST'])
+def validateLogin():
+	_username = request.form['inputEmail']
+	_password = request.form['inputPassword']
+	user = User.query.filter_by(email=_username).first() #retrieve the row based on e-mail
+	if user is not None:
+		if check_password_hash(user.pwHash,_password):
+			session['user'] = [user.username,user.email]
+			return redirect('/userHome')
+		else:
+			return render_template('error.html',error = 'Wrong Email address or Password. hash mismatch')
+	else:
+		return render_template('error.html',error = 'Wrong Email address or Password. no len')
+
+
+
+@app.route('/userHome')
+def userHome():
+	if session.get('user'):
+		print session['user']
+		return render_template('userHome.html',username = session['user'][0])
+	else:
+		return render_template('error.html',error = 'Unauthorized Access')
+
+@app.route('/logout')
+def logout():
+    session.pop('user',None)
+    return redirect('/')
+
 
 
 """
@@ -96,44 +132,4 @@ for a in dir(I):
 
 
 
-@app.route('/showSignIn')
-@app.route('/showSignin')
-def showSignin():
-    return render_template('signin.html')
-
-
-
-@app.route('/validateLogin',methods=['POST'])
-def validateLogin():
-	try:
-		_username = request.form['inputEmail']
-		_password = request.form['inputPassword']
-		cursor.callproc('sp_validateLogin',(_username,))
-		data = cursor.fetchall()
-		if len(data) > 0:
-			print 'new ',_password,len(_password),str(data[0][3]),len(data[0][3])
-			if check_password_hash(str(data[0][3]),_password):
-				session['user'] = [data[0][1],data[0][0]]
-				return redirect('/userHome')
-			else:
-				return render_template('error.html',error = 'Wrong Email address or Password. hash mismatch')
-		else:
-			return render_template('error.html',error = 'Wrong Email address or Password. no len')
-
-	except Exception as e:
-		return render_template('error.html',error = str(e))
-
-
-@app.route('/userHome')
-def userHome():
-	if session.get('user'):
-		print session['user']
-		return render_template('userHome.html',username = session['user'][0])
-	else:
-		return render_template('error.html',error = 'Unauthorized Access')
-
-@app.route('/logout')
-def logout():
-    session.pop('user',None)
-    return redirect('/')
 """

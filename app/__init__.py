@@ -4,8 +4,10 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
+app.secret_key = 'yet another secret key'
+
 #app.config.from_object(os.environ['APP_SETTINGS'])
-print (os.environ['DATABASE_URL'])
+#print (os.environ['DATABASE_URL'])
 
 
 # for sqlite ,DATABASE_URL = 'sqlite:////tmp/test.db'
