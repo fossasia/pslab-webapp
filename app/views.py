@@ -1,8 +1,32 @@
-from virtualapp import app,cursor,conn
-from flask import Flask, render_template,request,json,session,redirect,jsonify
-
-from werkzeug import generate_password_hash, check_password_hash
+#from app import app,cursor,conn
+#from flask import Flask, render_template,request,json,session,redirect,jsonify
+#from werkzeug import generate_password_hash, check_password_hash
 #import os
+
+from app import app
+from flask import Flask, render_template
+
+@app.route('/')
+@app.route('/index')
+@app.route('/main')
+def index():
+	'''
+	Home Page link
+	'''
+	return render_template('index.html')
+
+@app.route('/showSignUp')
+def showSignUp():
+	'''
+	Sign-up Page link
+	'''
+	return render_template('signup.html')
+
+
+"""
+#Pending migration to postgres
+
+
 
 import inspect,random
 import numpy as np
@@ -47,21 +71,7 @@ for a in dir(I):
 	if inspect.ismethod(attr) and a!='__init__':
 		functionList[a] = attr
 
-@app.route('/')
-@app.route('/index')
-@app.route('/main')
-def index():
-	'''
-	Home Page link
-	'''
-	return render_template('index.html')
 
-@app.route('/showSignUp')
-def showSignUp():
-	'''
-	Sign-up Page link
-	'''
-	return render_template('signup.html')
 
 @app.route('/signUp',methods=['POST'])
 def signUp():
@@ -83,6 +93,7 @@ def signUp():
 			return json.dumps({'error':str(data[0][0])})
 	else:
 		return json.dumps({'error':'Fill all the required fields!'})
+
 
 @app.route('/showSignIn')
 @app.route('/showSignin')
@@ -124,4 +135,4 @@ def userHome():
 def logout():
     session.pop('user',None)
     return redirect('/')
-
+"""

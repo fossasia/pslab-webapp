@@ -1,8 +1,10 @@
 from flask import Flask, render_template
+app = Flask(__name__)
+from app import views
+'''
 from flask.ext.mysql import MySQL
 
 from werkzeug.contrib.fixers import ProxyFix
-app = Flask(__name__)
 app.wsgi_app = ProxyFix(app.wsgi_app)
 
 app.secret_key = 'yet another secret key'
@@ -19,4 +21,4 @@ mysql.init_app(app)
 conn = mysql.connect()
 cursor = conn.cursor()
 
-from virtualapp import views
+'''
