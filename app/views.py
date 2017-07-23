@@ -70,7 +70,7 @@ def validateLogin():
 @app.route('/userHome')
 def userHome():
 	if session.get('user'):
-		print session['user']
+		#print (session['user'])
 		return render_template('userHome.html',username = session['user'][0])
 	else:
 		return render_template('error.html',error = 'Unauthorized Access')
