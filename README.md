@@ -33,11 +33,9 @@ coming soon.
 
 
 
-
-
 The following command will install flask as well as dependencies such as Jinja2, itsdangerous, click, and Werkzeug
-sudo pip install flask
-sudo pip install flask-mysql
+
++ sudo pip install flask
 
 
 ## Running the app locally
