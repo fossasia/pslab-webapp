@@ -40,7 +40,7 @@ def signUp():
 			return json.dumps({'message':'User %s created successfully. e-mail:%s !'%(_name,_email)})
 		except Exception as exc:
 			reason = str(exc)
-			print "Message: " , reason
+			print ("Message: " , reason)
 			return json.dumps({'error':str(reason)})
 
 		print (User.query.all())
