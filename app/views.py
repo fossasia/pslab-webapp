@@ -1,8 +1,91 @@
-from virtualapp import app,cursor,conn
+from app import app,SQLAlchemy,db
+from app.db_handler import User
 from flask import Flask, render_template,request,json,session,redirect,jsonify
-
 from werkzeug import generate_password_hash, check_password_hash
-#import os
+import os
+
+
+@app.route('/')
+@app.route('/index')
+@app.route('/main')
+def index():
+	'''
+	Home Page link
+	'''
+	return render_template('index.html')
+
+@app.route('/showSignUp')
+def showSignUp():
+	'''
+	Sign-up Page link
+	'''
+	return render_template('signup.html')
+
+
+
+@app.route('/signUp',methods=['POST'])
+def signUp():
+	# read the posted values from the UI
+	_name = request.form['inputName']
+	_email = request.form['inputEmail']
+	_password = request.form['inputPassword']
+
+	# validate the received values
+	if _name and _email and _password:
+		_hashed_password = generate_password_hash(_password)
+		newUser = User(_email, _name,_hashed_password)
+		try:
+			db.session.add(newUser)
+			db.session.commit()
+			return json.dumps({'message':'User %s created successfully. e-mail:%s !'%(_name,_email)})
+		except Exception as exc:
+			reason = str(exc)
+			print ("Message: " , reason)
+			return json.dumps({'error':str(reason)})
+
+
+
+@app.route('/showSignIn')
+@app.route('/showSignin')
+def showSignin():
+    return render_template('signin.html')
+
+
+@app.route('/validateLogin',methods=['POST'])
+def validateLogin():
+	_username = request.form['inputEmail']
+	_password = request.form['inputPassword']
+	user = User.query.filter_by(email=_username).first() #retrieve the row based on e-mail
+	if user is not None:
+		if check_password_hash(user.pwHash,_password):
+			session['user'] = [user.username,user.email]
+			return redirect('/userHome')
+		else:
+			return render_template('error.html',error = 'Wrong Email address or Password. hash mismatch')
+	else:
+		return render_template('error.html',error = 'Wrong Email address or Password. no len')
+
+
+
+@app.route('/userHome')
+def userHome():
+	if session.get('user'):
+		#print (session['user'])
+		return render_template('userHome.html',username = session['user'][0])
+	else:
+		return render_template('error.html',error = 'Unauthorized Access')
+
+@app.route('/logout')
+def logout():
+    session.pop('user',None)
+    return redirect('/')
+
+
+
+"""
+#Pending migration to postgres
+
+
 
 import inspect,random
 import numpy as np
@@ -47,81 +130,6 @@ for a in dir(I):
 	if inspect.ismethod(attr) and a!='__init__':
 		functionList[a] = attr
 
-@app.route('/')
-@app.route('/index')
-@app.route('/main')
-def index():
-	'''
-	Home Page link
-	'''
-	return render_template('index.html')
-
-@app.route('/showSignUp')
-def showSignUp():
-	'''
-	Sign-up Page link
-	'''
-	return render_template('signup.html')
-
-@app.route('/signUp',methods=['POST'])
-def signUp():
-	# read the posted values from the UI
-	_name = request.form['inputName']
-	_email = request.form['inputEmail']
-	_password = request.form['inputPassword']
-
-	# validate the received values
-	if _name and _email and _password:
-		_hashed_password = generate_password_hash(_password)
-		cursor.callproc('sp_createUser',(_name,_email,_hashed_password))
-		print 'old ',_password,len(_password),'LENGTH : ',len(_hashed_password)
-		data = cursor.fetchall()
-		if len(data) is 0:
-			conn.commit()
-			return json.dumps({'message':'User %s created successfully. e-mail:%s !'%(_name,_email)})
-		else:
-			return json.dumps({'error':str(data[0][0])})
-	else:
-		return json.dumps({'error':'Fill all the required fields!'})
-
-@app.route('/showSignIn')
-@app.route('/showSignin')
-def showSignin():
-    return render_template('signin.html')
 
 
-
-@app.route('/validateLogin',methods=['POST'])
-def validateLogin():
-	try:
-		_username = request.form['inputEmail']
-		_password = request.form['inputPassword']
-		cursor.callproc('sp_validateLogin',(_username,))
-		data = cursor.fetchall()
-		if len(data) > 0:
-			print 'new ',_password,len(_password),str(data[0][3]),len(data[0][3])
-			if check_password_hash(str(data[0][3]),_password):
-				session['user'] = [data[0][1],data[0][0]]
-				return redirect('/userHome')
-			else:
-				return render_template('error.html',error = 'Wrong Email address or Password. hash mismatch')
-		else:
-			return render_template('error.html',error = 'Wrong Email address or Password. no len')
-
-	except Exception as e:
-		return render_template('error.html',error = str(e))
-
-
-@app.route('/userHome')
-def userHome():
-	if session.get('user'):
-		print session['user']
-		return render_template('userHome.html',username = session['user'][0])
-	else:
-		return render_template('error.html',error = 'Unauthorized Access')
-
-@app.route('/logout')
-def logout():
-    session.pop('user',None)
-    return redirect('/')
-
+"""
