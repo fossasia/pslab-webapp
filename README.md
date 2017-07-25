@@ -1,4 +1,4 @@
-[Heroku App](https://pslab-test1.herokuapp.com/)
+[Heroku App](https://pslab-stage.herokuapp.com/)
 # PSLab Remote Experiments
 
 ## Introduction to the Virtual Lab
