@@ -1,0 +1,34 @@
+sudo: required
+dist: trusty
+
+
+language: python
+cache: pip
+
+addons:
+    postgresql: "9.6"
+services:
+    - postgresql
+
+python:
+  - "2.7"
+  - "3.4"
+
+install:
+    - pip install -r requirements.txt
+    - git clone https://github.com/fossasia/pslab-python.git
+    - pushd pslab-python
+    - cp -R /usr/local/lib/python2.7/dist-packages/PSL /home/travis/virtualenv/python2.7.13/lib/python2.7/site-packages/
+    - cp -R /usr/local/lib/python2.7/dist-packages/PSL /home/travis/virtualenv/python3.3.6/lib/python3.3/site-packages/
+    - cp -R /usr/local/lib/python2.7/dist-packages/PSL /home/travis/virtualenv/python3.4.4/lib/python3.4/site-packages/     
+    - make
+    - popd
+
+before_script:
+  - psql -c 'create database psl_db;' -U postgres
+  - export DATABASE_URL=postgres:///psl_db
+#  - psql -c "CREATE USER psl;" -U postgres
+
+script: nosetests
+
+
