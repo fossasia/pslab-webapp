@@ -44,7 +44,7 @@ The following command will install flask as well as dependencies such as Jinja2,
 navigate to localhost:8000 in your web browser
 
 ## deploying to Heroku
-+ staging : 
++ [Staging](https://pslab-stage.herokuapp.com/)
 + production :
 
 

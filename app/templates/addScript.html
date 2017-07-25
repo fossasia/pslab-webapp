@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <title>PSLab Virtual Lab</title>
+ 
+    
+    <script src="../static/js/jquery.js"></script>        
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+ 
+    <link href="../static/css/narrow.css" rel="stylesheet">
+    <link href="../static/css/signup.css" rel="stylesheet">
+ 
+</head>
+ 
+<body>
+ 
+    <div class="container">
+        <div class="header">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation" class="active"><a href="#">Add Script</a>
+                    </li>
+                    <li role="presentation"><a href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </nav>
+            <h3 class="text-muted">New Python Script . Author : {{author}}</h3>
+        </div>
+        <section>
+            <form id="contentForm" class="form-horizontal" method="post" action="/addScript">
+                <fieldset>
+ 
+                    <!-- Form Name -->
+                    <legend>Create Your Script</legend>
+ 
+                    <!-- Text input-->
+                    <div class="form-group" >
+                        <label class="col-md-2 control-label" for="txtTitle">Filename</label>
+                        <div class="col-md-10">
+                            <input id="txtTitle" name="inputTitle" type="text" placeholder="placeholder" class="form-control input-md">
+                        </div>
+                    </div>
+ 
+
+
+                    <!-- Ace editor -->
+					<pre id="editor" id="inputDescription"></pre>
+
+					<script src="../static/js/ace-js/ace.js" type="text/javascript" charset="utf-8"></script>
+					<script>
+						var editor = ace.edit("editor");
+						editor.setTheme("ace/theme/cobalt");
+						editor.session.setMode("ace/mode/python");
+					</script>
+ 
+                    <!-- Button -->
+                    <br>
+                    <div class="form-group">
+                        <div class="col-md-1">
+                            <input id="singlebutton" name="singlebutton" class="btn btn-primary" type="submit" value="Publish" />
+                        </div>
+                    </div>
+ 
+                </fieldset>
+            </form>
+ 
+        </section>
+ 
+    </div>
+</body>
+ 
+ 
+<script type="text/javascript">
+
+$('#contentForm').submit(function(eventObj) {
+     $('<input />').attr('type', 'hidden')
+          .attr('name', "inputDescription")
+          .attr('value', editor.getValue())
+          .appendTo('#contentForm');
+      return true;
+ });
+
+</script>
+ 
+ 
+</html>
