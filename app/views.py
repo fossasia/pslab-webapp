@@ -83,7 +83,7 @@ def logout():
 @app.route('/showAddScript')
 def showAddScript():
 	if session.get('user'):
-		print session['user']
+		#print (session['user'])
 		return render_template('addScript.html',author = session['user'][0])
 	else:
 		return render_template('error.html',error = 'Unauthorized Access')    
