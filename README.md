@@ -1,5 +1,14 @@
+<<<<<<< HEAD
 [Heroku App](https://pslab-stage.herokuapp.com/)
+=======
+
+>>>>>>> 7958f6a4df9031fad841e78a6fbcbfc56e1028b1
 # PSLab Remote Experiments
+
+[![Build Status](https://travis-ci.org/fossasia/pslab-remote.svg?branch=master)](https://travis-ci.org/fossasia/pslab-remote)
+[![Gitter](https://badges.gitter.im/fossasia/pslab.svg)](https://gitter.im/fossasia/pslab?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
+Deployment: [Heroku App](https://pslab-stage.herokuapp.com/)
 
 ## Introduction to the Virtual Lab
 
