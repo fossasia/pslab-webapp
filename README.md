@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 [Heroku App](https://pslab-stage.herokuapp.com/)
-=======
 
->>>>>>> 7958f6a4df9031fad841e78a6fbcbfc56e1028b1
 # PSLab Remote Experiments
 
 [![Build Status](https://travis-ci.org/fossasia/pslab-remote.svg?branch=master)](https://travis-ci.org/fossasia/pslab-remote)
