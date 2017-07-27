@@ -109,7 +109,6 @@ def addScript():
 		else:
 			return render_template('error.html',error = 'Unauthorized Access')
 	except Exception as e:
-		print e
 		return render_template('error.html',error = str(e))
 
 
