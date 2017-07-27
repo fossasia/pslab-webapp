@@ -1,5 +1,5 @@
 from app import app,SQLAlchemy,db
-from app.db_handler import User
+from app.db_handler import User,UserCode
 from flask import Flask, render_template,request,json,session,redirect,jsonify
 from werkzeug import generate_password_hash, check_password_hash
 import os
@@ -87,6 +87,30 @@ def showAddScript():
 		return render_template('addScript.html',author = session['user'][0])
 	else:
 		return render_template('error.html',error = 'Unauthorized Access')    
+
+
+
+@app.route('/addScript',methods=['POST'])
+def addScript():
+	try:
+		if session.get('user'):
+			_user = session.get('user')[1]
+			_title = request.form['inputTitle']
+			_description = request.form['inputDescription']
+
+			newSnippet = UserCode(_user, _title,_description)
+			try:
+				db.session.add(newSnippet)
+				db.session.commit()
+				return redirect('/userHome')
+			except Exception as exc:
+				return render_template('error.html',error = 'Write Failed.') 
+
+		else:
+			return render_template('error.html',error = 'Unauthorized Access')
+	except Exception as e:
+		return render_template('error.html',error = str(e))
+
 
 
 
