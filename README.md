@@ -59,11 +59,13 @@ navigate to localhost:8000 in your web browser
 - backend
   - [x] homepage hook
   - [x] SignUp hook
-  - [ ] SignUp database updation procedure
+  - [x] SignUp database updation procedure
   - [x] SignIn hook
-  - [ ] SignIn database verification
-  - [ ] User script page hook
-  - [ ] Process and store a user written script
+  - [x] SignIn database verification
+  - [x] User script page hook
+  - [x] Process and store a user written script
+  - [x] Retrieve list of scripts stored by a user
+  - [ ] Retrieve a script based on script ID
 
 - Frontend
   - [x] css files : Bootstrap, custom css

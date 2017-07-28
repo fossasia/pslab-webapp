@@ -112,6 +112,28 @@ def addScript():
 		return render_template('error.html',error = str(e))
 
 
+@app.route('/getScriptList')
+def getCode():
+	try:
+		if session.get('user'):
+			_user = session.get('user')[1]
+			scripts = UserCode.query.filter_by(user=_user)
+			print (_user,scripts)
+			scripts_dict = []
+			for script in scripts:
+				single_script = {
+						'Id': script.id,
+						'Filename': script.title,
+						#'Code': script.code, #Can be enbled if the user demands all scripts and content.
+						'Date': script.pub_date}
+				scripts_dict.append(single_script)
+			return json.dumps(scripts_dict)
+		else:
+			return render_template('error.html', error = 'Unauthorized Access')
+	except Exception as e:
+		print (str(e))
+		return render_template('error.html', error = str(e))
+
 
 
 """
