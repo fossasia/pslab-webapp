@@ -4,12 +4,27 @@ from flask import Flask, render_template,request,json,session,redirect,jsonify,s
 from werkzeug import generate_password_hash, check_password_hash
 import os
 
-
-# Custom static data
+############################## FRONTEND RELATED FILE SERVER FUNCTIONS ###########################
+# Custom static data. redirect automatically to apps/static folder
 @app.route('/<path:filename>')
 def custom_static(filename):
 	print ('serving static stuff',filename)
 	return send_from_directory(app.config['CUSTOM_STATIC_FOLDER'], filename)
+
+@app.route('/')
+@app.route('/index')
+@app.route('/main')
+def index():
+    return redirect('/index.html')
+
+
+@app.route('/logout')
+def logout():
+    session.pop('user',None)
+    return redirect('/')
+
+
+############################## FRONTEND RELATED FILE SERVER FUNCTIONS ###########################
 
 
 @app.route('/signUp',methods=['POST'])
@@ -33,10 +48,10 @@ def signUp():
 		try:
 			db.session.add(newUser)
 			db.session.commit()
-			return json.dumps({'message':'User %s created successfully. e-mail:%s !'%(_name,_email)})
+			return json.dumps({'status':True,'message':'User %s created successfully. e-mail:%s !'%(_name,_email)})
 		except Exception as exc:
 			reason = str(exc)
-			return json.dumps({'error':str(reason)})
+			return json.dumps({'status':False,'message':str(reason)})
 
 
 
@@ -48,11 +63,11 @@ def validateLogin():
 	if user is not None:
 		if check_password_hash(user.pwHash,_password):
 			session['user'] = [user.username,user.email]
-			return json.dumps({'success':True})
+			return json.dumps({'status':True})
 		else:
-			return json.dumps({'failure':'Wrong Email address or Password. hash mismatch'})
+			return json.dumps({'status':False,'message':'Wrong Email address or Password. hash mismatch'})
 	else:
-		return json.dumps({'error':'Username not specified'})
+		return json.dumps({'status':False,'message':'Username not specified'})
 
 
 @app.route('/getUserName')
@@ -64,14 +79,9 @@ def getUserName():
 
 
 
-@app.route('/logout')
-def logout():
-    session.pop('user',None)
-    return redirect('/')
-
-
 @app.route('/addScript',methods=['POST'])
 def addScript():
+	print (request.args)
 	try:
 		if session.get('user'):
 			_user = session.get('user')[1]
@@ -82,14 +92,14 @@ def addScript():
 			try:
 				db.session.add(newSnippet)
 				db.session.commit()
-				return redirect('/userHome')
+				return json.dumps({'status':True})
 			except Exception as exc:
-				return render_template('error.html',error = 'Write Failed.') 
+				return json.dumps({'status':False,'message':str(exc)})
 
 		else:
-			return render_template('error.html',error = 'Unauthorized Access')
+			return json.dumps({'status':False,'message':'Unauthorized access'})
 	except Exception as e:
-		return render_template('error.html',error = str(e))
+		return json.dumps({'status':False,'message':str(e)})
 
 
 @app.route('/getScriptList')
@@ -109,10 +119,10 @@ def getCode():
 				scripts_dict.append(single_script)
 			return json.dumps(scripts_dict)
 		else:
-			return render_template('error.html', error = 'Unauthorized Access')
+			return json.dumps([])
 	except Exception as e:
 		print (str(e))
-		return render_template('error.html', error = str(e))
+		return json.dumps([])
 
 
 

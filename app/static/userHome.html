@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <title>Pocket Science Lab: Virtual Lab</title>
+ 
+    <script src="/js/jquery.js"></script>
+    <script src="/js/jquery.tmpl.js"></script>        
+    <script src="/js/bootstrap.min.js"></script>        
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link href="/css/narrow.css" rel="stylesheet">
+    <link href="/css/signup.css" rel="stylesheet">
+
+
+
+<script type="text/javascript">
+	var function_list=[];
+	getScriptList();
+		
+	function getScriptList(){
+			$.ajax({
+			url: '/getScriptList',
+			type: 'GET',
+			success: function(res) {
+				var codeObj = JSON.parse(res);
+				$('#scriptCount').text(codeObj.length);
+				$('#myCodeList').empty();
+				$('#listTemplate').tmpl(codeObj).appendTo('#myCodeList');
+			},
+			error: function(error) {
+				console.log('eref',error);
+			}
+		});
+	}
+	
+	</script>
+
+</head>
+ 
+<body data-spy="scroll" data-target=".navbar" data-offset="100">
+ 
+<!-- Scrollspy nav menu --> 
+ <nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#section1">PSLab Virtual Lab </a>
+    </div>
+    <div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+			<ul class="nav navbar-nav navbar-right">
+				<!--<li role="presentation"><img style="margin-top:10px;display:none;" src="../static/images/busy.gif" id="busy-gif" /></li>-->
+				<li role="presentation"><a href="/addScript.html">New Python Script</a></li>
+				<li role="presentation" class="active"><a href="/logout">Logout</a>
+				</li>
+			</ul>
+		  <ul class="nav navbar-nav">
+			<li class="active"><a href="#section1">Your Scripts</a></li>
+			<li><a href="#section2">Experiments</a></li>
+			<li><a href="#section3">Function List</a></li>
+		  </ul>
+      </div>
+    </div>
+  </div>
+</nav>    
+
+
+<div class="contents" style="margin: 0 auto;width:95%;"> 
+<!-- Scrollspy nav Contents --> 
+
+    <div >
+
+      <div id="section1">    
+             <h3>Your Scripts <span class="label label-info" style="font-size:9pt;margin:10px;" id="scriptCount"></span></h3>
+             <hr class="style1">
+		    <script id="listTemplate" type="text/x-jQuery-tmpl">
+ 		    <li class="list-group-item">
+				<div class="pull-left action-buttons">
+					   <a data-id=${Id} onclick="Execute(this)" ><span class="glyphicon glyphicon-step-forward"></span></a>
+					</div>
+					<div class="checkbox">
+						<label>
+							${Filename}
+						</label>
+					</div>
+					<div class="pull-right action-buttons">
+						<a data-id=${Id} onclick="Edit(this)" ><span class="glyphicon glyphicon-pencil"></span></a>
+					   <a data-id=${Id} onclick="ConfirmDelete(this)" ><span class="glyphicon glyphicon-trash"></span></a>
+					</div>
+				</li>
+		    </script>
+
+		<div class="row">
+			<div class="col-md-12">
+					<div class="panel-body">
+						<ul id="myCodeList" class="list-group">
+						
+						</ul>
+					</div>
+			</div>
+		</div>
+
+             
+      </div>
+
+      <div id="section2"> 
+        <h3>Selection of pre-written scripts for experiments</h3><hr class="style1">
+      </div>        
+
+      <div id="section3">         
+        <h3>Function calls to access the hardware</h3><hr class="style1">
+      </div>
+
+    </div>
+
+       <footer class="footer">
+            <p>User Home</p>
+        </footer>
+ 
+    </div>
+  </body>
+</html>
