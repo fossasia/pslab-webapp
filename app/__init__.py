@@ -14,6 +14,7 @@ app.secret_key = 'yet another secret key'
 # for local postgres , = postgres:///jithin
 # Remote  postgres://nu***:6a2**@ec2-23-23-227-188.compute-1.amazonaws.com:5432/d2s**
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+app.config['CUSTOM_STATIC_FOLDER'] = 'static'
 
 
 db = SQLAlchemy(app)

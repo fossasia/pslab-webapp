@@ -1,30 +1,26 @@
 from app import app,SQLAlchemy,db
 from app.db_handler import User,UserCode
-from flask import Flask, render_template,request,json,session,redirect,jsonify
+from flask import Flask, render_template,request,json,session,redirect,jsonify,send_from_directory
 from werkzeug import generate_password_hash, check_password_hash
 import os
 
 
-@app.route('/')
-@app.route('/index')
-@app.route('/main')
-def index():
-	'''
-	Home Page link
-	'''
-	return render_template('index.html')
-
-@app.route('/showSignUp')
-def showSignUp():
-	'''
-	Sign-up Page link
-	'''
-	return render_template('signup.html')
-
+# Custom static data
+@app.route('/<path:filename>')
+def custom_static(filename):
+	print ('serving static stuff',filename)
+	return send_from_directory(app.config['CUSTOM_STATIC_FOLDER'], filename)
 
 
 @app.route('/signUp',methods=['POST'])
 def signUp():
+	"""Sign Up for Virtual Lab
+
+	POST: Submit sign-up parameters. The following must be present:
+	 inputName : The name of your account. does not need to be unique
+	 inputEmail : e-mail ID used for login . must be unique.
+	Returns HTTP 404 when data does not exist.
+	"""
 	# read the posted values from the UI
 	_name = request.form['inputName']
 	_email = request.form['inputEmail']
@@ -40,15 +36,8 @@ def signUp():
 			return json.dumps({'message':'User %s created successfully. e-mail:%s !'%(_name,_email)})
 		except Exception as exc:
 			reason = str(exc)
-			print ("Message: " , reason)
 			return json.dumps({'error':str(reason)})
 
-
-
-@app.route('/showSignIn')
-@app.route('/showSignin')
-def showSignin():
-    return render_template('signin.html')
 
 
 @app.route('/validateLogin',methods=['POST'])
@@ -59,35 +48,26 @@ def validateLogin():
 	if user is not None:
 		if check_password_hash(user.pwHash,_password):
 			session['user'] = [user.username,user.email]
-			return redirect('/userHome')
+			return json.dumps({'success':True})
 		else:
-			return render_template('error.html',error = 'Wrong Email address or Password. hash mismatch')
+			return json.dumps({'failure':'Wrong Email address or Password. hash mismatch'})
 	else:
-		return render_template('error.html',error = 'Wrong Email address or Password. no len')
+		return json.dumps({'error':'Username not specified'})
 
 
-
-@app.route('/userHome')
-def userHome():
-	if session.get('user'):
-		#print (session['user'])
-		return render_template('userHome.html',username = session['user'][0])
+@app.route('/getUserName')
+def getUserName():
+	if user is not None:
+		return json.dumps({'username':session['user'][0]})
 	else:
-		return render_template('error.html',error = 'Unauthorized Access')
+		return json.dumps({'error':'Not Logged In'})
+
+
 
 @app.route('/logout')
 def logout():
     session.pop('user',None)
     return redirect('/')
-
-@app.route('/showAddScript')
-def showAddScript():
-	if session.get('user'):
-		#print (session['user'])
-		return render_template('addScript.html',author = session['user'][0])
-	else:
-		return render_template('error.html',error = 'Unauthorized Access')    
-
 
 
 @app.route('/addScript',methods=['POST'])
