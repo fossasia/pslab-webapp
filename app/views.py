@@ -4,6 +4,7 @@ from flask import Flask, render_template,request,json,session,redirect,jsonify,s
 from werkzeug import generate_password_hash, check_password_hash
 import os
 
+"""
 ############################## FRONTEND RELATED FILE SERVER FUNCTIONS ###########################
 # Custom static data. redirect automatically to apps/static folder
 @app.route('/<path:filename>')
@@ -25,7 +26,7 @@ def logout():
 
 
 ############################## FRONTEND RELATED FILE SERVER FUNCTIONS ###########################
-
+"""
 
 @app.route('/signUp',methods=['POST'])
 def signUp():

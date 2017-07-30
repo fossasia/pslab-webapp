@@ -7,7 +7,13 @@ module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
     // Add options here
   });
+  app.import('vendor/js/jquery.js')
+  app.import('vendor/js/jquery.tmpl.js')
+  app.import('vendor/js/bootstrap.min.js')
 
+  app.import('vendor/css/narrow.css');
+  app.import('vendor/css/signup.css');
+  
   // Use `app.import` to add additional libraries to the generated
   // output files.
   //
