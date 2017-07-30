@@ -5,11 +5,11 @@
     <title>PSLab Virtual Lab</title>
  
     
-    <script src="/js/jquery.js"></script>        
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery.js"></script>        
+    <link href="css/bootstrap.min.css" rel="stylesheet">
  
-    <link href="/css/narrow.css" rel="stylesheet">
-    <link href="/css/signup.css" rel="stylesheet">
+    <link href="css/narrow.css" rel="stylesheet">
+    <link href="css/signup.css" rel="stylesheet">
  
 </head>
  
@@ -82,7 +82,7 @@ $(function() {
 			dataType:'json',
 			success: function(response) {
 				if (response.status==true){
-					window.location.href = "/userHome.html";
+					window.location.href = "userHome.html";
 				}
 				else{
 					$('#serverResponse').css("color", "red");

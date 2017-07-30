@@ -79,6 +79,10 @@ navigate to localhost:8000 in your web browser
   - [x] logout hook
   - [ ] Page to add a user written script
 
+- New Frontend based on EmberJS
+  - [x] Home Page
+  - [x] Navbar with bootstrap styling
+  - [x] Links to Sign In, Sign Up pages
 
 ## Old resources
 This project was moved from another repository, and in order to browse the various issues and PRs, the following links may help

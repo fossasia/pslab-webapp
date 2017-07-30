@@ -5,11 +5,11 @@
  
     
     
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
  
-    <link href="/css/narrow.css" rel="stylesheet">
-    <link href="/css/signup.css" rel="stylesheet">
-    <script src="/js/jquery.js"></script>        
+    <link href="css/narrow.css" rel="stylesheet">
+    <link href="css/signup.css" rel="stylesheet">
+    <script src="js/jquery.js"></script>        
 
     
   </head>
@@ -20,9 +20,9 @@
       <div class="header">
         <nav>
           <ul class="nav nav-pills pull-right">
-            <li role="presentation" ><a href="/index.html">Home</a></li>
+            <li role="presentation" ><a href="index.html">Home</a></li>
             <li role="presentation" class="active"><a href="#">Sign In</a></li>
-            <li role="presentation" ><a href="/signUp.html">Sign Up</a></li>
+            <li role="presentation" ><a href="signUp.html">Sign Up</a></li>
           </ul>
         </nav>
         <h3 class="text-muted">Pocket Science Lab: Virtual Lab</h3>
@@ -52,7 +52,7 @@
 				dataType:'json',
 				success: function(response) {
 					if (response.status==true){
-						window.location.href = "/userHome.html";
+						window.location.href = "userHome.html";
 					}
 					else{
 						$('#message').css("color", "red");

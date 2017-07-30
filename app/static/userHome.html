@@ -4,13 +4,13 @@
 <head>
     <title>Pocket Science Lab: Virtual Lab</title>
  
-    <script src="/js/jquery.js"></script>
-    <script src="/js/jquery.tmpl.js"></script>        
-    <script src="/js/bootstrap.min.js"></script>        
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.tmpl.js"></script>        
+    <script src="js/bootstrap.min.js"></script>        
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     
-    <link href="/css/narrow.css" rel="stylesheet">
-    <link href="/css/signup.css" rel="stylesheet">
+    <link href="css/narrow.css" rel="stylesheet">
+    <link href="css/signup.css" rel="stylesheet">
 
 
 
@@ -20,7 +20,7 @@
 		
 	function getScriptList(){
 			$.ajax({
-			url: '/getScriptList',
+			url: 'getScriptList',
 			type: 'GET',
 			success: function(res) {
 				var codeObj = JSON.parse(res);
