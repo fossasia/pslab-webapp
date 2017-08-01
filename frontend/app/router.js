@@ -7,10 +7,10 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route('signIn');
-  this.route('signOut');
-  this.route('userHome');
-  this.route('signUp');
+  this.route('sign-in');
+  this.route('sign-out');
+  this.route('user-home');
+  this.route('sign-up');
 });
 
 export default Router;

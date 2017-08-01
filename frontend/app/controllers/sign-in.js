@@ -14,7 +14,7 @@ export default Ember.Controller.extend({
     this.reset();
     if (response.status==true){
       this.reset();
-      window.location.href = "/userHome";
+      window.location.href = "/user-home";
     }
     else{
       this.set("loginFailed", true);
