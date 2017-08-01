@@ -2,10 +2,16 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
-/*---- Login Screen ---*/
-
-  loginFailed: false,
-  loginFailedMessage: "Failed to Login",
+/*---- Add Script Screen ---*/
+  theme: 'ace/theme/cobalt',
+  themes: [
+    'ace/theme/cobalt',
+    'ace/theme/ambiance',
+    'ace/theme/chaos',
+  ],
+  inputDescription:"",
+  submitFailed: false,
+  failedMessage: "Failed to Login",
   isProcessing: false,
   isSlowConnection: false,
   timeout: null,
@@ -17,19 +23,19 @@ export default Ember.Controller.extend({
       window.location.href = "/user-home";
     }
     else{
-      this.set("loginFailed", true);
-      this.loginFailedMessage= String(response.message);
+      this.set("submitFailed", true);
+      this.failedMessage= String(response.message);
       }
   },
   error() {
     this.reset();
-    this.set("loginFailed", true);
-    this.set("loginFailedMessage",'Sign-In failed. Server down? ');
+    this.set("submitFailed", true);
+    this.set("failedMessage",'Submission failed. Server down? ');
   },
   failure() {
     this.reset();
-    this.set("loginFailed", true);
-    this.set("loginFailedMessage",'Sign-In failed. App Error. ');
+    this.set("submitFailed", true);
+    this.set("failedMessage",'Submission failed. App Error. ');
   },
   slowConnection() {
     this.set("isSlowConnection", true);
@@ -43,21 +49,17 @@ export default Ember.Controller.extend({
   },
 
   actions:{
-
-    logMeIn() {
+    valueUpdated() {
       this.setProperties({
-        loginFailed: false,
-        loginFailedMessage: "",
+        submitFailed: false,
+        failedMessage: "",
         isProcessing: true
       });
-
       this.set("timeout", setTimeout(this.slowConnection.bind(this), 1000));
-      var request = Ember.$.post("/validateLogin", this.getProperties("inputEmail", "inputPassword"),this,'json');
+      var request = Ember.$.post("/addScript", this.getProperties("inputTitle","inputDescription"),this,'json');
       request.then(this.success.bind(this), this.failure.bind(this), this.error.bind(this));
     },
 
   },
   
 });
-
-

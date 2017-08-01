@@ -82,7 +82,7 @@ def getUserName():
 
 @app.route('/addScript',methods=['POST'])
 def addScript():
-	print (request.args)
+	print ('script incoming',request.form)
 	try:
 		if session.get('user'):
 			_user = session.get('user')[1]

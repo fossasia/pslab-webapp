@@ -5,7 +5,12 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
-    // Add options here
+  ace: {
+    themes: ['cobalt','ambiance', 'chaos'],
+    modes: ['python'],
+    workers: ['python']
+  },
+  // Add more options here
   });
 
   app.import('bower_components/bootstrap/dist/js/bootstrap.min.js');
@@ -19,6 +24,7 @@ module.exports = function(defaults) {
 
   app.import('vendor/css/narrow.css');
   app.import('vendor/css/signup.css');
+  app.import('vendor/js/ace-js/ace.js');
   // Use `app.import` to add additional libraries to the generated
   // output files.
   //
