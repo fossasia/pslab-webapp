@@ -1,56 +1,30 @@
 {{home-menu}}
     <div class="container">
       <div class="jumbotron">
-        <h1>Sign Up Here</h1>
-        <form class="form-signin">
-        <label for="inputName" class="sr-only">Name</label>
-        <input type="name" name="inputName" id="inputName" class="form-control" placeholder="Name" required autofocus>
+        <h1>Sign Up Form</h1>
+        <form class="form-signin" {{action "signMeUp" on="submit"}} >
+        <label for="inputName" class="sr-only">Your Name</label>
+        {{input value=inputName type="text" name="inputName" id="inputName" class="form-control" placeholder="name" required=true autofocus=true}}
         <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        {{input value=inputEmail type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email address" required=true autofocus=true}}
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
+        {{input value=inputPassword type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required=true autofocus=true}}
          
-        <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="button">Sign up</button>
+        <button disabled={{isProcessing}} id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
       </form>
-        <h3 id="message" class="text-muted"></h3>
-      </div>
- 
-    <script type="text/javascript">
-       $(function() {
-		$('#btnSignUp').click(function() {
-	 
-			$.ajax({
-				url: '/signUp',
-				data: $('form').serialize(),
-				type: 'POST',
-				dataType:'json',
-				success: function(response) {
-					if (response.hasOwnProperty('error')){
-						$('#message').css("color", "red");
-						$('#message').html(String(response.error));
-						}
-					else if (response.hasOwnProperty('message')){
-						$('#message').css("color", "green");
-						$('#message').html(response.message);
-						}
-					console.log(response);
-				},
-				error: function(response) {
-					$('#message').css("color", "red");
-					$('#message').html('Sign-Up failed. ');
-					console.log(response);
-				}
-			});
-		});
-	});
+	  {{#if signUpFailed}}
+	    <div class="alert alert-danger">{{failedMessage}}</div>
+	  {{/if}}
+	  {{#if isSlowConnection}}
+	    <div class="alert alert-info">The request seems to be taking more time than usual, please wait.</div>
+	  {{/if}}
 
-	</script>
-       
+      </div>
+
+<footer class="footer">
+<p>Sign-Up page</p>
+</footer>
  
-      <footer class="footer">
-        <p>Sign-Up page</p>
-      </footer>
- 
-    </div>
+</div>
 
 {{outlet}}
