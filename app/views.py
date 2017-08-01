@@ -58,6 +58,7 @@ def signUp():
 
 @app.route('/validateLogin',methods=['POST'])
 def validateLogin():
+	print ('request received',request.form)
 	_username = request.form['inputEmail']
 	_password = request.form['inputPassword']
 	user = User.query.filter_by(email=_username).first() #retrieve the row based on e-mail
