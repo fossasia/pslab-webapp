@@ -29,7 +29,7 @@ export default Ember.Controller.extend({
   failure() {
     this.reset();
     this.set("loginFailed", true);
-    this.set("loginFailedMessage",'Sign-In failed. ? ');
+    this.set("loginFailedMessage",'Sign-In failed. App Error. ');
   },
   slowConnection() {
     this.set("isSlowConnection", true);
