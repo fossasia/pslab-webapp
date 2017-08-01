@@ -34,31 +34,35 @@
     <div >
 
       <div id="section1">    
-             <h3>Your Scripts <span class="label label-info" style="font-size:9pt;margin:10px;" id="scriptCount"></span></h3>
-             <hr class="style1">
-		    <script id="listTemplate" type="text/x-jQuery-tmpl">
- 		    <li class="list-group-item">
-				<div class="pull-left action-buttons">
-					   <a data-id=${Id} onclick="Execute(this)" ><span class="glyphicon glyphicon-step-forward"></span></a>
-					</div>
-					<div class="checkbox">
-						<label>
-							${Filename}
-						</label>
-					</div>
-					<div class="pull-right action-buttons">
-						<a data-id=${Id} onclick="Edit(this)" ><span class="glyphicon glyphicon-pencil"></span></a>
-					   <a data-id=${Id} onclick="ConfirmDelete(this)" ><span class="glyphicon glyphicon-trash"></span></a>
-					</div>
-				</li>
-		    </script>
+             <h3>Your Scripts <span class="label label-info" style="font-size:9pt;margin:10px;" >{{model.length}}</span></h3>
 
-		<div class="row">
-			<div class="col-md-12">
-					<div class="panel-body">
-						<ul id="myCodeList" class="list-group">
-						
+
+            <hr class="style1">
+		        <div class="row">
+			        <div class="col-md-12">
+					        <div class="panel-body">
+						        <ul id="myCodeList" class="list-group">
+                    {{#each model as |script index|}}
+              		     <li class="list-group-item">
+				               <div class="pull-left action-buttons">
+					                 <a data-id={{script.Id}} onclick="Execute(this)" ><span class="glyphicon glyphicon-step-forward"></span></a>
+					              </div>
+					              <div class="checkbox">
+						              <label>
+							              {{script.Filename}}
+						              </label>
+					              </div>
+					              <div class="pull-right action-buttons">
+						              <a data-id={{script.Id}} onclick="Edit(this)" ><span class="glyphicon glyphicon-pencil"></span></a>
+					                <a data-id={{script.Id}} onclick="ConfirmDelete(this)" ><span class="glyphicon glyphicon-trash"></span></a>
+					              </div>
+				              </li>
+	                {{else}}
+	                  You haven't saved any scripts
+                	{{/each}}
+
 						</ul>
+
 					</div>
 			</div>
 		</div>
@@ -77,27 +81,5 @@
     </div>
 
     </div>
-
-<script type="text/javascript">
-	var function_list=[];
-	getScriptList();
-		
-	function getScriptList(){
-			$.ajax({
-			url: '/getScriptList',
-			type: 'GET',
-			success: function(res) {
-				var codeObj = JSON.parse(res);
-				$('#scriptCount').text(codeObj.length);
-				$('#myCodeList').empty();
-				$('#listTemplate').tmpl(codeObj).appendTo('#myCodeList');
-			},
-			error: function(error) {
-				console.log('eref',error);
-			}
-		});
-	}
-	
-	</script>
 
 {{outlet}}

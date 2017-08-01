@@ -7,14 +7,15 @@ module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
     // Add options here
   });
-  app.import('vendor/js/jquery.js')
-  app.import('vendor/js/jquery.tmpl.js')
-
-  app.import('bower_components/jquery/dist/jquery.min.js');
-
 
   app.import('bower_components/bootstrap/dist/js/bootstrap.min.js');
   app.import('bower_components/bootstrap/dist/css/bootstrap.min.css');
+  app.import('bower_components/bootstrap/dist/css/bootstrap.min.css.map');
+
+  app.import('bower_components/bootstrap/dist/css/bootstrap-theme.min.css');
+  app.import('bower_components/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2', {
+    destDir: 'fonts'
+  });
 
   app.import('vendor/css/narrow.css');
   app.import('vendor/css/signup.css');

@@ -109,7 +109,6 @@ def getCode():
 		if session.get('user'):
 			_user = session.get('user')[1]
 			scripts = UserCode.query.filter_by(user=_user)
-			print (_user,scripts)
 			scripts_dict = []
 			for script in scripts:
 				single_script = {
