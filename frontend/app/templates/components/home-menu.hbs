@@ -8,13 +8,13 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      {{ link-to 'Home' 'index' class="navbar-brand" }}
+      {{#link-to 'index' class="navbar-brand" }}Home{{/link-to}}
     </div>
 
     <div class="collapse navbar-collapse" id="menu-collapse">
       <ul class="nav navbar-nav nav-pills pull-right">
-        <li>{{ link-to 'Sign In' 'sign-in' }}</li>
-        <li>{{ link-to 'Sign Up' 'sign-up' }}</li>
+        <li>{{#link-to 'sign-in' }}Sign In{{/link-to}}</li>
+        <li>{{#link-to 'sign-up' }}Sign Up{{/link-to}}</li>
       </ul>
     </div>
   </div>

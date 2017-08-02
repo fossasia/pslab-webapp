@@ -1,5 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  //Ember.$.getJSON('/logout');  //TODo
+beforeModel (){
+    Ember.$.post("/logout", null,this);
+    this.replaceWith('index')
+  }
+
 });

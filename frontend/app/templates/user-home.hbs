@@ -12,9 +12,8 @@
     <div>
       <div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav navbar-right">
-				<li role="presentation">{{ link-to 'New Python Script' 'add-script' class='btn btn-primary btn-small'}}</li>
-				<li role="presentation" class="active"><a href="/logout">Logout</a>
-				</li>
+				<li role="presentation">{{#link-to 'add-script' class='btn btn-primary btn-small'}}New Python Script{{/link-to}}</li>
+				<li role="presentation" class="active">{{#link-to 'logout' class='btn btn-primary btn-small'}}Logout{{/link-to}}</li>
 			</ul>
 		  <ul class="nav navbar-nav">
 			<li class="active"><a href="#section1">Your Scripts</a></li>

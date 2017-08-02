@@ -46,10 +46,10 @@ def validateLogin():
 	else:
 		return json.dumps({'status':False,'message':'Username not specified'})
 
-@app.route('/logout')
+@app.route('/logout',methods=['POST'])
 def logout():
 	try:
-		session.pop('user',None)
+		print ('logging out',session.pop('user',None))
 		return json.dumps({'status':True,'message':'Logged out'})
 	except Exception as exc:
 		reason = str(exc)
