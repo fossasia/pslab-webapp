@@ -4,30 +4,6 @@ from flask import Flask, render_template,request,json,session,redirect,jsonify,s
 from werkzeug import generate_password_hash, check_password_hash
 import os
 
-"""
-############################## FRONTEND RELATED FILE SERVER FUNCTIONS ###########################
-# Custom static data. redirect automatically to apps/static folder
-@app.route('/<path:filename>')
-def custom_static(filename):
-	print ('serving static stuff',filename)
-	return send_from_directory(app.config['CUSTOM_STATIC_FOLDER'], filename)
-
-@app.route('/')
-@app.route('/index')
-@app.route('/main')
-def index():
-    return redirect('/index.html')
-
-
-@app.route('/logout')
-def logout():
-    session.pop('user',None)
-    return redirect('/')
-
-
-############################## FRONTEND RELATED FILE SERVER FUNCTIONS ###########################
-"""
-
 @app.route('/signUp',methods=['POST'])
 def signUp():
 	"""Sign Up for Virtual Lab
@@ -69,6 +45,15 @@ def validateLogin():
 			return json.dumps({'status':False,'message':'Wrong Email address or Password. hash mismatch'})
 	else:
 		return json.dumps({'status':False,'message':'Username not specified'})
+
+@app.route('/logout')
+def logout():
+	try:
+		session.pop('user',None)
+		return json.dumps({'status':True,'message':'Logged out'})
+	except Exception as exc:
+		reason = str(exc)
+		return json.dumps({'status':False,'message':str(reason)})
 
 
 @app.route('/getUserName')
