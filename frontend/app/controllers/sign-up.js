@@ -14,7 +14,7 @@ export default Ember.Controller.extend({
     this.reset();
     if (response.status==true){
       this.reset();
-      window.location.href = "/";
+      this.transitionToRoute('index')
     }
     else{
       this.set("signUpFailed", true);
