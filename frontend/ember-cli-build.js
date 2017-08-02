@@ -22,9 +22,6 @@ module.exports = function(defaults) {
     destDir: 'fonts'
   });
 
-  app.import('vendor/css/narrow.css');
-  app.import('vendor/css/signup.css');
-  app.import('vendor/js/ace-js/ace.js');
   // Use `app.import` to add additional libraries to the generated
   // output files.
   //
