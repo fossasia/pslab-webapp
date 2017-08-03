@@ -134,7 +134,6 @@ def updateCode():
     _title = request.form['inputTitle']
     _description = request.form['inputDescription']
     _code_id = request.form['codeId']
-    print (request.form,_code_id)
     try:
       script = UserCode.query.filter_by(user=_user,id=_code_id).first()
       script.title = _title
@@ -146,6 +145,24 @@ def updateCode():
   else:
     return json.dumps({'status':False,'message':'Unauthorized access'})
 
+
+
+
+@app.route('/deleteScript',methods=['POST'])
+def deleteCode():
+  if session.get('user'):
+    _user = session.get('user')[1]
+    _id = request.form['scriptId']
+    try:
+      UserCode.query.filter_by(user=_user,id=_id).delete()
+      print ('deleted',_id)
+      db.session.commit()
+      return json.dumps({'status':True,'message':'Deleted!'})
+    except Exception as exc:
+      print(exc)
+      return json.dumps({'status':False,'message':str(exc)})
+  else:
+    return json.dumps({'status':False,'message':'Unauthorized access'})
 
 
 """

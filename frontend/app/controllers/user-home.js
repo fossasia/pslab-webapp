@@ -15,11 +15,13 @@ editTitle:"myFile",
   openCodeId:null,
   fetchedCode:null,
   editorContents:"",
+  deleteScriptId:0,
 
   reset() {
     clearTimeout(this.get("timeout"));
     this.setProperties({
       submitFailed: false,
+      updateMessage: "updated successfully",
       updateDone: false,
       isProcessing: false,
       isSlowConnection: false
@@ -42,11 +44,14 @@ editTitle:"myFile",
   fetchedCodeSuccess(response) {
     this.reset();
     if (response.status==true){
-      this.set("updateDone",true);
-      this.set("clearTimer", setTimeout(this.clearUpdateMessage.bind(this), 1000));
-      this.set("editorContents",response.Code);
-      this.set("inputDescription",response.Code);
-      this.set("inputTitle",response.Filename);
+      this.setProperties({
+        updateMessage: "Retrieved from server",
+        updateDone:true,
+        clearTimer: setTimeout(this.clearUpdateMessage.bind(this), 1000),
+        editorContents:response.Code,
+        inputDescription:response.Code,
+        inputTitle:response.Filename,
+      });
     }
     else{
       this.set("submitFailed", true);
@@ -88,9 +93,17 @@ editTitle:"myFile",
       var request = Ember.$.post("/updateCode", Ember.$.extend({},this.getProperties("inputTitle","inputDescription"),{"codeId":this.openCodeId}),this,'json');
       request.then(this.success.bind(this), this.failure.bind(this), this.error.bind(this));
     },
+    showDeleteDialog(id) {
+      this.deleteScriptId = id;
+      Ember.$('#deleteModal').modal();
+    },
+    deleteScript(){
+      Ember.$.post("/deleteScript", {"scriptId":this.deleteScriptId},this,'json');
+      Ember.$('#deleteModal').modal('hide');
+      this.send('refresh');
+    },
 
   },
-
 
 
 });

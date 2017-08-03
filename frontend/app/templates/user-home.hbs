@@ -51,8 +51,8 @@
 						              </label>
 					              </div>
 					              <div class="pull-right action-buttons">
-						              <a data-id={{script.Id}} {{action "openEditModal" script on="click"}} ><span class="glyphicon glyphicon-pencil"></span></a>
-					                <a data-id={{script.Id}} onclick="ConfirmDelete(this)" ><span class="glyphicon glyphicon-trash"></span></a>
+						              <a {{action "openEditModal" script on="click"}} ><span class="glyphicon glyphicon-pencil"></span></a>
+						              <a {{action 'showDeleteDialog' script.Id on="click"}}><span class="glyphicon glyphicon-trash"></span></a>
 					              </div>
 				              </li>
 	                {{else}}
@@ -81,6 +81,21 @@
   </div>
 
 
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="text-align:center;">
+        <h4 class="modal-title" style="color:red;" id="deleteModalLabel">You are going to Delete this forever !!</h4>
+      </div>
+     
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" {{action 'deleteScript'}}>Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
   <div class="modal-dialog-full">
     <div class="modal-content">
@@ -99,7 +114,7 @@
                 <!-- Ace editor -->
                 {{ember-ace lines=20  theme="ace/theme/cobalt" mode="ace/mode/python" value=editorContents update=(action (mut inputDescription))}}
                 <!-- Button -->
-                <button disabled={{isProcessing}} id="singlebutton" class="btn btn-primary" {{action "updateScript" on="click"}}>Publish</button>
+                <button disabled={{isProcessing}} id="singlebutton" class="btn btn-primary" {{action "updateScript" on="click"}}>Update</button>
             </form>
          	  {{#if updateDone}}
 	            <div class="alert alert-info">{{updateMessage}}</div>
@@ -118,6 +133,7 @@
     </div>
  </div>
 </div>
+
 
 
 
