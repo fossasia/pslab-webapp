@@ -52,7 +52,7 @@
 					              </div>
 					              <div class="pull-right action-buttons">
 						              <a {{action "openEditModal" script on="click"}} ><span class="glyphicon glyphicon-pencil"></span></a>
-						              <a {{action 'showDeleteDialog' script.Id on="click"}}><span class="glyphicon glyphicon-trash"></span></a>
+						              <a {{action 'showDeleteDialog' script on="click"}}><span class="glyphicon glyphicon-trash"></span></a>
 					              </div>
 				              </li>
 	                {{else}}
@@ -85,7 +85,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header" style="text-align:center;">
-        <h4 class="modal-title" style="color:red;" id="deleteModalLabel">You are going to Delete this forever !!</h4>
+        <h4 class="modal-title" style="color:red;" id="deleteModalLabel">You are going to delete <span style="color:blue;">{{deleteScriptName}}</span> forever !!</h4>
       </div>
      
       <div class="modal-footer">

@@ -16,6 +16,7 @@ editTitle:"myFile",
   fetchedCode:null,
   editorContents:"",
   deleteScriptId:0,
+  deleteScriptName:"",
 
   reset() {
     clearTimeout(this.get("timeout"));
@@ -93,8 +94,9 @@ editTitle:"myFile",
       var request = Ember.$.post("/updateCode", Ember.$.extend({},this.getProperties("inputTitle","inputDescription"),{"codeId":this.openCodeId}),this,'json');
       request.then(this.success.bind(this), this.failure.bind(this), this.error.bind(this));
     },
-    showDeleteDialog(id) {
-      this.deleteScriptId = id;
+    showDeleteDialog(script) {
+      this.set("deleteScriptId",script.Id);
+      this.set("deleteScriptName",script.Filename);
       Ember.$('#deleteModal').modal();
     },
     deleteScript(){
