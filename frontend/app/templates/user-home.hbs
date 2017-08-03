@@ -51,7 +51,7 @@
 						              </label>
 					              </div>
 					              <div class="pull-right action-buttons">
-						              <a data-id={{script.Id}} onclick="Edit(this)" ><span class="glyphicon glyphicon-pencil"></span></a>
+						              <a data-id={{script.Id}} {{action "openEditModal" script on="click"}} ><span class="glyphicon glyphicon-pencil"></span></a>
 					                <a data-id={{script.Id}} onclick="ConfirmDelete(this)" ><span class="glyphicon glyphicon-trash"></span></a>
 					              </div>
 				              </li>
@@ -66,7 +66,7 @@
 		</div>
 
              
-      </div>
+    </div>
 
       <div id="section2"> 
         <h3>Selection of pre-written scripts for experiments</h3><hr class="style1">
@@ -78,6 +78,47 @@
 
     </div>
 
+  </div>
+
+
+<div class="modal" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog-full">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="editModalLabel">Update Script</h4>
+      </div>
+
+      <div class="modal-body">
+        <form role="form">
+          <div class="form-group">
+            <form id="contentForm" class="form-horizontal">
+                <!-- Text input-->
+                {{input disabled=true type="text" value=inputTitle class="form-control" placeholder="Filename/Description" required=true autofocus=true}}
+                <!-- Ace editor -->
+                {{ember-ace lines=20  theme="ace/theme/cobalt" mode="ace/mode/python" value=editorContents update=(action (mut inputDescription))}}
+                <!-- Button -->
+                <button disabled={{isProcessing}} id="singlebutton" class="btn btn-primary" {{action "updateScript" on="click"}}>Publish</button>
+            </form>
+         	  {{#if updateDone}}
+	            <div class="alert alert-info">{{updateMessage}}</div>
+	          {{/if}}
+         	  {{#if submitFailed}}
+	            <div class="alert alert-danger">{{failedMessage}}</div>
+	          {{/if}}
+	          {{#if isSlowConnection}}
+	            <div class="alert alert-info">Submission seems to be taking more time than usual, please wait.</div>
+	          {{/if}}
+
+          </div>
+        </form>
+      </div>
+
     </div>
+ </div>
+</div>
+
+
 
 {{outlet}}

@@ -67,7 +67,6 @@ def getUserName():
 
 @app.route('/addScript',methods=['POST'])
 def addScript():
-	print ('script incoming',request.form)
 	try:
 		if session.get('user'):
 			_user = session.get('user')[1]
@@ -108,6 +107,44 @@ def getCode():
 	except Exception as e:
 		print (str(e))
 		return json.dumps([])
+
+
+
+@app.route('/getScriptById',methods=['POST'])
+def getCodeById():
+	if session.get('user'):
+		_id = request.form['id']
+		_user = session.get('user')[1]
+		try:
+			script = UserCode.query.filter_by(user=_user,id=_id).first()
+			print('sending :',script.title)
+			return json.dumps({'status':True,'Id':script.id,'Code':script.code,'Filename':script.title,'Date':script.pub_date,'message':'got script %s'%script.title})
+		except Exception as exc:
+			return json.dumps({'data':None,'status':False,'message':str(exc)})
+	else:
+		return json.dumps({'data':None,'status':False,'message':'Unauthorized access'})
+
+
+
+
+@app.route('/updateCode', methods=['POST'])
+def updateCode():
+  if session.get('user'):
+    _user = session.get('user')[1]
+    _title = request.form['inputTitle']
+    _description = request.form['inputDescription']
+    _code_id = request.form['codeId']
+    print (request.form,_code_id)
+    try:
+      script = UserCode.query.filter_by(user=_user,id=_code_id).first()
+      script.title = _title
+      script.code = _description
+      db.session.commit()
+      return json.dumps({'status':True,'message':'Updated!'})
+    except Exception as exc:
+      return json.dumps({'status':False,'message':str(exc)})
+  else:
+    return json.dumps({'status':False,'message':'Unauthorized access'})
 
 
 

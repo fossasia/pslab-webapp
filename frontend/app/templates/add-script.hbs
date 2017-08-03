@@ -17,7 +17,7 @@
                 <label for="inputTitle" class="sr-only">Filename/Description</label>
                 {{input type="text" value=inputTitle class="form-control" placeholder="Filename/Description" required=true autofocus=true}}
                 <!-- Ace editor -->
-                {{ember-ace lines=20 value=value update=(action (mut inputDescription))}}
+                {{ember-ace theme="ace/theme/cobalt" mode="ace/mode/python" lines=20 value=value update=(action (mut inputDescription))}}
 
                 <!-- Button -->
                 <button disabled={{isProcessing}} id="singlebutton" class="btn btn-lg btn-primary" type="submit">Publish</button>

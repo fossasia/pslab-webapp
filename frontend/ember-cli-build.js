@@ -7,8 +7,8 @@ module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
   ace: {
     themes: ['cobalt','ambiance', 'chaos'],
-    modes: ['python'],
-    workers: ['python']
+    modes: ['python','javascript'],
+    workers: ['javascript'],
   },
   // Add more options here
   });
