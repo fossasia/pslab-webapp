@@ -8,7 +8,7 @@ class dummy(object):
 		self.r = random.random()
 	def capture1(self,chan,samples,tg):
 		'''
-		Example doc for capture command. returns a sine wave
+		Example doc for capture command. returns a sine wave (x,y)
 		'''
 		self.x=np.linspace(0,8*np.pi,samples)
 		return self.x,np.sin(self.x+np.pi*random.random()/10)
@@ -18,9 +18,7 @@ class dummy(object):
 
 	def get_voltage(self,chan):
 		'''
-		bloo blahs
-		a454
-		*&^ "23"
+		get a random value
 		'''
 		return self.r+random.random()
 	def set_pv1(self,val):
