@@ -1,0 +1,140 @@
+<!-- Scrollspy nav menu --> 
+ <nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#section1">PSLab Remote Lab </a>
+    </div>
+    <div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+			<ul class="nav navbar-nav navbar-right">
+				<li role="presentation">{{#link-to 'add-script' class='btn btn-primary btn-small'}}New Python Script{{/link-to}}</li>
+				<li role="presentation" class="active">{{#link-to 'logout' class='btn btn-primary btn-small'}}Logout{{/link-to}}</li>
+			</ul>
+		  <ul class="nav navbar-nav">
+			<li class="active"><a href="#section1">Your Scripts</a></li>
+			<li><a href="#section2">Experiments</a></li>
+			<li><a href="#section3">Function List</a></li>
+		  </ul>
+      </div>
+    </div>
+  </div>
+</nav>    
+
+
+<div class="contents" style="margin: 0 auto;width:95%;"> 
+<!-- Scrollspy nav Contents --> 
+
+    <div >
+
+      <div id="section1">    
+             <h3>Your Scripts <span class="label label-info" style="font-size:9pt;margin:10px;" >{{model.length}}</span></h3>
+
+
+            <hr class="style1">
+		        <div class="row">
+			        <div class="col-md-12">
+					        <div class="panel-body">
+						        <ul id="myCodeList" class="list-group">
+                    {{#each model as |script index|}}
+              		     <li class="list-group-item">
+				               <div class="pull-left action-buttons">
+					                 <a data-id={{script.Id}} onclick="Execute(this)" ><span class="glyphicon glyphicon-step-forward"></span></a>
+					              </div>
+					              <div class="checkbox">
+						              <label>
+							              {{script.Filename}}
+						              </label>
+					              </div>
+					              <div class="pull-right action-buttons">
+						              <a {{action "openEditModal" script on="click"}} ><span class="glyphicon glyphicon-pencil"></span></a>
+						              <a {{action 'showDeleteDialog' script on="click"}}><span class="glyphicon glyphicon-trash"></span></a>
+					              </div>
+				              </li>
+	                {{else}}
+	                  You haven't saved any scripts
+                	{{/each}}
+
+						</ul>
+
+					</div>
+			</div>
+		</div>
+
+             
+    </div>
+
+      <div id="section2"> 
+        <h3>Selection of pre-written scripts for experiments</h3><hr class="style1">
+      </div>        
+
+      <div id="section3">         
+        <h3>Function calls to access the hardware</h3><hr class="style1">
+      </div>
+
+    </div>
+
+  </div>
+
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="text-align:center;">
+        <h4 class="modal-title" style="color:red;" id="deleteModalLabel">You are going to delete <span style="color:blue;">{{deleteScriptName}}</span> forever !!</h4>
+      </div>
+     
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" {{action 'deleteScript'}}>Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog-full">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="editModalLabel">Update Script</h4>
+      </div>
+
+      <div class="modal-body">
+        <form role="form">
+          <div class="form-group">
+            <form id="contentForm" class="form-horizontal">
+                <!-- Text input-->
+                {{input disabled=true type="text" value=inputTitle class="form-control" placeholder="Filename/Description" required=true autofocus=true}}
+                <!-- Ace editor -->
+                {{ember-ace lines=20  theme="ace/theme/cobalt" mode="ace/mode/python" value=editorContents update=(action (mut inputDescription))}}
+                <!-- Button -->
+                <button disabled={{isProcessing}} id="singlebutton" class="btn btn-primary" {{action "updateScript" on="click"}}>Update</button>
+            </form>
+         	  {{#if updateDone}}
+	            <div class="alert alert-info">{{updateMessage}}</div>
+	          {{/if}}
+         	  {{#if submitFailed}}
+	            <div class="alert alert-danger">{{failedMessage}}</div>
+	          {{/if}}
+	          {{#if isSlowConnection}}
+	            <div class="alert alert-info">Submission seems to be taking more time than usual, please wait.</div>
+	          {{/if}}
+
+          </div>
+        </form>
+      </div>
+
+    </div>
+ </div>
+</div>
+
+
+
+
+{{outlet}}

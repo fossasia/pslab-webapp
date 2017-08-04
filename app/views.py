@@ -1,30 +1,18 @@
 from app import app,SQLAlchemy,db
 from app.db_handler import User,UserCode
-from flask import Flask, render_template,request,json,session,redirect,jsonify
+from flask import Flask, render_template,request,json,session,redirect,jsonify,send_from_directory
 from werkzeug import generate_password_hash, check_password_hash
 import os
 
-
-@app.route('/')
-@app.route('/index')
-@app.route('/main')
-def index():
-	'''
-	Home Page link
-	'''
-	return render_template('index.html')
-
-@app.route('/showSignUp')
-def showSignUp():
-	'''
-	Sign-up Page link
-	'''
-	return render_template('signup.html')
-
-
-
 @app.route('/signUp',methods=['POST'])
 def signUp():
+	"""Sign Up for Virtual Lab
+
+	POST: Submit sign-up parameters. The following must be present:
+	 inputName : The name of your account. does not need to be unique
+	 inputEmail : e-mail ID used for login . must be unique.
+	Returns HTTP 404 when data does not exist.
+	"""
 	# read the posted values from the UI
 	_name = request.form['inputName']
 	_email = request.form['inputEmail']
@@ -37,18 +25,11 @@ def signUp():
 		try:
 			db.session.add(newUser)
 			db.session.commit()
-			return json.dumps({'message':'User %s created successfully. e-mail:%s !'%(_name,_email)})
+			return json.dumps({'status':True,'message':'User %s created successfully. e-mail:%s !'%(_name,_email)})
 		except Exception as exc:
 			reason = str(exc)
-			print ("Message: " , reason)
-			return json.dumps({'error':str(reason)})
+			return json.dumps({'status':False,'message':str(reason)})
 
-
-
-@app.route('/showSignIn')
-@app.route('/showSignin')
-def showSignin():
-    return render_template('signin.html')
 
 
 @app.route('/validateLogin',methods=['POST'])
@@ -59,34 +40,28 @@ def validateLogin():
 	if user is not None:
 		if check_password_hash(user.pwHash,_password):
 			session['user'] = [user.username,user.email]
-			return redirect('/userHome')
+			return json.dumps({'status':True})
 		else:
-			return render_template('error.html',error = 'Wrong Email address or Password. hash mismatch')
+			return json.dumps({'status':False,'message':'Wrong Email address or Password. hash mismatch'})
 	else:
-		return render_template('error.html',error = 'Wrong Email address or Password. no len')
+		return json.dumps({'status':False,'message':'Username not specified'})
 
-
-
-@app.route('/userHome')
-def userHome():
-	if session.get('user'):
-		#print (session['user'])
-		return render_template('userHome.html',username = session['user'][0])
-	else:
-		return render_template('error.html',error = 'Unauthorized Access')
-
-@app.route('/logout')
+@app.route('/logout',methods=['POST'])
 def logout():
-    session.pop('user',None)
-    return redirect('/')
+	try:
+		print ('logging out',session.pop('user',None))
+		return json.dumps({'status':True,'message':'Logged out'})
+	except Exception as exc:
+		reason = str(exc)
+		return json.dumps({'status':False,'message':str(reason)})
 
-@app.route('/showAddScript')
-def showAddScript():
-	if session.get('user'):
-		#print (session['user'])
-		return render_template('addScript.html',author = session['user'][0])
+
+@app.route('/getUserName')
+def getUserName():
+	if user is not None:
+		return json.dumps({'username':session['user'][0]})
 	else:
-		return render_template('error.html',error = 'Unauthorized Access')    
+		return json.dumps({'error':'Not Logged In'})
 
 
 
@@ -102,14 +77,14 @@ def addScript():
 			try:
 				db.session.add(newSnippet)
 				db.session.commit()
-				return redirect('/userHome')
+				return json.dumps({'status':True})
 			except Exception as exc:
-				return render_template('error.html',error = 'Write Failed.') 
+				return json.dumps({'status':False,'message':str(exc)})
 
 		else:
-			return render_template('error.html',error = 'Unauthorized Access')
+			return json.dumps({'status':False,'message':'Unauthorized access'})
 	except Exception as e:
-		return render_template('error.html',error = str(e))
+		return json.dumps({'status':False,'message':str(e)})
 
 
 @app.route('/getScriptList')
@@ -118,7 +93,6 @@ def getCode():
 		if session.get('user'):
 			_user = session.get('user')[1]
 			scripts = UserCode.query.filter_by(user=_user)
-			print (_user,scripts)
 			scripts_dict = []
 			for script in scripts:
 				single_script = {
@@ -129,11 +103,66 @@ def getCode():
 				scripts_dict.append(single_script)
 			return json.dumps(scripts_dict)
 		else:
-			return render_template('error.html', error = 'Unauthorized Access')
+			return json.dumps([])
 	except Exception as e:
 		print (str(e))
-		return render_template('error.html', error = str(e))
+		return json.dumps([])
 
+
+
+@app.route('/getScriptById',methods=['POST'])
+def getCodeById():
+	if session.get('user'):
+		_id = request.form['id']
+		_user = session.get('user')[1]
+		try:
+			script = UserCode.query.filter_by(user=_user,id=_id).first()
+			print('sending :',script.title)
+			return json.dumps({'status':True,'Id':script.id,'Code':script.code,'Filename':script.title,'Date':script.pub_date,'message':'got script %s'%script.title})
+		except Exception as exc:
+			return json.dumps({'data':None,'status':False,'message':str(exc)})
+	else:
+		return json.dumps({'data':None,'status':False,'message':'Unauthorized access'})
+
+
+
+
+@app.route('/updateCode', methods=['POST'])
+def updateCode():
+  if session.get('user'):
+    _user = session.get('user')[1]
+    _title = request.form['inputTitle']
+    _description = request.form['inputDescription']
+    _code_id = request.form['codeId']
+    try:
+      script = UserCode.query.filter_by(user=_user,id=_code_id).first()
+      script.title = _title
+      script.code = _description
+      db.session.commit()
+      return json.dumps({'status':True,'message':'Updated!'})
+    except Exception as exc:
+      return json.dumps({'status':False,'message':str(exc)})
+  else:
+    return json.dumps({'status':False,'message':'Unauthorized access'})
+
+
+
+
+@app.route('/deleteScript',methods=['POST'])
+def deleteCode():
+  if session.get('user'):
+    _user = session.get('user')[1]
+    _id = request.form['scriptId']
+    try:
+      UserCode.query.filter_by(user=_user,id=_id).delete()
+      print ('deleted',_id)
+      db.session.commit()
+      return json.dumps({'status':True,'message':'Deleted!'})
+    except Exception as exc:
+      print(exc)
+      return json.dumps({'status':False,'message':str(exc)})
+  else:
+    return json.dumps({'status':False,'message':'Unauthorized access'})
 
 
 """

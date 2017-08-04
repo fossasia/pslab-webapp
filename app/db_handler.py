@@ -20,7 +20,7 @@ class User(db.Model):
 class UserCode(db.Model):
 	__tablename__ = 'userCode'
 	id = db.Column(db.Integer, primary_key=True)
-	user = db.Column(db.String(80), unique=True)
+	user = db.Column(db.String(80))
 	title = db.Column(db.String(100), unique=True)
 	code = db.Column(db.Text)
 	pub_date = db.Column(db.DateTime)
