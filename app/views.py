@@ -4,6 +4,10 @@ from flask import Flask, render_template,request,json,session,redirect,jsonify,s
 from werkzeug import generate_password_hash, check_password_hash
 import os
 
+####  Get the list of available hardware methods ###
+from app.hardwareHandler import functionList,np
+
+
 @app.route('/signUp',methods=['POST'])
 def signUp():
 	"""Sign Up for Virtual Lab
@@ -34,17 +38,17 @@ def signUp():
 
 @app.route('/validateLogin',methods=['POST'])
 def validateLogin():
-	_username = request.form['inputEmail']
-	_password = request.form['inputPassword']
-	user = User.query.filter_by(email=_username).first() #retrieve the row based on e-mail
-	if user is not None:
-		if check_password_hash(user.pwHash,_password):
-			session['user'] = [user.username,user.email]
-			return json.dumps({'status':True})
-		else:
-			return json.dumps({'status':False,'message':'Wrong Email address or Password. hash mismatch'})
-	else:
-		return json.dumps({'status':False,'message':'Username not specified'})
+    _username = request.form['inputEmail']
+    _password = request.form['inputPassword']
+    user = User.query.filter_by(email=_username).first() #retrieve the row based on e-mail
+    if user is not None:
+        if check_password_hash(user.pwHash,_password):
+            session['user'] = [user.username,user.email]
+            return json.dumps({'status':True})
+        else:
+            return json.dumps({'status':False,'message':'Wrong Email address or Password. hash mismatch'})
+    else:
+        return json.dumps({'status':False,'message':'Username not specified'})
 
 @app.route('/logout',methods=['POST'])
 def logout():
@@ -165,54 +169,34 @@ def deleteCode():
     return json.dumps({'status':False,'message':'Unauthorized access'})
 
 
-"""
-#Pending migration to postgres
+@app.route('/evalFunctionString',methods=['POST'])
+def evalFunctionString():
+    if session.get('user'):
+        _stringify=False
+        try:
+            _user = session.get('user')[1]
+            _fn = request.form['function']
+            _stringify = request.form.get('stringify',False)
+            res = eval(_fn,functionList)
+        except Exception as e:
+            res = str(e)
+        #dump string if requested. Otherwise json array
+        if _stringify:
+            return json.dumps({'status':True,'result':str(res),'stringified':True})
+        else:
+            #Try to simply convert the results to json
+            try:
+                return json.dumps({'status':True,'result':res,'stringified':False})
+            # If that didn't work, it's due to the result containing numpy arrays.
+            except Exception as e:
+                #try to convert the numpy arrays to json using the .toList() function
+                try:
+                    return json.dumps({'status':True,'result':np.array(res).tolist(),'stringified':False})
+                #And if nothing works, return the string
+                except Exception as e:
+                    print( 'string return',str(e))
+                    return json.dumps({'status':True,'result':str(res),'stringified':True})
+    else:
+        return json.dumps({'status':False,'result':'unauthorized access','message':'Unauthorized access'})
 
 
-
-import inspect,random
-import numpy as np
-# A dummy class that will pretend to be a minimal PSLab . we shall use this for testing purposes.
-class dummy(object):
-	def __init__(self):
-		self.x=np.linspace(0,8*np.pi,200)
-		self.r = random.random()
-	def capture1(self,chan,samples,tg):
-		'''
-		Example doc for capture command. returns a sine wave
-		'''
-		self.x=np.linspace(0,8*np.pi,samples)
-		return self.x,np.sin(self.x+np.pi*random.random()/10)
-	def capture2(self,samples,tg):
-		self.x=np.linspace(0,8*np.pi,samples)
-		return self.x,np.sin(self.x+np.pi*random.random()/10),np.sin(self.x+np.pi*random.random()/10)
-
-	def get_voltage(self,chan):
-		'''
-		bloo blahs
-		a454
-		*&^ "23"
-		'''
-		return self.r+random.random()
-	def set_pv1(self,val):
-		return val+self.r
-
-
-try:
-	from PSL import sciencelab
-	I = sciencelab.connect(verbose=True)
-	I.set_sine2(1000)
-except Exception as e:
-	print ('using dummy class',str(e))
-	I = dummy()
-
-# Use the inspect module to prepare a list of methods available in the class. This is quite flexible, and in theory this framework should easily adapt to serve any hardware with a python communication library
-functionList = {}
-for a in dir(I):
-	attr = getattr(I, a)
-	if inspect.ismethod(attr) and a!='__init__':
-		functionList[a] = attr
-
-
-
-"""
