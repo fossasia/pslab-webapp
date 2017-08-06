@@ -1,3 +1,5 @@
+// -*- coding: utf-8; mode: js; indent-tabs-mode: t; tab-width:2 -*-
+
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
@@ -17,6 +19,7 @@ editTitle:"myFile",
   editorContents:"",
   deleteScriptId:0,
   deleteScriptName:"",
+  functionStringResults:"",
 
   reset() {
     clearTimeout(this.get("timeout"));
@@ -76,6 +79,15 @@ editTitle:"myFile",
     this.set("isSlowConnection", true);
   },
 
+	//Remote Execution of function strings
+  showFunctionStringResults(response) {
+    this.reset();
+    this.set("functionStringResults",response.result);
+		//TODO : check status key, and change highlight colour or something to indicate failure.
+    Ember.$('#resultsModal').modal();
+  },
+
+
   actions:{
     openEditModal(script) {
       this.reset();
@@ -104,6 +116,17 @@ editTitle:"myFile",
       Ember.$('#deleteModal').modal('hide');
       this.send('refresh');
     },
+
+		//Remote Execution of function strings
+    executeFunctionString() {
+      this.setProperties({
+        isProcessing: true
+      });
+      var request = Ember.$.post("/evalFunctionString", {"function":this.functionString},this,'json');
+      request.then(this.showFunctionStringResults.bind(this), this.failure.bind(this), this.error.bind(this));
+    },
+
+
 
   },
 
