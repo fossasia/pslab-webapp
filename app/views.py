@@ -9,7 +9,7 @@ from app.hardwareHandler import functionList,np
 
 
 @app.route('/signUp',methods=['POST'])
-def signUp():
+def signUpFunction():
 	"""Sign Up for Virtual Lab
 
 	POST: Submit sign-up parameters. The following must be present:
@@ -37,7 +37,7 @@ def signUp():
 
 
 @app.route('/validateLogin',methods=['POST'])
-def validateLogin():
+def validateLoginFunction():
     _username = request.form['inputEmail']
     _password = request.form['inputPassword']
     user = User.query.filter_by(email=_username).first() #retrieve the row based on e-mail
@@ -61,7 +61,7 @@ def logout():
 
 
 @app.route('/getUserName')
-def getUserName():
+def getUserNameFunction():
 	if user is not None:
 		return json.dumps({'username':session['user'][0]})
 	else:
@@ -70,7 +70,7 @@ def getUserName():
 
 
 @app.route('/addScript',methods=['POST'])
-def addScript():
+def addScriptFunction():
 	try:
 		if session.get('user'):
 			_user = session.get('user')[1]
@@ -92,7 +92,7 @@ def addScript():
 
 
 @app.route('/getScriptList')
-def getCode():
+def getCodeFunction():
 	try:
 		if session.get('user'):
 			_user = session.get('user')[1]
@@ -115,7 +115,7 @@ def getCode():
 
 
 @app.route('/getScriptById',methods=['POST'])
-def getCodeById():
+def getCodeByIdFunction():
 	if session.get('user'):
 		_id = request.form['id']
 		_user = session.get('user')[1]
@@ -132,7 +132,7 @@ def getCodeById():
 
 
 @app.route('/updateCode', methods=['POST'])
-def updateCode():
+def updateCodeFunction():
   if session.get('user'):
     _user = session.get('user')[1]
     _title = request.form['inputTitle']
@@ -153,7 +153,7 @@ def updateCode():
 
 
 @app.route('/deleteScript',methods=['POST'])
-def deleteCode():
+def deleteCodeFunction():
   if session.get('user'):
     _user = session.get('user')[1]
     _id = request.form['scriptId']
@@ -170,7 +170,7 @@ def deleteCode():
 
 
 @app.route('/evalFunctionString',methods=['POST'])
-def evalFunctionString():
+def evalFunctionStringFunction():
     if session.get('user'):
         _stringify=False
         try:
