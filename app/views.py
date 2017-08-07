@@ -62,7 +62,7 @@ def logout():
 
 @app.route('/getUserName')
 def getUserNameFunction():
-	if user is not None:
+	if session.get('user'):
 		return json.dumps({'username':session['user'][0]})
 	else:
 		return json.dumps({'error':'Not Logged In'})
