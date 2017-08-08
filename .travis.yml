@@ -14,14 +14,32 @@ python:
   - "2.7"
   - "3.4"
 
+
+before_install:
+  - pushd frontend
+  - npm install -g npm@5
+  - npm config set spin false
+  - npm --version
+  - npm cache verify
+  - npm install -g bower
+  - bower --version
+  - popd
+
+
 install:
-    - pip install -r requirements.txt
-    - git clone https://github.com/fossasia/pslab-python.git
-    - pushd pslab-python
-    - sudo python setup.py install
-    - if [[ $TRAVIS_PYTHON_VERSION == 2.7 ]]; then cp -R /usr/local/lib/python2.7/dist-packages/PSL /home/travis/virtualenv/python2.7.13/lib/python2.7/site-packages/; fi
-    - if [[ $TRAVIS_PYTHON_VERSION == 3.4 ]]; then cp -R /usr/local/lib/python2.7/dist-packages/PSL /home/travis/virtualenv/python3.4.6/lib/python3.4/site-packages/; fi
-    - popd
+  # Frontend stuff
+  - pushd frontend
+  - npm install
+  - bower install
+  - popd
+  # API server stuff  
+  - pip install -r requirements.txt
+  - git clone https://github.com/fossasia/pslab-python.git
+  - pushd pslab-python
+  - sudo python setup.py install
+  - if [[ $TRAVIS_PYTHON_VERSION == 2.7 ]]; then cp -R /usr/local/lib/python2.7/dist-packages/PSL /home/travis/virtualenv/python2.7.13/lib/python2.7/site-packages/; fi
+  - if [[ $TRAVIS_PYTHON_VERSION == 3.4 ]]; then cp -R /usr/local/lib/python2.7/dist-packages/PSL /home/travis/virtualenv/python3.4.6/lib/python3.4/site-packages/; fi
+  - popd
 
 before_script:
   - psql -c 'create database psl_db;' -U postgres
@@ -30,4 +48,10 @@ before_script:
 
 script: nosetests
 
-
+after_success:
+  - pushd frontend
+  - bash surge_deploy.sh
+  - popd
+  
+  
+  

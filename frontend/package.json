@@ -10,6 +10,7 @@
   },
   "repository": "",
   "scripts": {
+    "postinstall": "./node_modules/bower/bin/bower install",
     "build": "ember build",
     "start": "ember server",
     "test": "ember test"
@@ -30,6 +31,7 @@
     "ember-cli-qunit": "^4.0.0",
     "ember-cli-shims": "^1.1.0",
     "ember-cli-sri": "^2.1.0",
+    "ember-cli-surge": "^1.1.20",
     "ember-cli-uglify": "^1.2.0",
     "ember-data": "~2.14.3",
     "ember-export-application-global": "^2.0.0",
@@ -46,6 +48,7 @@
   "private": true,
   "dependencies": {
     "auth0-js": "^8.8.0",
+    "bower": "^0.6.8",
     "jwt-decode": "^2.2.0"
   }
 }
