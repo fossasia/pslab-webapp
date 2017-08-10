@@ -32,20 +32,18 @@ switch (environment) {
 		ENV.APP.corsWithCreds = true;
 		ENV.APP.apiURL = 'http://localhost:8000'
 		break;
-	// make alias in /etc/hosts 127.0.0.1   localhost mybackend.com
-	case 'cors-hack':
-		ENV.APP.usingCors = true;
-		ENV.APP.corsWithCreds = true;
-		ENV.APP.apiURL = 'http://mybackend.com:8000'
-		break;
 	case 'production':
 		ENV.APP.usingCors = true;
 		ENV.APP.corsWithCreds = true;
 		ENV.APP.apiURL = 'https://pslab-stage.herokuapp.com'
 		break;
+	case 'pslab-test1':
+		ENV.APP.usingCors = true;
+		ENV.APP.corsWithCreds = true;
+		ENV.APP.apiURL = 'https://pslab-test1.herokuapp.com'
+		break;
 	case 'test':
 		ENV.locationType = 'none';
-
 		// keep test console output quieter
 		ENV.APP.LOG_ACTIVE_GENERATION = false;
 		ENV.APP.LOG_VIEW_LOOKUPS = false;
