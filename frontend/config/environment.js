@@ -6,6 +6,7 @@ module.exports = function(environment) {
     modulePrefix: 'pslab-frontend',
     environment,
     rootURL: '/',
+    API_HOST:'http://127.0.0.1:8000',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
@@ -21,6 +22,8 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+     API_HOST: 'http://127.0.0.1:8000'
+
     }
   };
 
@@ -30,6 +33,8 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
+    ENV.APP.API_HOST = "http://127.0.0.1:8000"
+
   }
 
   if (environment === 'test') {
@@ -44,8 +49,9 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-
+  ENV.APP.API_HOST = 'https://pslab-stage.herokuapp.com'
   }
+
 
   return ENV;
 };
