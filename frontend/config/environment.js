@@ -6,7 +6,6 @@ module.exports = function(environment) {
     modulePrefix: 'pslab-frontend',
     environment,
     rootURL: '/',
-    API_HOST:'http://127.0.0.1:8000',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
@@ -22,35 +21,38 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-     API_HOST: 'http://127.0.0.1:8000'
-
+	    API_HOST: 'http://127.0.0.1:8000',
     }
   };
 
-  if (environment === 'development') {
-    // ENV.APP.LOG_RESOLVER = true;
-    // ENV.APP.LOG_ACTIVE_GENERATION = true;
-    // ENV.APP.LOG_TRANSITIONS = true;
-    // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
-    // ENV.APP.LOG_VIEW_LOOKUPS = true;
-    ENV.APP.API_HOST = "http://127.0.0.1:8000"
 
-  }
+switch (environment) {
+	case 'development':
+		ENV.APP.usingCors = true;
+		ENV.APP.corsWithCreds = true;
+		ENV.APP.apiURL = 'http://localhost:8000'
+		break;
+	// make alias in /etc/hosts 127.0.0.1   localhost mybackend.com
+	case 'cors-hack':
+		ENV.APP.usingCors = true;
+		ENV.APP.corsWithCreds = true;
+		ENV.APP.apiURL = 'http://mybackend.com:8000'
+		break;
+	case 'production':
+		ENV.APP.usingCors = true;
+		ENV.APP.corsWithCreds = true;
+		ENV.APP.apiURL = 'https://pslab-stage.herokuapp.com'
+		break;
+	case 'test':
+		ENV.locationType = 'none';
 
-  if (environment === 'test') {
-    // Testem prefers this...
-    ENV.locationType = 'none';
+		// keep test console output quieter
+		ENV.APP.LOG_ACTIVE_GENERATION = false;
+		ENV.APP.LOG_VIEW_LOOKUPS = false;
 
-    // keep test console output quieter
-    ENV.APP.LOG_ACTIVE_GENERATION = false;
-    ENV.APP.LOG_VIEW_LOOKUPS = false;
-
-    ENV.APP.rootElement = '#ember-testing';
-  }
-
-  if (environment === 'production') {
-  ENV.APP.API_HOST = 'https://pslab-stage.herokuapp.com'
-  }
+		ENV.APP.rootElement = '#ember-testing';
+		break;
+}
 
 
   return ENV;
