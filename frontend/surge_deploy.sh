@@ -4,7 +4,7 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
     exit 0
 fi
 
-ember build production
+ember build --environment=production
 
 export REPO_SLUG_ARRAY=(${TRAVIS_REPO_SLUG//\// })
 export REPO_OWNER=${REPO_SLUG_ARRAY[0]}
