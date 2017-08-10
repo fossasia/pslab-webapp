@@ -1,7 +1,7 @@
 {
   "name": "pslab-frontend",
   "version": "0.0.0",
-  "description": "Small description for pslab-frontend goes here",
+  "description": "Web-App for remotely accessing the Pocket Science Lab",
   "license": "MIT",
   "author": "",
   "directories": {
@@ -10,12 +10,12 @@
   },
   "repository": "",
   "scripts": {
-    "postinstall": "./node_modules/bower/bin/bower install",
     "build": "ember build",
     "start": "ember server",
     "test": "ember test"
   },
   "devDependencies": {
+    "bootstrap": "^3.3.7",
     "broccoli-asset-rev": "^2.4.5",
     "ember-ace": "^1.1.0",
     "ember-ajax": "^3.0.0",
@@ -43,11 +43,10 @@
     "loader.js": "^4.2.3"
   },
   "engines": {
-    "node": "^4.5 || 6.* || >= 7.*"
+    "node": "6.*"
   },
   "private": true,
   "dependencies": {
-    "auth0-js": "^8.8.0",
     "bower": "^0.6.8",
     "jwt-decode": "^2.2.0"
   }

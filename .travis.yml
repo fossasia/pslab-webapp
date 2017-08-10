@@ -6,20 +6,34 @@ language: python
 cache: pip
 
 addons:
-    postgresql: "9.6"
+  postgresql: "9.6"
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
 services:
     - postgresql
+env:
+  - CXX=g++-4.8
+
 
 python:
   - "2.7"
   - "3.4"
 
+node_js:
+  - "6"
 
 before_install:
   - pushd frontend
-  - npm install -g npm@5
+  - nvm install 6
+  # add node_modules/.bin to the path so that ember command is detected
+  - export PATH=./node_modules/.bin:$PATH
+  - npm install -g npm@5.3.0
   - npm config set spin false
-  - npm --version
+  - node -v
+  - npm -v
   - npm cache verify
   - npm install -g bower
   - bower --version
@@ -29,6 +43,7 @@ before_install:
 install:
   # Frontend stuff
   - pushd frontend
+  - npm run
   - npm install
   - bower install
   - popd
@@ -53,5 +68,5 @@ after_success:
   - bash surge_deploy.sh
   - popd
   
-  
+after_failure: cat /home/travis/.npm/_logs/*.log
   
