@@ -21,31 +21,37 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+	    API_HOST: 'http://127.0.0.1:8000',
     }
   };
 
-  if (environment === 'development') {
-    // ENV.APP.LOG_RESOLVER = true;
-    // ENV.APP.LOG_ACTIVE_GENERATION = true;
-    // ENV.APP.LOG_TRANSITIONS = true;
-    // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
-    // ENV.APP.LOG_VIEW_LOOKUPS = true;
-  }
 
-  if (environment === 'test') {
-    // Testem prefers this...
-    ENV.locationType = 'none';
+switch (environment) {
+	case 'development':
+		ENV.APP.usingCors = true;
+		ENV.APP.corsWithCreds = true;
+		ENV.APP.apiURL = 'http://localhost:8000'
+		break;
+	case 'production':
+		ENV.APP.usingCors = true;
+		ENV.APP.corsWithCreds = true;
+		ENV.APP.apiURL = 'https://pslab-stage.herokuapp.com'
+		break;
+	case 'pslab-test1':
+		ENV.APP.usingCors = true;
+		ENV.APP.corsWithCreds = true;
+		ENV.APP.apiURL = 'https://pslab-test1.herokuapp.com'
+		break;
+	case 'test':
+		ENV.locationType = 'none';
+		// keep test console output quieter
+		ENV.APP.LOG_ACTIVE_GENERATION = false;
+		ENV.APP.LOG_VIEW_LOOKUPS = false;
 
-    // keep test console output quieter
-    ENV.APP.LOG_ACTIVE_GENERATION = false;
-    ENV.APP.LOG_VIEW_LOOKUPS = false;
+		ENV.APP.rootElement = '#ember-testing';
+		break;
+}
 
-    ENV.APP.rootElement = '#ember-testing';
-  }
-
-  if (environment === 'production') {
-
-  }
 
   return ENV;
 };

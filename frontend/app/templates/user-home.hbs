@@ -1,3 +1,5 @@
+<!-- -*- coding: utf-8; mode: html; indent-tabs-mode: t; tab-width:2 -*- -->
+
 <!-- Scrollspy nav menu --> 
  <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
@@ -40,6 +42,15 @@
 			        <div class="col-md-12">
 					        <div class="panel-body">
 						        <ul id="myCodeList" class="list-group">
+              		     <li class="list-group-item">
+					              <div class="checkbox">
+						              <label>
+							              {{input value=functionString type="text" class="form-control" placeholder="get_voltage('CH1')"}}
+						              </label>
+										      <button disabled={{isProcessing}} id="btnSignIn" class="btn btn-md btn-primary"  {{action 'executeFunctionString' script on="click"}}>Execute</button>
+					              </div>
+				              </li><br>
+
                     {{#each model as |script index|}}
               		     <li class="list-group-item">
 				               <div class="pull-left action-buttons">
@@ -54,12 +65,12 @@
 						              <a {{action "openEditModal" script on="click"}} ><span class="glyphicon glyphicon-pencil"></span></a>
 						              <a {{action 'showDeleteDialog' script on="click"}}><span class="glyphicon glyphicon-trash"></span></a>
 					              </div>
-				              </li>
+			              </li>
 	                {{else}}
 	                  You haven't saved any scripts
                 	{{/each}}
 
-						</ul>
+						      </ul>
 
 					</div>
 			</div>
@@ -95,6 +106,22 @@
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" id="resultsModal" tabindex="-1" role="dialog" aria-labelledby="resultsModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="text-align:center;">
+        <h4 class="modal-title" style="color:black;" id="resultsModalLabel">{{functionStringResults}}</h4>
+      </div>
+           <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 <div class="modal" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
   <div class="modal-dialog-full">

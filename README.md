@@ -46,12 +46,20 @@ The following command will install flask as well as dependencies such as Jinja2,
 
 ## Running the app locally
 
+`honcho -f ProcfileFree start`
+
 `gunicorn app:app`
-navigate to localhost:8000 in your web browser
+This launches the API server on default port 8000
+
+`cd frontend`
+`ember -s --proxy 127.0.0.1:8000
+this launches the the emberjs webapp on port 4200
+
+navigate to localhost:4200 in your web browser
+
 
 ## deploying to Heroku
 + [Staging](https://pslab-stage.herokuapp.com/)
-+ production :
 
 
 
@@ -63,26 +71,16 @@ navigate to localhost:8000 in your web browser
   - [x] SignIn hook
   - [x] SignIn database verification
   - [x] User script page hook
-  - [x] Process and store a user written script
-  - [x] Retrieve list of scripts stored by a user
-  - [ ] Retrieve a script based on script ID
-
-- Frontend
-  - [x] css files : Bootstrap, custom css
-  - [x] js files : Jquery
-  - [x] homepage.html
-  - [x] SignUp.html
-  - [x] SignUp AJAX callbacks
-  - [x] SignIn.html
-  - [x] SignIn AJAX callback and redirection to user's homepage
-  - [x] UserHome.html
-  - [x] logout hook
-  - [ ] Page to add a user written script
+  - [x] Store, Edit, View, Delete user submitted code snippets
+  - [x] Execute a function string
 
 - New Frontend based on EmberJS
   - [x] Home Page
   - [x] Navbar with bootstrap styling
-  - [x] Links to Sign In, Sign Up pages
+  - [x] sign-up page
+  - [x] sign-in page
+  - [x] user-home.html. Feature to Create and Store code snippets. Execute function strings
+  - [x] Add script page. Embedded ace-js code editor.
 
 ## Old resources
 This project was moved from another repository, and in order to browse the various issues and PRs, the following links may help
