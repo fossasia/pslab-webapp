@@ -2,8 +2,8 @@
         <div class="header">
             <nav>
                 <ul class="nav nav-pills pull-right">
-                    <li role="presentation" class="active"><a href="#">Add Script</a></li>
-            				<li role="presentation" class="active">{{#link-to 'logout' class='btn btn-primary btn-small'}}Logout{{/link-to}}</li>
+			              <li role="presentation">{{#link-to 'user-home' class='btn btn-primary btn-small'}}Back{{/link-to}}</li>
+			              <li role="presentation" class="active">{{#link-to 'logout' class='btn btn-primary btn-small'}}Logout{{/link-to}}</li>
                 </ul>
             </nav>
             <h3 class="text-muted">New Python Script</h3>
@@ -12,8 +12,6 @@
 
             <form id="contentForm" class="form-horizontal" {{action "valueUpdated" on="submit"}}>
                 <!-- Form Name -->
-                <legend>Spin your own code</legend>
-                <!-- Text input-->
                 <label for="inputTitle" class="sr-only">Filename/Description</label>
                 {{input type="text" value=inputTitle class="form-control" placeholder="Filename/Description" required=true autofocus=true}}
                 <!-- Ace editor -->

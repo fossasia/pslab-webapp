@@ -54,7 +54,7 @@
                     {{#each model as |script index|}}
               		     <li class="list-group-item">
 				               <div class="pull-left action-buttons">
-					                 <a data-id={{script.Id}} onclick="Execute(this)" ><span class="glyphicon glyphicon-step-forward"></span></a>
+						               <a {{action 'executeScript' script on="click"}}><span class="glyphicon glyphicon-step-forward"></span></a>
 					              </div>
 					              <div class="checkbox">
 						              <label>
@@ -160,6 +160,46 @@
     </div>
  </div>
 </div>
+
+
+
+
+<div class="modal" id="runModal" tabindex="-1" role="dialog" aria-labelledby="runModalLabel" aria-hidden="true">
+  <div class="modal-dialog-full">
+    <div class="modal-content">
+      <div class="modal-header">
+		 <div class="row">
+		  <div class="col-sm-4"><span class="modal-title" id="runModalLabel">Execute results: </span></div>
+		  <div class="col-sm-4"><img src="../static/images/loading.gif" id="executing-indicator" style="display:none;" /></div>
+
+		  <div class="col-sm-2 pull-right">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+		   </div>
+		</div>
+
+      </div>
+      <div class="modal-body">
+        <form role="form">
+          <div class="form-group">
+            <div style="min-height:40px;min-width:400px;" id="runResults">{{{codeResults}}}</div>
+
+          </div>
+        </form>
+      </div>
+
+      {{#if waitingForCode}}
+        <div class="alert alert-info">Waiting for the server to execute your code and respond. please wait.</div>
+      {{/if}}
+
+      <div class="modal-footer">
+        <button type="btnRan" class="btn btn-default btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 
 
 

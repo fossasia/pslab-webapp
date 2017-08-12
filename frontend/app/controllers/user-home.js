@@ -20,6 +20,9 @@ editTitle:"myFile",
   deleteScriptId:0,
   deleteScriptName:"",
   functionStringResults:"",
+  codeResults:"",
+  waitingForCode:false,
+  runScriptFailed:false,
 
   reset() {
     clearTimeout(this.get("timeout"));
@@ -28,7 +31,9 @@ editTitle:"myFile",
       updateMessage: "updated successfully",
       updateDone: false,
       isProcessing: false,
-      isSlowConnection: false
+      isSlowConnection: false,
+      waitingForCode: false,
+      runScriptFailed: false,
       });
   },
   success(response) {
@@ -45,6 +50,9 @@ editTitle:"myFile",
       this.failedMessage= String(response.message);
       }
   },
+
+	//Editing your submitted scripts
+
   fetchedCodeSuccess(response) {
     this.reset();
     if (response.status==true){
@@ -87,6 +95,24 @@ editTitle:"myFile",
     Ember.$('#resultsModal').modal();
   },
 
+	//Remote Execution of Scripts
+  showFunctionResults(response) {
+    this.reset();
+    this.set("codeResults",response.result);
+		//TODO : check status key, and change highlight colour or something to indicate failure.
+    Ember.$('#runModal').modal();
+  },
+  runScriptError() {
+    this.reset();
+    this.set("runScriptFailed", true);
+    this.set("failedMessage",'Submission failed. Server down? ');
+  },
+  runScriptFailure() {
+    this.reset();
+    this.set("runScriptFailed", true);
+    this.set("failedMessage",'Submission failed. App Error. ');
+  },
+
 
   actions:{
     openEditModal(script) {
@@ -96,6 +122,7 @@ editTitle:"myFile",
       request.then(this.fetchedCodeSuccess.bind(this), this.failure.bind(this), this.error.bind(this));
       Ember.$('#editModal').modal();
     },
+
     updateScript() {
       this.setProperties({
         submitFailed: false,
@@ -123,7 +150,17 @@ editTitle:"myFile",
         isProcessing: true
       });
       var request = Ember.$.post("/evalFunctionString", {"function":this.functionString},this,'json');
-      request.then(this.showFunctionStringResults.bind(this), this.failure.bind(this), this.error.bind(this));
+      request.then(this.showFunctionStringResults.bind(this), this.runScriptFailure.bind(this), this.runScriptError.bind(this));
+    },
+
+		//Remote Execution of Scripts
+    executeScript(script) {
+      this.setProperties({
+        waitingForCode: true,
+        codeResults:"",
+      });
+      var request = Ember.$.post("/runScriptById", {'id':script.Id},this,'json');
+      request.then(this.showFunctionResults.bind(this), this.failure.bind(this), this.error.bind(this));
     },
 
 
