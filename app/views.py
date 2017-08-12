@@ -6,7 +6,7 @@ import os
 
 ####  Get the list of available hardware methods ###
 from app.hardwareHandler import functionList,np
-
+from app.codeEvaluator import Evaluator
 
 @app.route('/signUp',methods=['POST'])
 def signUpFunction():
@@ -198,5 +198,22 @@ def evalFunctionStringFunction():
                     return json.dumps({'status':True,'result':str(res),'stringified':True})
     else:
         return json.dumps({'status':False,'result':'unauthorized access','message':'Unauthorized access'})
+
+
+
+@app.route('/runScriptById',methods=['POST'])
+def runCodeById():
+	if session.get('user'):
+		_id = request.form['id']
+		_user = session.get('user')[1]
+		try:
+			script = UserCode.query.filter_by(user=_user,id=_id).first()
+			myEval = Evaluator(functionList)
+			res = myEval.runCode(script.code)
+			return json.dumps({'status':True,'Id':script.id,'result':res,'Filename':script.title,'Date':script.pub_date})
+		except Exception as exc:
+			return json.dumps({'status':False,'result':str(exc)})
+	else:
+		return json.dumps({'status':False,'result':'unauthorized access','message':'Unauthorized access'})
 
 
