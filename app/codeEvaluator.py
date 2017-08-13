@@ -1,6 +1,6 @@
 #from cStringIO import StringIO
 from io import BytesIO
-import sys
+import sys,inspect
 
 import numpy as np
 from flask import json
@@ -44,4 +44,23 @@ class Evaluator:
 
 	def get_html(self):
 		return self.html
+
+	#### Extract Doc Strings ####
+	def getDocs(self):
+		flist = []
+		for a in self.functionList.keys():
+			if a[:2]=='__':continue
+			doc = ''
+			try:
+				doc = inspect.getdoc(self.functionList[a])
+				arglist = inspect.getargspec(self.functionList[a]).args
+			except Exception as e:
+				print(a,e)
+				continue
+			arglist.remove('self')
+			flist.append({'doc_string':str(doc),'name':a,'args':arglist})
+		return flist
+
+
+
 		

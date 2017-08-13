@@ -8,8 +8,11 @@ import os
 from app.hardwareHandler import functionList,np
 from app.codeEvaluator import Evaluator
 
+myEval = Evaluator(functionList)
+
+
 @app.route('/signUp',methods=['POST'])
-def signUpFunction():
+def signUp():
 	"""Sign Up for Virtual Lab
 
 	POST: Submit sign-up parameters. The following must be present:
@@ -37,7 +40,7 @@ def signUpFunction():
 
 
 @app.route('/validateLogin',methods=['POST'])
-def validateLoginFunction():
+def validateLogin():
     _username = request.form['inputEmail']
     _password = request.form['inputPassword']
     user = User.query.filter_by(email=_username).first() #retrieve the row based on e-mail
@@ -61,7 +64,7 @@ def logout():
 
 
 @app.route('/getUserName')
-def getUserNameFunction():
+def getUserName():
 	if session.get('user'):
 		return json.dumps({'username':session['user'][0]})
 	else:
@@ -70,7 +73,7 @@ def getUserNameFunction():
 
 
 @app.route('/addScript',methods=['POST'])
-def addScriptFunction():
+def addScript():
 	try:
 		if session.get('user'):
 			_user = session.get('user')[1]
@@ -92,7 +95,7 @@ def addScriptFunction():
 
 
 @app.route('/getScriptList')
-def getCodeFunction():
+def getScriptList():
 	try:
 		if session.get('user'):
 			_user = session.get('user')[1]
@@ -115,7 +118,7 @@ def getCodeFunction():
 
 
 @app.route('/getScriptById',methods=['POST'])
-def getCodeByIdFunction():
+def getCodeById():
 	if session.get('user'):
 		_id = request.form['id']
 		_user = session.get('user')[1]
@@ -132,7 +135,7 @@ def getCodeByIdFunction():
 
 
 @app.route('/updateCode', methods=['POST'])
-def updateCodeFunction():
+def updateCode():
   if session.get('user'):
     _user = session.get('user')[1]
     _title = request.form['inputTitle']
@@ -153,7 +156,7 @@ def updateCodeFunction():
 
 
 @app.route('/deleteScript',methods=['POST'])
-def deleteCodeFunction():
+def deleteScript():
   if session.get('user'):
     _user = session.get('user')[1]
     _id = request.form['scriptId']
@@ -169,8 +172,22 @@ def deleteCodeFunction():
     return json.dumps({'status':False,'message':'Unauthorized access'})
 
 
+
+@app.route('/getFunctionList')
+def getFunctionList():
+	"""returns a comprehensive list of functions, their arguments and their docstrings
+	{'status':true/false, 'doc_list':doc_list}
+	doc_list = [{args:list of arguments, name:name of the function , doc_string : inline docstring if any},{function 2},...]
+	"""
+	if session.get('user'):
+		return json.dumps({'status':False,'doc_list':myEval.getDocs()})
+	else:
+		return json.dumps({'status':False,'doc_list':[]})
+
+
+
 @app.route('/evalFunctionString',methods=['POST'])
-def evalFunctionStringFunction():
+def evalFunctionString():
     if session.get('user'):
         _stringify=False
         try:
@@ -202,13 +219,12 @@ def evalFunctionStringFunction():
 
 
 @app.route('/runScriptById',methods=['POST'])
-def runCodeById():
+def runScriptById():
 	if session.get('user'):
 		_id = request.form['id']
 		_user = session.get('user')[1]
 		try:
 			script = UserCode.query.filter_by(user=_user,id=_id).first()
-			myEval = Evaluator(functionList)
 			res = myEval.runCode(script.code)
 			return json.dumps({'status':True,'Id':script.id,'result':res,'Filename':script.title,'Date':script.pub_date})
 		except Exception as exc:
