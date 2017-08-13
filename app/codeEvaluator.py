@@ -21,10 +21,11 @@ class Evaluator:
 		self.html+='''<div id="print-statement" class="row well well-sm">%s</div>'''%txt
 
 	def runCode(self,code):
+		self.html = ''
 		old_stdout = sys.stdout
 		sys.stdout = results = BytesIO()
 		
-		submitted = compile(str(code), '<string>', mode='exec')
+		submitted = compile(code.encode(), '<string>', mode='exec')
 		self.exec_scope = self.evalGlobals.copy()
 		try:
 			exec(submitted, self.exec_scope)
