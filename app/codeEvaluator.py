@@ -1,10 +1,12 @@
-#from cStringIO import StringIO
-from io import BytesIO
+from __future__ import print_function
+
 import sys,inspect
 
 import numpy as np
 from flask import json
 from collections import OrderedDict
+
+
 
 class Evaluator:
 	def __init__(self,functionList):		
@@ -15,15 +17,22 @@ class Evaluator:
 		self.functionList = functionList
 		self.evalGlobals = functionList.copy()
 		self.evalGlobals['print_']=self.printer
+		self.evalGlobals['print']=self.print
 		
+	def print(self,*args):
+		'''
+		For now, the print function is being overloaded in order to capture the console output.
+		Future plans will store each line of execution as a json object. This approach will increase flexibility,
+		and outputs more than just text, such as images and widgets can be created.
+		'''
+		self.html += str(*args).replace(' ','&nbsp;').replace('\n','<br>')
+		self.html+='<br>'
 	
 	def printer(self,txt):
 		self.html+='''<div id="print-statement" class="row well well-sm">%s</div>'''%txt
 
 	def runCode(self,code):
-		self.html = ''
-		old_stdout = sys.stdout
-		sys.stdout = results = BytesIO()
+		self.html = """ <hr><div id="resText" style="width:100%;"> """
 		
 		submitted = compile(code.encode(), '<string>', mode='exec')
 		self.exec_scope = self.evalGlobals.copy()
@@ -31,15 +40,8 @@ class Evaluator:
 			exec(submitted, self.exec_scope)
 		except Exception as e:
 			print(str(e))
-			return str(e)
 			
-		sys.stdout = old_stdout
-
-		self.html += '''
-		<hr><div id="resText" style="width:100%;">{value}</div>
-		'''.format(value =results.getvalue().replace(' ','&nbsp;').replace('\n','<br>'))
-
-		#print eval(code,globals(),self.evalGlobals)
+		self.html += "</div>"
 		return self.get_html()
 
 
