@@ -1,7 +1,10 @@
-import os
+import os,sys
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS, cross_origin
+
+print('Version: ',sys.version)
+
 
 app = Flask(__name__)
 CORS(app,supports_credentials=True)
