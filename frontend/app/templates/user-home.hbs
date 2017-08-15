@@ -191,6 +191,9 @@
 							{{#if (eq element.type 'button')}}
 								<button id="{{element.name}}" {{action 'runAction' element.action}}>{{element.label}}</button>
 							{{/if}}
+							{{#if (eq element.type 'text')}}
+								{{element.value}}<br>
+							{{/if}}
 							{{#if (eq element.type 'span')}}
 								<div class={{element.class}}><span>{{element.value}}</span></div>
 							{{/if}}
