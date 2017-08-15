@@ -181,7 +181,26 @@
       <div class="modal-body">
         <form role="form">
           <div class="form-group">
-            <div style="min-height:40px;min-width:400px;" id="runResults">{{{codeResults}}}</div>
+            <div style="min-height:40px;min-width:400px;" id="runResults">
+            
+					{{#each codeResults as |element|}}
+						{{#if (eq element.type 'input')}}
+							<label>{{element.label}}</label>
+							{{input id=element.name}}
+						{{/if}}
+						{{#if (eq element.type 'button')}}
+							<button id="{{element.name}}" {{action 'runAction' element.action}}>{{element.label}}</button>
+						{{/if}}
+						{{#if (eq element.type 'span')}}
+							<span>{{element.value}}</span><br>
+						{{/if}}
+						{{#if (eq element.type 'span-well')}}
+							<div class="row well"><span>{{element.value}}</span></div><br>
+						{{/if}}
+
+					{{/each}}            
+            
+            </div>
 
           </div>
         </form>

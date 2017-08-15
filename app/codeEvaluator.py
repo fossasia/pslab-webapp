@@ -25,10 +25,10 @@ class Evaluator:
 		Future plans will store each line of execution as a json object. This approach will increase flexibility,
 		and outputs more than just text, such as images and widgets can be created.
 		'''
-		self.generatedApp.append({"name":"print","type":"line","label":str(*args).replace(' ','&nbsp;').replace('\n','<br>')})
+		self.generatedApp.append({"name":"print","type":"span","value":str(args)})
 	
 	def printer(self,txt):
-		self.generatedApp.append({"name":"highlighted-print","type":"line","label":str(txt).replace(' ','&nbsp;').replace('\n','<br>')})
+		self.generatedApp.append({"name":"print","type":"span-well","value":str(txt)})
 
 	def runCode(self,code):
 		self.generatedApp=[]
