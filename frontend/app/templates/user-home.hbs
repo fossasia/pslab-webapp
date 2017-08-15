@@ -174,7 +174,7 @@
 
 		  <div class="col-sm-2 pull-right">
 				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-		   </div>
+		  </div>
 		</div>
 
       </div>
@@ -183,22 +183,19 @@
           <div class="form-group">
             <div style="min-height:40px;min-width:400px;" id="runResults">
             
-					{{#each codeResults as |element|}}
-						{{#if (eq element.type 'input')}}
-							<label>{{element.label}}</label>
-							{{input id=element.name}}
-						{{/if}}
-						{{#if (eq element.type 'button')}}
-							<button id="{{element.name}}" {{action 'runAction' element.action}}>{{element.label}}</button>
-						{{/if}}
-						{{#if (eq element.type 'span')}}
-							<span>{{element.value}}</span><br>
-						{{/if}}
-						{{#if (eq element.type 'span-well')}}
-							<div class="row well"><span>{{element.value}}</span></div><br>
-						{{/if}}
+						{{#each codeResults as |element|}}
+							{{#if (eq element.type 'input')}}
+								<label>{{element.label}}</label>
+								{{input id=element.name}}
+							{{/if}}
+							{{#if (eq element.type 'button')}}
+								<button id="{{element.name}}" {{action 'runAction' element.action}}>{{element.label}}</button>
+							{{/if}}
+							{{#if (eq element.type 'span')}}
+								<div class={{element.class}}><span>{{element.value}}</span></div>
+							{{/if}}
 
-					{{/each}}            
+						{{/each}}            
             
             </div>
 

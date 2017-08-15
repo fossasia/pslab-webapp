@@ -28,7 +28,7 @@ class Evaluator:
 		self.generatedApp.append({"name":"print","type":"span","value":str(args)})
 	
 	def printer(self,txt):
-		self.generatedApp.append({"name":"print","type":"span-well","value":str(txt)})
+		self.generatedApp.append({"name":"print","type":"span","class":"row well","value":str(txt)})
 
 	def runCode(self,code):
 		self.generatedApp=[]
