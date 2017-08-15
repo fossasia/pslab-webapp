@@ -10,7 +10,7 @@ from collections import OrderedDict
 
 class Evaluator:
 	def __init__(self,functionList):		
-		self.html = ''
+		self.generatedApp=[]
 		self.hasPlot=False
 
 		self.evalGlobals={}
@@ -25,14 +25,13 @@ class Evaluator:
 		Future plans will store each line of execution as a json object. This approach will increase flexibility,
 		and outputs more than just text, such as images and widgets can be created.
 		'''
-		self.html += str(*args).replace(' ','&nbsp;').replace('\n','<br>')
-		self.html+='<br>'
+		self.generatedApp.append({"name":"print","type":"line","label":str(*args).replace(' ','&nbsp;').replace('\n','<br>')})
 	
 	def printer(self,txt):
-		self.html+='''<div id="print-statement" class="row well well-sm">%s</div>'''%txt
+		self.generatedApp.append({"name":"highlighted-print","type":"line","label":str(txt).replace(' ','&nbsp;').replace('\n','<br>')})
 
 	def runCode(self,code):
-		self.html = """ <hr><div id="resText" style="width:100%;"> """
+		self.generatedApp=[]
 		
 		submitted = compile(code.encode(), '<string>', mode='exec')
 		self.exec_scope = self.evalGlobals.copy()
@@ -41,12 +40,11 @@ class Evaluator:
 		except Exception as e:
 			print(str(e))
 			
-		self.html += "</div>"
-		return self.get_html()
+		return self.getApp()
 
 
-	def get_html(self):
-		return self.html
+	def getApp(self):
+		return self.generatedApp
 
 	#### Extract Doc Strings ####
 	def getDocs(self):
