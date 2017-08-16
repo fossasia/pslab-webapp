@@ -11,6 +11,7 @@ from collections import OrderedDict
 class Evaluator:
 	def __init__(self,functionList):		
 		self.generatedApp=[]
+		self.widgets = 0
 		self.hasPlot=False
 
 		self.evalGlobals={}
@@ -18,6 +19,8 @@ class Evaluator:
 		self.evalGlobals = functionList.copy()
 		self.evalGlobals['print_']=self.printer
 		self.evalGlobals['print']=self.print
+		self.evalGlobals['button']=self.button
+		self.evalGlobals['label']=self.label
 		
 	def print(self,*args):
 		'''
@@ -25,13 +28,22 @@ class Evaluator:
 		Future plans will store each line of execution as a json object. This approach will increase flexibility,
 		and outputs more than just text, such as images and widgets can be created.
 		'''
-		self.generatedApp.append({"name":"print","type":"text","value":str(args)})
+		self.generatedApp.append({"type":"text","name":"print","value":str(args)})
 	
-	def printer(self,txt):
-		self.generatedApp.append({"name":"print","type":"span","class":"row well","value":str(txt)})
+	def printer(self,txt,name="print"):
+		self.generatedApp.append({"type":"span","name":name,"class":"row well","value":str(txt)})
 
+	def label(self,txt,name="print",html_class=""):
+		self.generatedApp.append({"type":"label","name":name,"class":html_class,"value":str(txt)})
+
+	def button(self,label,endpoint,displayType="display_number"):
+		self.generatedApp.append({"type":"button", "name":"button-id%d"%self.widgets,"label":label,"fetched_value":"","action":{"type":"POST","endpoint":endpoint,"success":{"datapoint":'result',"type":displayType,"target":"button-id%d-label"%self.widgets}}})
+		if displayType=="display_number":
+			self.label('',"button-id%d-label"%self.widgets)
+		self.widgets+=1
 	def runCode(self,code):
 		self.generatedApp=[]
+		self.widgets = 0
 		
 		submitted = compile(code.encode(), '<string>', mode='exec')
 		self.exec_scope = self.evalGlobals.copy()

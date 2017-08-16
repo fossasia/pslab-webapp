@@ -185,17 +185,20 @@
             
 						{{#each codeResults as |element|}}
 							{{#if (eq element.type 'input')}}
-								<label>{{element.label}}</label>
+								<label  id="{{element.labelname}}" class="{{element.class}}">{{element.label}}</label>
 								{{input id=element.name}}
 							{{/if}}
+							{{#if (eq element.type 'label')}}
+								<label  id="{{element.name}}" class="{{element.class}}">{{element.value}}</label>
+							{{/if}}
 							{{#if (eq element.type 'button')}}
-								<button id="{{element.name}}" {{action 'runAction' element.action}}>{{element.label}}</button>
+                <button id="{{element.name}}" {{action 'runButtonAction' element.action}}>{{element.label}}</button>
 							{{/if}}
 							{{#if (eq element.type 'text')}}
 								{{element.value}}<br>
 							{{/if}}
 							{{#if (eq element.type 'span')}}
-								<div class={{element.class}}><span>{{element.value}}</span></div>
+								<div class="{{element.class}}"><span  id="{{element.name}}" >{{element.value}}</span></div>
 							{{/if}}
 
 						{{/each}}            
