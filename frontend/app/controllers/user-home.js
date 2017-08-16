@@ -144,7 +144,7 @@ editTitle:"myFile",
       this.send('refresh');
     },
 
-		//Remote Execution of function strings
+    //Remote Execution of function strings
     executeFunctionString() {
       this.setProperties({
         isProcessing: true
@@ -152,8 +152,7 @@ editTitle:"myFile",
       var request = Ember.$.post("/evalFunctionString", {"function":this.functionString},this,'json');
       request.then(this.showFunctionStringResults.bind(this), this.runScriptFailure.bind(this), this.runScriptError.bind(this));
     },
-
-		//Remote Execution of Scripts
+    //Remote Execution of Scripts
     executeScript(script) {
       this.setProperties({
         waitingForCode: true,
@@ -163,7 +162,20 @@ editTitle:"myFile",
       request.then(this.showFunctionResults.bind(this), this.failure.bind(this), this.error.bind(this));
     },
 
-
+     runButtonAction(actionDefinition) {
+        if(actionDefinition.type === 'POST') {
+          Ember.$.post('/evalFunctionString',{'function':actionDefinition.endpoint},this,"json")
+            .then(response => {
+              const resultValue = Ember.get(response, actionDefinition.success.datapoint);
+              if (actionDefinition.success.type === 'display_number') {
+                 Ember.$('#' + actionDefinition.success.target).text(resultValue.toFixed(3));
+              }
+              else if (actionDefinition.success.type === 'display') {
+                 Ember.$('#' + actionDefinition.success.target).text(resultValue);
+              }
+            });
+        }
+     }
 
   },
 
