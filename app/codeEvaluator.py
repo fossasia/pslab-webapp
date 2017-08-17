@@ -30,6 +30,7 @@ class Evaluator:
 		'''
 		self.generatedApp.append({"type":"text","name":"print","value":str(args)})
 	
+
 	def printer(self,txt,name="print"):
 		self.generatedApp.append({"type":"span","name":name,"class":"row well","value":str(txt)})
 
@@ -41,6 +42,11 @@ class Evaluator:
 		if displayType=="display_number":
 			self.label('',"button-id%d-label"%self.widgets)
 		self.widgets+=1
+	
+	#Plots
+	def plot(self,x,y,**kwargs):
+		self.generatedApp.append({"type":"plot","name":kwargs.get('name','myPlot'),data:np.array([x,y]).T}) #jqplot requires [x,y] pairs . not separate datasets.
+
 	def runCode(self,code):
 		self.generatedApp=[]
 		self.widgets = 0
