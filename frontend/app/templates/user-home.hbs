@@ -200,6 +200,9 @@
 							{{#if (eq element.type 'span')}}
 								<div class="{{element.class}}"><span  id="{{element.name}}" >{{element.value}}</span></div>
 							{{/if}}
+							{{#if (eq element.type 'plot')}}
+								<div class="{{element.class}}" id="{{element.name}}"></div>
+							{{/if}}
 
 						{{/each}}            
             
