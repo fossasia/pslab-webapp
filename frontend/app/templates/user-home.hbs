@@ -201,8 +201,7 @@
 								<div class="{{element.class}}"><span  id="{{element.name}}" >{{element.value}}</span></div>
 							{{/if}}
 							{{#if (eq element.type 'plot')}}
-								<div style="min-height:400px;min-width:400px;" id="{{element.name}}"></div>
-							  {{init-jqplot element}}
+								{{jqplot-graph data=element}}
 							{{/if}}
 
 						{{/each}}            

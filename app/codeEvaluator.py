@@ -46,7 +46,7 @@ class Evaluator:
 	
 	#Plots
 	def plot(self,x,y,**kwargs):
-		self.generatedApp.append({"type":"plot","name":kwargs.get('name','myPlot'),"data":np.array([x,y]).T.tolist()}) #jqplot requires [x,y] pairs . not separate datasets.
+		self.generatedApp.append({"type":"plot","name":kwargs.get('name','myPlot'),"data":[np.array([x,y]).T.tolist()]}) #jqplot requires [x,y] pairs . not separate datasets.
 
 	def runCode(self,code):
 		self.generatedApp=[]
