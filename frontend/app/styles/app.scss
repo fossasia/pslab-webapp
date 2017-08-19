@@ -19,6 +19,7 @@ body {
   padding-bottom: 20px;
   border-bottom: 1px solid #e5e5e5;
 }
+
 /* Make the masthead heading the same height as the navigation */
 .header h3 {
   margin-top: 0;
@@ -39,7 +40,7 @@ body {
     max-width: 900px;
   }
 }
-  
+
 .container-narrow > hr {
   margin: 30px 0;
 }
@@ -54,6 +55,7 @@ body {
   text-align: center;
   border-bottom: 1px solid #e5e5e5;
 }
+
 .jumbotron .btn {
   padding: 14px 24px;
   font-size: 21px;
@@ -63,10 +65,10 @@ body {
 .marketing {
   margin: 40px 0;
 }
+
 .marketing p + h4 {
   margin-top: 28px;
 }
-
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
@@ -86,32 +88,29 @@ body {
     border-bottom: 0;
   }
 
-
-
-
 }
 
-#editor , #editorView{
-	margin: 0;
-	height:300px;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
+#editor, #editorView {
+  margin: 0;
+  height: 300px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .trash {
-	color: rgb(209, 91, 71);
+  color: rgb(209, 91, 71);
 }
+
 .panel-body .checkbox {
-	display: inline-block;
-	margin: 0px;
+  display: inline-block;
+  margin: 0px;
 }
+
 .list-group {
-	margin-bottom: 0px;
+  margin-bottom: 0px;
 }
-
-
 
 .modal-dialog-full {
   width: 95%;
@@ -126,41 +125,37 @@ body {
   border-radius: 0;
 }
 
-
-hr.style1 { 
-  height: 30px; 
-  border-style: solid; 
-  border-color: #5c8b8b; 
-  border-width: 1px 0 0 0; 
-  border-radius: 20px; 
-} 
-
-hr.style1:before { 
-  display: block; 
-  content: ""; 
-  height: 30px; 
-  margin-top: -31px; 
-  border-style: solid; 
-  border-color: #5c8b8b; 
-  border-width: 0 0 1px 0; 
-  border-radius: 20px; 
+hr.style1 {
+  height: 30px;
+  border-style: solid;
+  border-color: #5c8b8b;
+  border-width: 1px 0 0 0;
+  border-radius: 20px;
 }
 
-hr.style2 { 
-  border: 0; 
-  height: 1px; 
+hr.style1:before {
+  display: block;
+  content: "";
+  height: 30px;
+  margin-top: -31px;
+  border-style: solid;
+  border-color: #5c8b8b;
+  border-width: 0 0 1px 0;
+  border-radius: 20px;
+}
+
+hr.style2 {
+  border: 0;
+  height: 1px;
   background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
   background-image: -moz-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
   background-image: -ms-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
-  background-image: -o-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0); 
-} 
-
-
-
-.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:focus, .navbar-inverse .navbar-nav > .active > a:hover{
-background-color:#8A8;
+  background-image: -o-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
 }
 
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:focus, .navbar-inverse .navbar-nav > .active > a:hover {
+  background-color: #8A8;
+}
 
 /* -- signup.css-- */
 
@@ -174,30 +169,36 @@ body {
   padding: 15px;
   margin: 0 auto;
 }
+
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
   margin-bottom: 10px;
 }
+
 .form-signin .checkbox {
   font-weight: normal;
 }
+
 .form-signin .form-control {
   position: relative;
   height: auto;
   -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
   padding: 10px;
   font-size: 16px;
 }
+
 .form-signin .form-control:focus {
   z-index: 2;
 }
+
 .form-signin input[type="email"] {
   margin-bottom: -1px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
+
 .form-signin input[type="password"] {
   margin-bottom: 10px;
   border-top-left-radius: 0;
@@ -205,12 +206,12 @@ body {
 }
 
 .form-signin .message {
-  font-weight: normal;color:#0f0;
+  font-weight: normal;
+  color: #0f0;
 }
 
-
-.form-editor{
+.form-editor {
   font-weight: normal;
-  min-height:300px;
+  min-height: 300px;
 }
 

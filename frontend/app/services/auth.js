@@ -1,4 +1,6 @@
 import Ember from 'ember';
 
-export default Ember.Service.extend({
+const { Service } = Ember;
+
+export default Service.extend({
 });

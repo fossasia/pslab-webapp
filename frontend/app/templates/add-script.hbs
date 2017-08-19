@@ -1,33 +1,37 @@
-    <div class="container">
-        <div class="header">
-            <nav>
-                <ul class="nav nav-pills pull-right">
-			              <li role="presentation">{{#link-to 'user-home' class='btn btn-primary btn-small'}}Back{{/link-to}}</li>
-			              <li role="presentation" class="active">{{#link-to 'logout' class='btn btn-primary btn-small'}}Logout{{/link-to}}</li>
-                </ul>
-            </nav>
-            <h3 class="text-muted">New Python Script</h3>
-        </div>
-        <section>
+<div class="container">
+  <div class="header">
+    <nav>
+      <ul class="nav nav-pills pull-right">
+        <li role="presentation">
+          {{#link-to 'user-home' class='btn btn-primary btn-small'}}Back{{/link-to}}
+        </li>
+        <li role="presentation" class="active">
+          {{#link-to 'logout' class='btn btn-primary btn-small'}}Logout{{/link-to}}
+        </li>
+      </ul>
+    </nav>
+    <h3 class="text-muted">New Python Script</h3>
+  </div>
+  <section>
+    <form id="contentForm" class="form-horizontal" {{action "valueUpdated" on="submit"}}>
+      <label for="inputTitle" class="sr-only">Filename/Description</label>
+      {{input type="text"
+              value=inputTitle
+              class="form-control"
+              placeholder="Filename/Description"
+              required=true
+              autofocus=true}}
+      {{ember-ace theme="ace/theme/cobalt" mode="ace/mode/python" lines=20 value=value
+                  update=(action (mut inputDescription))}}
 
-            <form id="contentForm" class="form-horizontal" {{action "valueUpdated" on="submit"}}>
-                <!-- Form Name -->
-                <label for="inputTitle" class="sr-only">Filename/Description</label>
-                {{input type="text" value=inputTitle class="form-control" placeholder="Filename/Description" required=true autofocus=true}}
-                <!-- Ace editor -->
-                {{ember-ace theme="ace/theme/cobalt" mode="ace/mode/python" lines=20 value=value update=(action (mut inputDescription))}}
-
-                <!-- Button -->
-                <button disabled={{isProcessing}} id="singlebutton" class="btn btn-lg btn-primary" type="submit">Publish</button>
-            </form>
-         	  {{#if submitFailed}}
-	            <div class="alert alert-danger">{{failedMessage}}</div>
-	          {{/if}}
-	          {{#if isSlowConnection}}
-	            <div class="alert alert-info">Submission seems to be taking more time than usual, please wait.</div>
-	          {{/if}}
-
-        </section>
- 
-    </div>
+      <button id="singlebutton" class="btn btn-lg btn-primary" disabled={{isProcessing}}>Publish</button>
+    </form>
+    {{#if submitFailed}}
+      <div class="alert alert-danger">{{failedMessage}}</div>
+    {{/if}}
+    {{#if isSlowConnection}}
+      <div class="alert alert-info">Submission seems to be taking more time than usual, please wait.</div>
+    {{/if}}
+  </section>
+</div>
 {{outlet}}
