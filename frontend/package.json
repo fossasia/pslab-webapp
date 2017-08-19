@@ -48,7 +48,7 @@
   },
   "private": true,
   "dependencies": {
-    "bower": "^0.6.8",
-    "jwt-decode": "^2.2.0"
+    "jwt-decode": "^2.2.0",
+    "updated-jqplot": "^1.0.9-2"
   }
 }
