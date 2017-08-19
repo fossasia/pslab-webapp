@@ -61,7 +61,7 @@
               </li>
               <br>
 
-              {{#each model as |script index|}}
+              {{#each model as |script|}}
                 <li class="list-group-item">
                   <div class="pull-left action-buttons">
                     <a {{action 'executeScript' script on="click"}} role="button">
@@ -180,7 +180,7 @@
       <div class="modal-header">
         <div class="row">
           <div class="col-sm-4"><span class="modal-title" id="runModalLabel">Execute results: </span></div>
-          <div class="col-sm-4"><img alt="loading.gif" src="../static/images/loading.gif" id="executing-indicator" style="display:none;"/>
+            <div class="col-sm-4"><img alt="loading.gif" src="../static/images/loading.gif" id="executing-indicator" style="display:none;">
           </div>
 
           <div class="col-sm-2 pull-right">
