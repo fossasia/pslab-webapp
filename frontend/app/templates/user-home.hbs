@@ -192,7 +192,7 @@
 								<label  id="{{element.name}}" class="{{element.class}}">{{element.value}}</label>
 							{{/if}}
 							{{#if (eq element.type 'button')}}
-                <button id="{{element.name}}" {{action 'runButtonAction' element.action}}>{{element.label}}</button>
+                <button id="{{element.name}}" class="btn btn-small btn-primary" {{action 'runButtonAction' element.action}}>{{element.label}}</button>
 							{{/if}}
 							{{#if (eq element.type 'text')}}
 								{{element.value}}<br>

@@ -29,7 +29,7 @@ class Evaluator:
 		Future plans will store each line of execution as a json object. This approach will increase flexibility,
 		and outputs more than just text, such as images and widgets can be created.
 		'''
-		self.generatedApp.append({"type":"text","name":"print","value":str(args)})
+		self.generatedApp.append({"type":"text","name":"print","value":[str(a) for a in args]})
 	
 
 	def printer(self,txt,name="print"):
@@ -37,16 +37,20 @@ class Evaluator:
 
 	def label(self,txt,name="print",html_class=""):
 		self.generatedApp.append({"type":"label","name":name,"class":html_class,"value":str(txt)})
+		return name
 
 	def button(self,label,endpoint,displayType="display_number"):
 		self.generatedApp.append({"type":"button", "name":"button-id%d"%self.widgets,"label":label,"fetched_value":"","action":{"type":"POST","endpoint":endpoint,"success":{"datapoint":'result',"type":displayType,"target":"button-id%d-label"%self.widgets}}})
 		if displayType=="display_number":
 			self.label('',"button-id%d-label"%self.widgets)
 		self.widgets+=1
+		return "button-id%d"%self.widgets
 	
 	#Plots
 	def plot(self,x,y,**kwargs):
-		self.generatedApp.append({"type":"plot","name":kwargs.get('name','myPlot'),"data":[np.array([x,y]).T.tolist()]}) #jqplot requires [x,y] pairs . not separate datasets.
+		name = kwargs.get('name','myPlot')
+		self.generatedApp.append({"type":"plot","name":name,"data":[np.array([x,y]).T.tolist()]}) #jqplot requires [x,y] pairs . not separate datasets.
+		return name
 
 	def runCode(self,code):
 		self.generatedApp=[]
