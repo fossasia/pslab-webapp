@@ -1,6 +1,5 @@
 <!-- -*- coding: utf-8; mode: html; indent-tabs-mode: t; tab-width:2 -*- -->
 
-<!-- Scrollspy nav menu -->
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -16,12 +15,12 @@
         <ul class="nav navbar-nav navbar-right">
           <li role="presentation">
             {{#link-to 'add-script' class='btn btn-primary btn-small'}}
-            New Python Script
+              New Python Script
             {{/link-to}}
           </li>
           <li role="presentation" class="active">
             {{#link-to 'logout' class='btn btn-primary btn-small'}}
-            Logout
+              Logout
             {{/link-to}}
           </li>
         </ul>
@@ -65,7 +64,7 @@
               {{#each model as |script index|}}
                 <li class="list-group-item">
                   <div class="pull-left action-buttons">
-                    <a {{action 'executeScript' script on="click"}}>
+                    <a {{action 'executeScript' script on="click"}} role="button">
                       <span class="glyphicon glyphicon-step-forward"></span>
                     </a>
                   </div>
@@ -75,10 +74,10 @@
                     </label>
                   </div>
                   <div class="pull-right action-buttons">
-                    <a {{action "openEditModal" script on="click"}}>
+                    <a {{action "openEditModal" script on="click"}} role="button">
                       <span class="glyphicon glyphicon-pencil"></span>
                     </a>
-                    <a {{action 'showDeleteDialog' script on="click"}}>
+                    <a {{action 'showDeleteDialog' script on="click"}} role="button">
                       <span class="glyphicon glyphicon-trash"></span>
                     </a>
                   </div>
@@ -142,8 +141,7 @@
     <div class="modal-content">
 
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
-          class="sr-only">Close</span></button>
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         <h4 class="modal-title" id="editModalLabel">Update Script</h4>
       </div>
 
@@ -155,9 +153,7 @@
                       required=true autofocus=true}}
               {{ember-ace lines=20  theme="ace/theme/cobalt" mode="ace/mode/python" value=editorContents
                           update=(action (mut inputDescription))}}
-              <button disabled={{isProcessing}} id="singlebutton" class="btn btn-primary" {{action "updateScript"
-                                                                                                   on="click"}}>Update
-              </button>
+              <button disabled={{isProcessing}} id="singlebutton" class="btn btn-primary" {{action "updateScript" on="click"}}>Update</button>
             </form>
             {{#if updateDone}}
               <div class="alert alert-info">{{updateMessage}}</div>
@@ -184,15 +180,13 @@
       <div class="modal-header">
         <div class="row">
           <div class="col-sm-4"><span class="modal-title" id="runModalLabel">Execute results: </span></div>
-          <div class="col-sm-4"><img src="../static/images/loading.gif" id="executing-indicator" style="display:none;"/>
+          <div class="col-sm-4"><img alt="loading.gif" src="../static/images/loading.gif" id="executing-indicator" style="display:none;"/>
           </div>
 
           <div class="col-sm-2 pull-right">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
-              class="sr-only">Close</span></button>
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
           </div>
         </div>
-
       </div>
       <div class="modal-body">
         <form role="form">
