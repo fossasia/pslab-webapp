@@ -80,23 +80,15 @@ body {
     padding-left: 0;
   }
   /* Space out the masthead */
+
   .header {
     margin-bottom: 30px;
   }
+
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
     border-bottom: 0;
   }
-
-}
-
-#editor, #editorView {
-  margin: 0;
-  height: 300px;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
 }
 
 .trash {
@@ -116,31 +108,31 @@ body {
   width: 95%;
   height: 100%;
   margin: 50px auto;
-  padding: 0;
+  padding: 0px;
 }
 
 .modal-content {
   height: auto;
   min-height: 100%;
-  border-radius: 0;
+  border-radius: 0px;
 }
 
 hr.style1 {
   height: 30px;
   border-style: solid;
   border-color: #5c8b8b;
-  border-width: 1px 0 0 0;
+  border-width: 1px 0 0;
   border-radius: 20px;
 }
 
 hr.style1:before {
   display: block;
-  content: "";
+  content: '';
   height: 30px;
   margin-top: -31px;
   border-style: solid;
   border-color: #5c8b8b;
-  border-width: 0 0 1px 0;
+  border-width: 0 0 1px;
   border-radius: 20px;
 }
 
@@ -148,13 +140,10 @@ hr.style2 {
   border: 0;
   height: 1px;
   background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
-  background-image: -moz-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
-  background-image: -ms-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
-  background-image: -o-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
 }
 
 .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:focus, .navbar-inverse .navbar-nav > .active > a:hover {
-  background-color: #8A8;
+  background-color: #8a8;
 }
 
 /* -- signup.css-- */
@@ -193,13 +182,13 @@ body {
   z-index: 2;
 }
 
-.form-signin input[type="email"] {
+.form-signin input[type='email'] {
   margin-bottom: -1px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-.form-signin input[type="password"] {
+.form-signin input[type='password'] {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
