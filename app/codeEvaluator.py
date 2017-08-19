@@ -48,7 +48,6 @@ class Evaluator:
 		return name
 
 	def label(self,txt,name="print",html_class=""):
-		name = kwargs.get("name","print")
 		name=self.toUnique(name)
 		self.generatedApp.append({"type":"label","name":name,"class":html_class,"value":str(txt)})
 		return name
