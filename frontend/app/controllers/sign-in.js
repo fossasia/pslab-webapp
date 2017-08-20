@@ -1,63 +1,63 @@
 import Ember from 'ember';
 
-export default Ember.Controller.extend({
+const { $: { post }, Controller } = Ember;
 
-/*---- Login Screen ---*/
+export default Controller.extend({
 
-  loginFailed: false,
-  loginFailedMessage: "Failed to Login",
-  isProcessing: false,
-  isSlowConnection: false,
-  timeout: null,
+/* ---- Login Screen ---*/
+
+  loginFailed        : false,
+  loginFailedMessage : 'Failed to Login',
+  isProcessing       : false,
+  isSlowConnection   : false,
+  timeout            : null,
 
   success(response) {
     this.reset();
-    if (response.status==true){
+    if (response.status) {
       this.reset();
-      this.transitionToRoute('user-home')
+      this.transitionToRoute('user-home');
+    }    else {
+      this.set('loginFailed', true);
+      this.loginFailedMessage = String(response.message);
     }
-    else{
-      this.set("loginFailed", true);
-      this.loginFailedMessage= String(response.message);
-      }
   },
   error() {
     this.reset();
-    this.set("loginFailed", true);
-    this.set("loginFailedMessage",'Sign-In failed. Server down? ');
+    this.set('loginFailed', true);
+    this.set('loginFailedMessage', 'Sign-In failed. Server down? ');
   },
   failure() {
     this.reset();
-    this.set("loginFailed", true);
-    this.set("loginFailedMessage",'Sign-In failed. App Error. ');
+    this.set('loginFailed', true);
+    this.set('loginFailedMessage', 'Sign-In failed. App Error. ');
   },
   slowConnection() {
-    this.set("isSlowConnection", true);
+    this.set('isSlowConnection', true);
   },
   reset() {
-    clearTimeout(this.get("timeout"));
+    clearTimeout(this.get('timeout'));
     this.setProperties({
-      isProcessing: false,
-      isSlowConnection: false
-      });
+      isProcessing     : false,
+      isSlowConnection : false
+    });
   },
 
-  actions:{
+  actions: {
 
     logMeIn() {
       this.setProperties({
-        loginFailed: false,
-        loginFailedMessage: "",
-        isProcessing: true
+        loginFailed        : false,
+        loginFailedMessage : '',
+        isProcessing       : true
       });
 
-      this.set("timeout", setTimeout(this.slowConnection.bind(this), 1000));
-      var request = Ember.$.post("/validateLogin", this.getProperties("inputEmail", "inputPassword"),this,'json');
-      request.then(this.success.bind(this), this.failure.bind(this), this.error.bind(this));
-    },
+      this.set('timeout', setTimeout(this.slowConnection.bind(this), 1000));
+      post('/validateLogin', this.getProperties('inputEmail', 'inputPassword'), this, 'json')
+        .then(this.success.bind(this), this.failure.bind(this), this.error.bind(this));
+    }
 
-  },
-  
+  }
+
 });
-
 

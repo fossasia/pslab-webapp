@@ -35,10 +35,9 @@ before_install:
   - node -v
   - npm -v
   - npm cache verify
-  - npm install -g bower
+  - npm install -g bower ember-cli
   - bower --version
   - popd
-
 
 install:
   # Frontend stuff
@@ -47,7 +46,7 @@ install:
   - npm install
   - bower install
   - popd
-  # API server stuff  
+  # API server stuff
   - pip install -r requirements.txt
   - git clone https://github.com/fossasia/pslab-python.git
   - pushd pslab-python
@@ -61,12 +60,16 @@ before_script:
   - export DATABASE_URL=postgres:///psl_db
 #  - psql -c "CREATE USER psl;" -U postgres
 
-script: nosetests
+script:
+  - nosetests
+  - pushd frontend
+  - rm -rf tests/integration/* # Ignore auto-generated tests for now.
+  - rm -rf tests/unit/* # Ignore auto-generated tests for now.
+  - ember test
 
 after_success:
   - pushd frontend
   - bash surge_deploy.sh
   - popd
-  
+
 after_failure: cat /home/travis/.npm/_logs/*.log
-  

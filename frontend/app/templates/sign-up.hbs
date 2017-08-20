@@ -1,30 +1,31 @@
 {{home-menu}}
-    <div class="container">
-      <div class="jumbotron">
-        <h1>Sign Up Form</h1>
-        <form class="form-signin" {{action "signMeUp" on="submit"}} >
-        <label for="inputName" class="sr-only">Your Name</label>
-        {{input value=inputName type="text" name="inputName" id="inputName" class="form-control" placeholder="name" required=true autofocus=true}}
-        <label for="inputEmail" class="sr-only">Email address</label>
-        {{input value=inputEmail type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email address" required=true autofocus=true}}
-        <label for="inputPassword" class="sr-only">Password</label>
-        {{input value=inputPassword type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required=true autofocus=true}}
-         
-        <button disabled={{isProcessing}} id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
-      </form>
-	  {{#if signUpFailed}}
-	    <div class="alert alert-danger">{{failedMessage}}</div>
-	  {{/if}}
-	  {{#if isSlowConnection}}
-	    <div class="alert alert-info">The request seems to be taking more time than usual, please wait.</div>
-	  {{/if}}
-
-      </div>
-
-<footer class="footer">
-<p>Sign-Up page</p>
-</footer>
- 
+<div class="container">
+  <div class="jumbotron">
+    <h1>Sign Up Form</h1>
+    <form class="form-signin" {{action "signMeUp" on="submit"}} >
+      <label for="inputName" class="sr-only">Your Name</label>
+      {{input value=inputName type="text" name="inputName" id="inputName" class="form-control" placeholder="name"
+              required=true autofocus=true}}
+      <label for="inputEmail" class="sr-only">Email address</label>
+      {{input value=inputEmail type="email" name="inputEmail" id="inputEmail" class="form-control"
+              placeholder="Email address" required=true autofocus=true}}
+      <label for="inputPassword" class="sr-only">Password</label>
+      {{input value=inputPassword type="password" name="inputPassword" id="inputPassword" class="form-control"
+              placeholder="Password" required=true autofocus=true}}
+      <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" disabled={{isProcessing}}>
+        Sign Up
+      </button>
+    </form>
+    {{#if signUpFailed}}
+      <div class="alert alert-danger">{{failedMessage}}</div>
+    {{/if}}
+    {{#if isSlowConnection}}
+      <div class="alert alert-info">The request seems to be taking more time than usual, please wait.</div>
+    {{/if}}
+  </div>
+  <footer class="footer">
+    <p>Sign-Up page</p>
+  </footer>
 </div>
 
 {{outlet}}

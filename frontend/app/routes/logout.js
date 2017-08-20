@@ -1,9 +1,11 @@
 import Ember from 'ember';
 
-export default Ember.Route.extend({
-beforeModel (){
-    Ember.$.post("/logout", null,this);
-    this.replaceWith('index')
+const { Route, $: { post } } = Ember;
+
+export default Route.extend({
+  beforeModel() {
+    post('/logout', null, this);
+    this.replaceWith('index');
   }
 
 });

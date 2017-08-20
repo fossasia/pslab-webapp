@@ -1,24 +1,25 @@
 {{home-menu}}
-    <div class="container">
-      <div class="jumbotron">
-        <h1>Sign In</h1>
-        <form class="form-signin" {{action "logMeIn" on="submit"}} >
-        <label for="inputEmail" class="sr-only">Email address</label>
-        {{input value=inputEmail type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email address" required=true autofocus=true}}
-        <label for="inputPassword" class="sr-only">Password</label>
-        {{input value=inputPassword type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required=true autofocus=true}}
-         
-        <button disabled={{isProcessing}} id="btnSignIn" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      </form>
-	  {{#if loginFailed}}
-	    <div class="alert alert-danger">{{loginFailedMessage}}</div>
-	  {{/if}}
-	  {{#if isSlowConnection}}
-	    <div class="alert alert-info">The request seems to be taking more time than usual, please wait.</div>
-	  {{/if}}
+<div class="container">
+  <div class="jumbotron">
+    <h1>Sign In</h1>
+    <form class="form-signin" {{action "logMeIn" on="submit"}} >
+      <label for="inputEmail" class="sr-only">Email address</label>
+      {{input value=inputEmail type="email" name="inputEmail" id="inputEmail" class="form-control"
+              placeholder="Email address" required=true autofocus=true}}
+      <label for="inputPassword" class="sr-only">Password</label>
+      {{input value=inputPassword type="password" name="inputPassword" id="inputPassword" class="form-control"
+              placeholder="Password" required=true autofocus=true}}
 
-      </div>
-
+      <button id="btnSignIn" class="btn btn-lg btn-primary btn-block" disabled={{isProcessing}}>
+        Sign in
+      </button>
+    </form>
+    {{#if loginFailed}}
+      <div class="alert alert-danger">{{loginFailedMessage}}</div>
+    {{/if}}
+    {{#if isSlowConnection}}
+      <div class="alert alert-info">The request seems to be taking more time than usual, please wait.</div>
+    {{/if}}
+  </div>
 </div>
-
 {{outlet}}

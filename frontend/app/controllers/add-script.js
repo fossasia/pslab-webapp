@@ -1,65 +1,64 @@
 import Ember from 'ember';
 
-export default Ember.Controller.extend({
+const { $: { post }, Controller } = Ember;
 
-/*---- Add Script Screen ---*/
-  theme: 'ace/theme/cobalt',
-  themes: [
+export default Controller.extend({
+
+/* ---- Add Script Screen ---*/
+  theme  : 'ace/theme/cobalt',
+  themes : [
     'ace/theme/cobalt',
     'ace/theme/ambiance',
-    'ace/theme/chaos',
+    'ace/theme/chaos'
   ],
-  inputDescription:"",
-  submitFailed: false,
-  failedMessage: "Failed to Login",
-  isProcessing: false,
-  isSlowConnection: false,
-  timeout: null,
+  inputDescription : '',
+  submitFailed     : false,
+  failedMessage    : 'Failed to Login',
+  isProcessing     : false,
+  isSlowConnection : false,
+  timeout          : null,
 
   success(response) {
     this.reset();
-    if (response.status==true){
+    if (response.status) {
       this.reset();
-      this.transitionToRoute('user-home')
+      this.transitionToRoute('user-home');
+    } else {
+      this.set('submitFailed', true);
+      this.failedMessage = String(response.message);
     }
-    else{
-      this.set("submitFailed", true);
-      this.failedMessage= String(response.message);
-      }
   },
   error() {
     this.reset();
-    this.set("submitFailed", true);
-    this.set("failedMessage",'Submission failed. Server down? ');
+    this.set('submitFailed', true);
+    this.set('failedMessage', 'Submission failed. Server down? ');
   },
   failure() {
     this.reset();
-    this.set("submitFailed", true);
-    this.set("failedMessage",'Submission failed. App Error. ');
+    this.set('submitFailed', true);
+    this.set('failedMessage', 'Submission failed. App Error. ');
   },
   slowConnection() {
-    this.set("isSlowConnection", true);
+    this.set('isSlowConnection', true);
   },
   reset() {
-    clearTimeout(this.get("timeout"));
+    clearTimeout(this.get('timeout'));
     this.setProperties({
-      isProcessing: false,
-      isSlowConnection: false
-      });
+      isProcessing     : false,
+      isSlowConnection : false
+    });
   },
 
-  actions:{
+  actions: {
     valueUpdated() {
       this.setProperties({
-        submitFailed: false,
-        failedMessage: "",
-        isProcessing: true
+        submitFailed  : false,
+        failedMessage : '',
+        isProcessing  : true
       });
-      this.set("timeout", setTimeout(this.slowConnection.bind(this), 1000));
-      var request = Ember.$.post("/addScript", this.getProperties("inputTitle","inputDescription"),this,'json');
-      request.then(this.success.bind(this), this.failure.bind(this), this.error.bind(this));
-    },
-
-  },
-  
+      this.set('timeout', setTimeout(this.slowConnection.bind(this), 1000));
+      post('/addScript', this.getProperties('inputTitle', 'inputDescription'), this, 'json')
+        .then(this.success.bind(this), this.failure.bind(this), this.error.bind(this));
+    }
+  }
 });
