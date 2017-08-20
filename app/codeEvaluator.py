@@ -23,13 +23,11 @@ class Evaluator:
 		self.evalGlobals['label']=self.label
 		self.evalGlobals['plot']=self.plot
 		
-	def toUnique(self,identifier): #Make any ID string unique. returns new string.
-		suffix=0
-		if identifier in self.itemList:
-			suffix+=1
-			return self.toUnique(identifier+str(suffix))
-		self.itemList.append(identifier)
-		return identifier
+	def toUnique(self,identifier,suffix=0): #Make any ID string unique. returns new string.
+		newId = identifier+str(suffix) if suffix else identifier
+		if newId in self.itemList:
+			return self.toUnique(identifier,suffix+1)
+		return newId
 		
 	def print(self,*args):
 		'''
@@ -39,29 +37,38 @@ class Evaluator:
 		'''
 		name=self.toUnique("print")
 		self.generatedApp.append({"type":"text","name":name,"value":[str(a) for a in args]})
+		self.itemList.append(name)
 		return name
 	
 
 	def printer(self,txt,name="print"):
 		name=self.toUnique(name)
 		self.generatedApp.append({"type":"span","name":name,"class":"row well","value":str(txt)})
+		self.itemList.append(name)
 		return name
 
 	def label(self,txt,name="print",html_class=""):
 		name=self.toUnique(name)
 		self.generatedApp.append({"type":"label","name":name,"class":html_class,"value":str(txt)})
+		self.itemList.append(name)
 		return name
 
 	def button(self,label,endpoint,displayType="display_number",**kwargs):
 		name = kwargs.get("name","button-id")
 		name=self.toUnique(name)
+		self.itemList.append(name)
 		
-		targetName = kwargs.get("name","button-id-label") #Create a unique name for the target.
-		targetName = self.toUnique(targetName)
-		targetName = kwargs.get('target',targetName)   #OVerride this name if specified explicitly
-		self.generatedApp.append({"type":"button", "name":name,"label":label,"fetched_value":"","action":{"type":"POST","endpoint":endpoint,"success":{"datapoint":'result',"type":displayType,"target":targetName}}})
+		targetName = kwargs.get('target',name+'-label')
+		if 'target' not in kwargs:  #If a target was not specified, make up a name
+			targetName = self.toUnique(name+'-label')
+
+		successOpts={"datapoint":'result',"type":displayType,"target":targetName}
+		if displayType=='update-plot': # specify the stacking of data
+			successOpts['stacking']='xy'
+		self.generatedApp.append({"type":"button", "name":name,"label":label,"fetched_value":"","action":{"type":"POST","endpoint":endpoint,"success":successOpts}})
 		if 'target' not in kwargs:  #If a target was not specified, make a label.
-			if displayType=="display_number":
+			if displayType in ["display_number","display"]:
+				print('making a target')
 				self.label('',targetName)
 		return name
 	
@@ -69,10 +76,12 @@ class Evaluator:
 	def plot(self,x,y,**kwargs):
 		name = kwargs.get('name','myPlot')
 		self.generatedApp.append({"type":"plot","name":name,"data":[np.array([x,y]).T.tolist()]}) #jqplot requires [x,y] pairs . not separate datasets.
+		self.itemList.append(name)
 		return name
 
 	def runCode(self,code):
 		self.generatedApp=[]
+		self.itemList=[]
 		
 		submitted = compile(code.encode(), '<string>', mode='exec')
 		self.exec_scope = self.evalGlobals.copy()

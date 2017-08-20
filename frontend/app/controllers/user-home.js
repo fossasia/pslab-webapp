@@ -169,6 +169,8 @@ export default Controller.extend({
               $(`#${actionDefinition.success.target}`).text(resultValue.toFixed(3));
             } else if (actionDefinition.success.type === 'display') {
               $(`#${actionDefinition.success.target}`).text(resultValue);
+            } else if (actionDefinition.success.type === 'update-plot') {
+              $.jqplot(actionDefinition.success.target, resultValue).replot();
             }
           });
       }
