@@ -73,7 +73,7 @@ class Evaluator:
 	
 	#Plots
 	def plot(self,x,y,**kwargs):
-		name = kwargs.get('name','myPlot')
+		name = kwargs.get('name',self.toUnique('myPlot'))
 		self.generatedApp.append({"type":"plot","name":name,"data":[np.array([x,y]).T.tolist()]}) #jqplot requires [x,y] pairs . not separate datasets.
 		self.itemList.append(name)
 		return name
