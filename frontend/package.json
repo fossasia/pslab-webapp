@@ -36,6 +36,7 @@
     "ember-cli-surge": "^1.1.20",
     "ember-cli-template-lint": "^0.7.3",
     "ember-cli-uglify": "^1.2.0",
+    "ember-cli-underscore": "0.0.3",
     "ember-data": "~2.14.3",
     "ember-export-application-global": "^2.0.0",
     "ember-load-initializers": "^1.0.0",

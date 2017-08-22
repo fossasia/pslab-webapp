@@ -68,7 +68,6 @@ class Evaluator:
 		self.generatedApp.append({"type":"button", "name":name,"label":label,"fetched_value":"","action":{"type":"POST","endpoint":endpoint,"success":successOpts}})
 		if 'target' not in kwargs:  #If a target was not specified, make a label.
 			if displayType in ["display_number","display"]:
-				print('making a target')
 				self.label('',targetName)
 		return name
 	
