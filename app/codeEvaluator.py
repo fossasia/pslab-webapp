@@ -64,7 +64,7 @@ class Evaluator:
 
 		successOpts={"datapoint":'result',"type":displayType,"target":targetName}
 		if displayType=='update-plot': # specify the stacking of data
-			successOpts['stacking']='xy'
+			successOpts['stacking']=kwargs.get('stacking','xy')
 		self.generatedApp.append({"type":"button", "name":name,"label":label,"fetched_value":"","action":{"type":"POST","endpoint":endpoint,"success":successOpts}})
 		if 'target' not in kwargs:  #If a target was not specified, make a label.
 			if displayType in ["display_number","display"]:
