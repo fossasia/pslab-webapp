@@ -16,6 +16,7 @@
   ],
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "jqplot": "*"
+    "jqplot": "*",
+    "underscore": "^1.8.3"
   }
 }

@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import _ from 'lodash';
 
 const { $, $: { post, extend }, Controller, get } = Ember;
 
@@ -170,7 +171,17 @@ export default Controller.extend({
             } else if (actionDefinition.success.type === 'display') {
               $(`#${actionDefinition.success.target}`).text(resultValue);
             } else if (actionDefinition.success.type === 'update-plot') {
-              $.jqplot(actionDefinition.success.target, resultValue).replot();
+              if (actionDefinition.success.stacking === 'xy') {
+                // alert(JSON.stringify($(`#${actionDefinition.success.target}`).data(), null, 4));
+                // $(`#${actionDefinition.success.target}`).data('jqplot').replot({ data: [_.zip.apply(null, resultValue)] });
+                $.jqplot(actionDefinition.success.target, [_.zip.apply(null, resultValue)]).replot();
+              } else if (actionDefinition.success.stacking === 'xyy') {
+                $.jqplot(actionDefinition.success.target, [_.zip.apply(null, [resultValue[0], resultValue[1]]), _.zip.apply(null, [resultValue[0], resultValue[2]])]).replot();
+              } else if (actionDefinition.success.stacking === 'xyyyy') {
+                $.jqplot(actionDefinition.success.target, [_.zip.apply(null, [resultValue[0], resultValue[1]]), _.zip.apply(null, [resultValue[0], resultValue[2]]), _.zip.apply(null, [resultValue[0], resultValue[3]]), _.zip.apply(null, [resultValue[0], resultValue[4]])]).replot();
+              } else {
+                $.jqplot(actionDefinition.success.target, resultValue).replot();
+              }
             }
           });
       }

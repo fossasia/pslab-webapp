@@ -19,6 +19,14 @@ class dummy(object):
 		self.x=np.linspace(0,8*np.pi,samples)
 		return self.x,np.sin(self.x+np.pi*random.random()/10),np.sin(self.x+np.pi*random.random()/10)
 
+	def capture4(self,samples,tg):
+		'''
+		Example doc for capture2 command. returns two sine waves with random phase difference(x,y1,y2)
+		'''
+		self.x=np.linspace(0,8*np.pi,samples)
+		return self.x,np.sin(self.x+np.pi*random.random()/10),np.sin(self.x+np.pi*random.random()/10),np.sin(self.x+np.pi*random.random()/10),np.sin(self.x+np.pi*random.random()/10)
+
+
 	def get_voltage(self,chan):
 		'''
 		Returns a random value

@@ -64,17 +64,16 @@ class Evaluator:
 
 		successOpts={"datapoint":'result',"type":displayType,"target":targetName}
 		if displayType=='update-plot': # specify the stacking of data
-			successOpts['stacking']='xy'
+			successOpts['stacking']=kwargs.get('stacking','xy')
 		self.generatedApp.append({"type":"button", "name":name,"label":label,"fetched_value":"","action":{"type":"POST","endpoint":endpoint,"success":successOpts}})
 		if 'target' not in kwargs:  #If a target was not specified, make a label.
 			if displayType in ["display_number","display"]:
-				print('making a target')
 				self.label('',targetName)
 		return name
 	
 	#Plots
 	def plot(self,x,y,**kwargs):
-		name = kwargs.get('name','myPlot')
+		name = kwargs.get('name',self.toUnique('myPlot'))
 		self.generatedApp.append({"type":"plot","name":name,"data":[np.array([x,y]).T.tolist()]}) #jqplot requires [x,y] pairs . not separate datasets.
 		self.itemList.append(name)
 		return name
