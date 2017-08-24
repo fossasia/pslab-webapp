@@ -101,7 +101,7 @@ body {
 }
 
 .list-group {
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .modal-dialog-full {
@@ -142,7 +142,9 @@ hr.style2 {
   background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
 }
 
-.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:focus, .navbar-inverse .navbar-nav > .active > a:hover {
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:focus,
+.navbar-inverse .navbar-nav > .active > a:hover {
   background-color: #8a8;
 }
 
