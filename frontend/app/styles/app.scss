@@ -2,8 +2,8 @@
 /* -- narrow.css-- */
 /* Space out content a bit */
 body {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 40px;
+  padding-bottom: 40px;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -97,24 +97,24 @@ body {
 
 .panel-body .checkbox {
   display: inline-block;
-  margin: 0px;
+  margin: 0;
 }
 
 .list-group {
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .modal-dialog-full {
   width: 95%;
   height: 100%;
   margin: 50px auto;
-  padding: 0px;
+  padding: 0;
 }
 
 .modal-content {
   height: auto;
   min-height: 100%;
-  border-radius: 0px;
+  border-radius: 0;
 }
 
 hr.style1 {
@@ -125,7 +125,7 @@ hr.style1 {
   border-radius: 20px;
 }
 
-hr.style1:before {
+hr.style1::before {
   display: block;
   content: '';
   height: 30px;
@@ -142,16 +142,13 @@ hr.style2 {
   background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
 }
 
-.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:focus, .navbar-inverse .navbar-nav > .active > a:hover {
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:focus,
+.navbar-inverse .navbar-nav > .active > a:hover {
   background-color: #8a8;
 }
 
 /* -- signup.css-- */
-
-body {
-  padding-top: 40px;
-  padding-bottom: 40px;
-}
 
 .form-signin {
   max-width: 330px;

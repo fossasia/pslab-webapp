@@ -124,7 +124,6 @@ def getCodeById():
 		_user = session.get('user')[1]
 		try:
 			script = UserCode.query.filter_by(user=_user,id=_id).first()
-			print('sending :',script.title)
 			return json.dumps({'status':True,'Id':script.id,'Code':script.code,'Filename':script.title,'Date':script.pub_date,'message':'got script %s'%script.title})
 		except Exception as exc:
 			return json.dumps({'data':None,'status':False,'message':str(exc)})
