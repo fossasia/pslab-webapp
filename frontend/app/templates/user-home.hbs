@@ -60,28 +60,30 @@
               <br>
 
               {{#each model as |script|}}
-                <li class="list-group-item">
-                  <div class="pull-left action-buttons">
-                    <a {{action 'executeScript' script on="click"}} role="button">
-                      <span class="glyphicon glyphicon-step-forward"></span>
-                    </a>
-                  </div>
-                  <div class="checkbox">
-                    <label>
-                      {{script.Filename}}
-                    </label>
-                  </div>
-                  <div class="pull-right action-buttons">
-                    <a {{action "openEditModal" script on="click"}} role="button">
-                      <span class="glyphicon glyphicon-pencil"></span>
-                    </a>
-                    <a {{action 'showDeleteDialog' script on="click"}} role="button">
-                      <span class="glyphicon glyphicon-trash"></span>
-                    </a>
-                  </div>
-                </li>
+                {{#unless script.readonly}}
+                  <li class="list-group-item">
+		                  <div class="pull-left action-buttons">
+		                    <a {{action 'executeScript' script on="click"}} role="button">
+		                      <span class="glyphicon glyphicon-step-forward"></span>
+		                    </a>
+		                  </div>
+		                  <div class="checkbox">
+		                    <label>
+		                      {{script.Filename}}
+		                    </label>
+		                  </div>
+		                  <div class="pull-right action-buttons">
+		                    <a {{action "openEditModal" script on="click"}} role="button">
+		                      <span class="glyphicon glyphicon-pencil"></span>
+		                    </a>
+		                    <a {{action 'showDeleteDialog' script on="click"}} role="button">
+		                      <span class="glyphicon glyphicon-trash"></span>
+		                    </a>
+		                  </div>
+                  </li>
+                {{/unless}}    
               {{else}}
-                You haven't saved any scripts
+	                You haven't saved any scripts
               {{/each}}
             </ul>
           </div>
@@ -92,6 +94,38 @@
     <div id="section2">
       <h3>Selection of pre-written scripts for experiments</h3>
       <hr class="style1">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel-body">
+            <ul id="myCodeList" class="list-group">
+              {{#each model as |script|}}
+                {{#if script.readonly}}
+                  <li class="list-group-item">
+                    <div class="pull-left action-buttons">
+                      <a {{action 'executeScriptByFilename' script on="click"}} role="button">
+                        <span class="glyphicon glyphicon-step-forward"></span>
+                      </a>
+                    </div>
+                    <div class="checkbox">
+                      <label>
+                        {{script.Filename}}
+                      </label>
+                    </div>
+                    <div class="pull-right action-buttons">
+                      <a {{action "openViewModal" script on="click"}} role="button">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                      </a>
+                    </div>
+                  </li>
+                {{/if}}    
+              {{else}}
+                  No example scripts available
+              {{/each}}
+            </ul>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <div id="section3">

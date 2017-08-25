@@ -106,8 +106,14 @@ def getScriptList():
 						'Id': script.id,
 						'Filename': script.title,
 						#'Code': script.code, #Can be enbled if the user demands all scripts and content.
-						'Date': script.pub_date}
+						'Date': script.pub_date,
+						'readonly':False}
 				scripts_dict.append(single_script)
+			
+			for a in os.listdir('./app/scripts'):
+				if a[-3:]=='.py':
+					scripts_dict.append({'Filename':a,'readonly':True})
+			
 			return json.dumps(scripts_dict)
 		else:
 			return json.dumps([])
@@ -168,20 +174,6 @@ def deleteScript():
       return json.dumps({'status':False,'message':str(exc)})
   else:
     return json.dumps({'status':False,'message':'Unauthorized access'})
-
-
-@app.route('/getCommonScripts')
-def getCommonScripts():
-	try:
-		if session.get('user'):
-			_user = session.get('user')[1]
-			scripts = [{'Filename':a} for a in os.listdir('./app/scripts') if a[-3:]=='.py']
-			return json.dumps(scripts)
-		else:
-			return json.dumps([])
-	except Exception as e:
-		print (str(e))
-		return json.dumps([])
 
 
 @app.route('/getScriptByFilename',methods=['POST'])
