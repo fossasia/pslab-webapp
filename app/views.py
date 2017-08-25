@@ -171,7 +171,7 @@ def deleteScript():
 
 
 @app.route('/getCommonScripts')
-def getScriptList():
+def getCommonScripts():
 	try:
 		if session.get('user'):
 			_user = session.get('user')[1]
@@ -185,7 +185,7 @@ def getScriptList():
 
 
 @app.route('/getScriptByFilename',methods=['POST'])
-def getCodeById():
+def getScriptByFilename():
 	if session.get('user'):
 		try:
 			Filename = request.form['Filename']
@@ -193,13 +193,13 @@ def getCodeById():
 				data=myfile.read()
 			return json.dumps({'status':True,'Filename':Filename,'Code':data})
 		except Exception as exc:
-			return json.dumps({'data':None,'status':False,'message':str(exc)})
+			return json.dumps({'status':False,'message':str(exc),'Code':None})
 	else:
-		return json.dumps({'data':None,'status':False,'message':'Unauthorized access'})
+		return json.dumps({'status':False,'message':'Unauthorized access','Code':None})
 
 
 @app.route('/runScriptByFilename',methods=['POST'])
-def getCodeById():
+def runScriptByFilename():
 	if session.get('user'):
 		try:
 			Filename = request.form['Filename']
