@@ -116,7 +116,6 @@ def getScriptList():
 		return json.dumps([])
 
 
-
 @app.route('/getScriptById',methods=['POST'])
 def getCodeById():
 	if session.get('user'):
@@ -169,6 +168,51 @@ def deleteScript():
       return json.dumps({'status':False,'message':str(exc)})
   else:
     return json.dumps({'status':False,'message':'Unauthorized access'})
+
+
+@app.route('/getCommonScripts')
+def getScriptList():
+	try:
+		if session.get('user'):
+			_user = session.get('user')[1]
+			scripts = [{'Filename':a} for a in os.listdir('./app/scripts') if a[-3:]=='.py']
+			return json.dumps(scripts)
+		else:
+			return json.dumps([])
+	except Exception as e:
+		print (str(e))
+		return json.dumps([])
+
+
+@app.route('/getScriptByFilename',methods=['POST'])
+def getCodeById():
+	if session.get('user'):
+		try:
+			Filename = request.form['Filename']
+			with open ('./app/scripts/'+Filename, "r") as myfile:
+				data=myfile.read()
+			return json.dumps({'status':True,'Filename':Filename,'Code':data})
+		except Exception as exc:
+			return json.dumps({'data':None,'status':False,'message':str(exc)})
+	else:
+		return json.dumps({'data':None,'status':False,'message':'Unauthorized access'})
+
+
+@app.route('/runScriptByFilename',methods=['POST'])
+def getCodeById():
+	if session.get('user'):
+		try:
+			Filename = request.form['Filename']
+			with open ('./app/scripts/'+Filename, "r") as myfile:
+				data=myfile.read()
+			res = myEval.runCode(script.code)
+			return json.dumps({'status':True,'Filename':Filename,'result':res})
+		except Exception as exc:
+			return json.dumps({'result':None,'status':False,'message':str(exc)})
+	else:
+		return json.dumps({'result':None,'status':False,'message':'Unauthorized access'})
+
+
 
 
 
