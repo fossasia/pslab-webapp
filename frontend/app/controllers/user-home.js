@@ -24,6 +24,15 @@ export default Controller.extend({
   codeResults           : '',
   waitingForCode        : false,
   runScriptFailed       : false,
+  viewModalTitle        : '',
+  viewContents          : '',
+  viewAceInit(editor) {
+    editor.setHighlightActiveLine(false);
+    editor.setShowPrintMargin(false);
+    editor.getSession().setTabSize(2);
+    editor.getSession().setMode('ace/mode/python');
+    editor.setReadOnly(true);
+  },
 
   reset() {
     clearTimeout(this.get('timeout'));
@@ -121,6 +130,20 @@ export default Controller.extend({
         .then(this.fetchedCodeSuccess.bind(this), this.failure.bind(this), this.error.bind(this));
       $('#editModal').modal();
     },
+    openViewModal(script) {
+      $('#viewModal').modal();
+      post('/getScriptByFilename', { 'Filename': script.Filename }, this, 'json')
+        .then(response => {
+          if (response.status) {
+            this.setProperties({
+              viewContents   : response.Code,
+              viewModalTitle : response.Filename
+            });
+          } else {
+            this.set('viewModalTitle', 'Could not retrieve script!');
+          }
+        });
+    },
 
     updateScript() {
       this.setProperties({
@@ -152,13 +175,18 @@ export default Controller.extend({
         .then(this.showFunctionStringResults.bind(this), this.runScriptFailure.bind(this), this.runScriptError.bind(this));
     },
     // Remote Execution of Scripts
-    executeScript(script) {
+    executeScript(script, mode) {
       this.setProperties({
         waitingForCode : true,
         codeResults    : ''
       });
-      post('/runScriptById', { 'id': script.Id }, this, 'json')
-        .then(this.showFunctionResults.bind(this), this.failure.bind(this), this.error.bind(this));
+      if (mode === 'Id') {
+        post('/runScriptById', { 'Id': script.Id }, this, 'json')
+          .then(this.showFunctionResults.bind(this), this.failure.bind(this), this.error.bind(this));
+      } else if (mode === 'Filename') {
+        post('/runScriptByFilename', { 'Filename': script.Filename }, this, 'json')
+          .then(this.showFunctionResults.bind(this), this.failure.bind(this), this.error.bind(this));
+      }
     },
 
     runButtonAction(actionDefinition) {

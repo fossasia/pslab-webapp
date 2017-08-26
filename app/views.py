@@ -190,21 +190,6 @@ def getScriptByFilename():
 		return json.dumps({'status':False,'message':'Unauthorized access','Code':None})
 
 
-@app.route('/runScriptByFilename',methods=['POST'])
-def runScriptByFilename():
-	if session.get('user'):
-		try:
-			Filename = request.form['Filename']
-			with open ('./app/scripts/'+Filename, "r") as myfile:
-				data=myfile.read()
-			res = myEval.runCode(script.code)
-			return json.dumps({'status':True,'Filename':Filename,'result':res})
-		except Exception as exc:
-			return json.dumps({'result':None,'status':False,'message':str(exc)})
-	else:
-		return json.dumps({'result':None,'status':False,'message':'Unauthorized access'})
-
-
 
 
 
@@ -256,7 +241,7 @@ def evalFunctionString():
 @app.route('/runScriptById',methods=['POST'])
 def runScriptById():
 	if session.get('user'):
-		_id = request.form['id']
+		_id = request.form['Id']
 		_user = session.get('user')[1]
 		try:
 			script = UserCode.query.filter_by(user=_user,id=_id).first()
@@ -266,5 +251,20 @@ def runScriptById():
 			return json.dumps({'status':False,'result':str(exc)})
 	else:
 		return json.dumps({'status':False,'result':'unauthorized access','message':'Unauthorized access'})
+
+
+@app.route('/runScriptByFilename',methods=['POST'])
+def runScriptByFilename():
+	if session.get('user'):
+		try:
+			Filename = request.form['Filename']
+			with open ('./app/scripts/'+Filename, "r") as myfile:
+				data=myfile.read()
+			res = myEval.runCode(data)
+			return json.dumps({'status':True,'result':res})
+		except Exception as exc:
+			return json.dumps({'status':False,'result':None,'message':str(exc)})
+	else:
+		return json.dumps({'status':False,'result':None,'message':'Unauthorized access'})
 
 

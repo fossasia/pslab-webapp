@@ -63,7 +63,7 @@
                 {{#unless script.readonly}}
                   <li class="list-group-item">
 		                  <div class="pull-left action-buttons">
-		                    <a {{action 'executeScript' script on="click"}} role="button">
+		                    <a {{action 'executeScript' script "Id" on="click"}} role="button">
 		                      <span class="glyphicon glyphicon-step-forward"></span>
 		                    </a>
 		                  </div>
@@ -102,7 +102,7 @@
                 {{#if script.readonly}}
                   <li class="list-group-item">
                     <div class="pull-left action-buttons">
-                      <a {{action 'executeScriptByFilename' script on="click"}} role="button">
+                      <a {{action 'executeScript' script "Filename" on="click"}} role="button">
                         <span class="glyphicon glyphicon-step-forward"></span>
                       </a>
                     </div>
@@ -112,7 +112,7 @@
                       </label>
                     </div>
                     <div class="pull-right action-buttons">
-                      <a {{action "openViewModal" script on="click"}} role="button">
+                      <a {{action 'openViewModal' script on="click"}} role="button">
                         <span class="glyphicon glyphicon-eye-open"></span>
                       </a>
                     </div>
@@ -204,6 +204,34 @@
     </div>
   </div>
 </div>
+
+
+<div class="modal" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="viewModalLabel" aria-hidden="true">
+  <div class="modal-dialog-full">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="viewModalLabel">{{viewModalTitle}}</h4>
+      </div>
+
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <form id="contentForm" class="form-horizontal">
+              {{ember-ace lines=30  theme="ace/theme/cobalt" mode="ace/mode/python" value=viewContents aceInit=viewAceInit}}
+              <button type="button" class="btn btn-default btn-primary" data-dismiss="modal">Close</button>
+            </form>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
 
 
 <div class="modal" id="runModal" tabindex="-1" role="dialog" aria-labelledby="runModalLabel" aria-hidden="true">
