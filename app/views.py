@@ -106,15 +106,18 @@ def getScriptList():
 						'Id': script.id,
 						'Filename': script.title,
 						#'Code': script.code, #Can be enbled if the user demands all scripts and content.
-						'Date': script.pub_date}
+						'Date': script.pub_date,
+						'readonly':False}
 				scripts_dict.append(single_script)
+			for a in os.listdir('./app/scripts'):
+				if a[-3:]=='.py':
+					scripts_dict.append({'Filename':a,'readonly':True})
 			return json.dumps(scripts_dict)
 		else:
 			return json.dumps([])
 	except Exception as e:
 		print (str(e))
 		return json.dumps([])
-
 
 
 @app.route('/getScriptById',methods=['POST'])
@@ -171,6 +174,22 @@ def deleteScript():
     return json.dumps({'status':False,'message':'Unauthorized access'})
 
 
+@app.route('/getScriptByFilename',methods=['POST'])
+def getScriptByFilename():
+	if session.get('user'):
+		try:
+			Filename = request.form['Filename']
+			with open ('./app/scripts/'+Filename, "r") as myfile:
+				data=myfile.read()
+			return json.dumps({'status':True,'Filename':Filename,'Code':data})
+		except Exception as exc:
+			return json.dumps({'status':False,'message':str(exc),'Code':None})
+	else:
+		return json.dumps({'status':False,'message':'Unauthorized access','Code':None})
+
+
+
+
 
 @app.route('/getFunctionList')
 def getFunctionList():
@@ -220,7 +239,7 @@ def evalFunctionString():
 @app.route('/runScriptById',methods=['POST'])
 def runScriptById():
 	if session.get('user'):
-		_id = request.form['id']
+		_id = request.form['Id']
 		_user = session.get('user')[1]
 		try:
 			script = UserCode.query.filter_by(user=_user,id=_id).first()
@@ -230,5 +249,20 @@ def runScriptById():
 			return json.dumps({'status':False,'result':str(exc)})
 	else:
 		return json.dumps({'status':False,'result':'unauthorized access','message':'Unauthorized access'})
+
+
+@app.route('/runScriptByFilename',methods=['POST'])
+def runScriptByFilename():
+	if session.get('user'):
+		try:
+			Filename = request.form['Filename']
+			with open ('./app/scripts/'+Filename, "r") as myfile:
+				data=myfile.read()
+			res = myEval.runCode(data)
+			return json.dumps({'status':True,'result':res})
+		except Exception as exc:
+			return json.dumps({'status':False,'result':None,'message':str(exc)})
+	else:
+		return json.dumps({'status':False,'result':None,'message':'Unauthorized access'})
 
 
