@@ -109,11 +109,9 @@ def getScriptList():
 						'Date': script.pub_date,
 						'readonly':False}
 				scripts_dict.append(single_script)
-			
 			for a in os.listdir('./app/scripts'):
 				if a[-3:]=='.py':
 					scripts_dict.append({'Filename':a,'readonly':True})
-			
 			return json.dumps(scripts_dict)
 		else:
 			return json.dumps([])
