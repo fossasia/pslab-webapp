@@ -22,6 +22,7 @@ export default Controller.extend({
   deleteScriptName      : '',
   functionStringResults : '',
   codeResults           : '',
+  sourceCode            : '',
   waitingForCode        : false,
   runScriptFailed       : false,
   viewModalTitle        : '',
@@ -107,6 +108,7 @@ export default Controller.extend({
   showFunctionResults(response) {
     this.reset();
     this.set('codeResults', response.result);
+    this.set('sourceCode', response.Code);
 		// TODO : check status key, and change highlight colour or something to indicate failure.
     $('#runModal').modal();
   },
