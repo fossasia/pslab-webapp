@@ -247,37 +247,50 @@
         </div>
       </div>
       <div class="modal-body">
-        <form role="form">
-          <div class="form-group">
-            <div style="min-height:40px;min-width:400px;" id="runResults">
 
-              {{#each codeResults as |element|}}
-                {{#if (eq element.type 'input')}}
-                  <label id="{{element.labelname}}" class="{{element.class}}">{{element.label}}</label>
-                  {{input id=element.name}}
-                {{/if}}
-                {{#if (eq element.type 'label')}}
-                  <label id="{{element.name}}" class="{{element.class}}">{{element.value}}</label>
-                {{/if}}
-                {{#if (eq element.type 'button')}}
-                  <button id="{{element.name}}" class="btn btn-small btn-primary" {{action 'runButtonAction' element.action}}>{{element.label}}</button>
-                {{/if}}
-                {{#if (eq element.type 'text')}}
-                  {{element.value}}<br>
-                {{/if}}
-                {{#if (eq element.type 'span')}}
-                  <div class="{{element.class}}"><span id="{{element.name}}">{{element.value}}</span></div>
-                {{/if}}
-                {{#if (eq element.type 'plot')}}
-                  {{jqplot-graph data=element}}
-                {{/if}}
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active"><a href="#appTab" aria-controls="appTab" role="tab" data-toggle="tab">Application</a></li>
+          <li role="presentation"><a href="#sourceTab" aria-controls="sourceTab" role="tab" data-toggle="tab">Source Code</a></li>
+        </ul>
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="appTab">
+            <form role="form">
+              <div class="form-group">
+                <div style="min-height:40px;min-width:400px;" id="runResults">
 
-              {{/each}}
+                  {{#each codeResults as |element|}}
+                    {{#if (eq element.type 'input')}}
+                      <label id="{{element.labelname}}" class="{{element.class}}">{{element.label}}</label>
+                      {{input id=element.name}}
+                    {{/if}}
+                    {{#if (eq element.type 'label')}}
+                      <label id="{{element.name}}" class="{{element.class}}">{{element.value}}</label>
+                    {{/if}}
+                    {{#if (eq element.type 'button')}}
+                      <button id="{{element.name}}" class="btn btn-small btn-primary" {{action 'runButtonAction' element.action}}>{{element.label}}</button>
+                    {{/if}}
+                    {{#if (eq element.type 'text')}}
+                      {{element.value}}<br>
+                    {{/if}}
+                    {{#if (eq element.type 'span')}}
+                      <div class="{{element.class}}"><span id="{{element.name}}">{{element.value}}</span></div>
+                    {{/if}}
+                    {{#if (eq element.type 'plot')}}
+                      {{jqplot-graph data=element}}
+                    {{/if}}
+
+                  {{/each}}
 
 
-            </div>
+                </div>
+              </div>
+            </form>
           </div>
-        </form>
+          <div role="tabpanel" class="tab-pane" id="sourceTab">
+            <textarea style="width:100%;min-height:400px;">{{ sourceCode }}</textarea>
+          </div>
+        </div>
+
       </div>
 
       {{#if waitingForCode}}
