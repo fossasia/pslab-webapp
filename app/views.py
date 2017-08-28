@@ -244,7 +244,7 @@ def runScriptById():
 		try:
 			script = UserCode.query.filter_by(user=_user,id=_id).first()
 			res = myEval.runCode(script.code)
-			return json.dumps({'status':True,'Id':script.id,'result':res,'Filename':script.title,'Date':script.pub_date})
+			return json.dumps({'status':True,'Id':script.id,'result':res,'Filename':script.title,'Date':script.pub_date,'Code':script.code})
 		except Exception as exc:
 			return json.dumps({'status':False,'result':str(exc)})
 	else:
@@ -259,7 +259,7 @@ def runScriptByFilename():
 			with open ('./app/scripts/'+Filename, "r") as myfile:
 				data=myfile.read()
 			res = myEval.runCode(data)
-			return json.dumps({'status':True,'result':res})
+			return json.dumps({'status':True,'result':res,'Code':data})
 		except Exception as exc:
 			return json.dumps({'status':False,'result':None,'message':str(exc)})
 	else:
