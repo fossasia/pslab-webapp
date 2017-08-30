@@ -3,6 +3,7 @@ from app.db_handler import User,UserCode
 from flask import Flask, render_template,request,json,session,redirect,jsonify,send_from_directory
 from werkzeug import generate_password_hash, check_password_hash
 import os
+from flasgger.utils import swag_from
 
 ####  Get the list of available hardware methods ###
 from app.hardwareHandler import functionList,np
@@ -12,6 +13,7 @@ myEval = Evaluator(functionList)
 
 
 @app.route('/signUp',methods=['POST'])
+@swag_from('signUp.yml')
 def signUp():
 	"""Sign Up for Virtual Lab
 
