@@ -1,0 +1,27 @@
+Call this endpoint to destroy the authentication token
+---
+tags:
+  - User Sign Up/ Sign In/ Logout etc
+consumes:
+  - application/json
+produces:
+  - application/json
+
+responses:
+  200:
+    description: Logout Successful
+    schema:
+      id: signin
+      properties:
+        status:
+          type: boolean
+          description: true/false depending on logout result
+          default: true
+        message:
+          type: string
+          description: Logout message
+          default: "Logged out"
+  400:
+    description: Logout Failed. User not logged in
+
+

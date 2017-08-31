@@ -1,0 +1,39 @@
+Pass email and password string, and get back a status variable. Token is activated on success
+---
+tags:
+  - User Sign Up/ Sign In/ Logout etc
+consumes:
+  - application/json
+produces:
+  - application/json
+parameters:
+  - name: inputEmail
+    type: string
+    description: e-mail address (login ID)
+    in: formData
+    required: true
+  - name: inputPassword
+    type: string
+    format: password
+    description: password string
+    in: formData
+    required: true
+
+responses:
+  200:
+    description: Login Successful
+    schema:
+      id: signin
+      properties:
+        status:
+          type: boolean
+          description: true/false depending on sign-in result
+          default: true
+        message:
+          type: string
+          description: Sign-in message
+          default: "Login successful"
+  400:
+    description: Error, Password mismatch / user does not exist
+
+
