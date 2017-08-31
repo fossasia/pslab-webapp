@@ -37,11 +37,12 @@ def signUp():
 			return json.dumps({'status':True,'message':'User %s created successfully. e-mail:%s !'%(_name,_email)})
 		except Exception as exc:
 			reason = str(exc)
-			return json.dumps({'status':False,'message':str(reason)})
+			return json.dumps({'status':False,'message':str(reason)}),400
 
 
 
 @app.route('/validateLogin',methods=['POST'])
+@swag_from('validateLogin.yml')
 def validateLogin():
     _username = request.form['inputEmail']
     _password = request.form['inputPassword']
@@ -51,18 +52,19 @@ def validateLogin():
             session['user'] = [user.username,user.email]
             return json.dumps({'status':True})
         else:
-            return json.dumps({'status':False,'message':'Wrong Email address or Password. hash mismatch'})
+            return json.dumps({'status':False,'message':'Wrong Email address or Password. hash mismatch'}),400
     else:
         return json.dumps({'status':False,'message':'Username not specified'})
 
 @app.route('/logout',methods=['POST'])
+@swag_from('logout.yml')
 def logout():
 	try:
 		print ('logging out',session.pop('user',None))
 		return json.dumps({'status':True,'message':'Logged out'})
 	except Exception as exc:
 		reason = str(exc)
-		return json.dumps({'status':False,'message':str(reason)})
+		return json.dumps({'status':False,'message':str(reason)}),400
 
 
 @app.route('/getUserName')
