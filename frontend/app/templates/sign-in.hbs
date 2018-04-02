@@ -9,7 +9,7 @@
       <label for="inputPassword" class="sr-only">Password</label>
       {{input value=inputPassword type="password" name="inputPassword" id="inputPassword" class="form-control"
               placeholder="Password" required=true autofocus=true}}
-
+      <input type="checkbox" name="show-password" id="show-password" onchange={{action 'togglePassword' value="target.checked"}}> Show Password
       <button id="btnSignIn" class="btn btn-lg btn-primary btn-block" disabled={{isProcessing}}>
         Sign in
       </button>

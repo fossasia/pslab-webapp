@@ -55,6 +55,14 @@ export default Controller.extend({
       this.set('timeout', setTimeout(this.slowConnection.bind(this), 1000));
       post('/validateLogin', this.getProperties('inputEmail', 'inputPassword'), this, 'json')
         .then(this.success.bind(this), this.failure.bind(this), this.error.bind(this));
+    },
+    
+    togglePassword(checked){     //To toggle the password visibility
+      this.set('any', checked);
+      if (checked === true) {
+        document.getElementById('inputPassword').type = 'text';
+      }
+      else document.getElementById('inputPassword').type = 'password';
     }
 
   }
