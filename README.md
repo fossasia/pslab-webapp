@@ -6,7 +6,7 @@
 [![Gitter](https://badges.gitter.im/fossasia/pslab.svg)](https://gitter.im/fossasia/pslab?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 [Backend API server](https://pslab-stage.herokuapp.com/) : Hosted on Heroku. The dyno is reaped after an hour of inactivity and may take up to 10 seconds to boot up.
-[Webapp](pslab-remote.surge.sh) : Hosted on surge.sh
+[Webapp](https://pslab-remote.surge.sh) : Hosted on surge.sh
 
 ## Introduction to the Virtual Lab
 
