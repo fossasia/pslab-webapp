@@ -57,14 +57,14 @@ export default Controller.extend({
         .then(this.success.bind(this), this.failure.bind(this), this.error.bind(this));
     },
 
-    togglePassword(checked) {     //To toggle the password visibility in sign-up form
+    togglePassword(checked) {     // To toggle the password visibility in sign-up form
       this.set('any', checked);
       if (checked === true) {
         document.getElementById('inputPassword').type = 'text';
+      } else {
+        document.getElementById('inputPassword').type = 'password';
       }
-      else document.getElementById('inputPassword').type = 'password';
     }
-
   }
 
 });
