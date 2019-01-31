@@ -8,6 +8,8 @@
 [Backend API server](https://pslab-stage.herokuapp.com/) : Hosted on Heroku. The dyno is reaped after an hour of inactivity and may take up to 10 seconds to boot up.
 [Webapp](https://pslab-remote.surge.sh) : Hosted on surge.sh
 
+[![Twitter Follow](https://img.shields.io/twitter/follow/pslabio.svg?style=social&label=Follow&maxAge=2592000?style=flat-square)](https://twitter.com/pslabio)
+
 ## Introduction to the Virtual Lab
 
 A virtual lab interface gives students remote access to equipment in laboratories via the internet without having to be physically present near the equipment.
