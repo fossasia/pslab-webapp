@@ -4,11 +4,10 @@
 
 [![Build Status](https://travis-ci.org/fossasia/pslab-remote.svg?branch=master)](https://travis-ci.org/fossasia/pslab-remote)
 [![Gitter](https://badges.gitter.im/fossasia/pslab.svg)](https://gitter.im/fossasia/pslab?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Twitter Follow](https://img.shields.io/twitter/follow/pslabio.svg?style=social&label=Follow&maxAge=2592000?style=flat-square)](https://twitter.com/pslabio)
 
 [Backend API server](https://pslab-stage.herokuapp.com/) : Hosted on Heroku. The dyno is reaped after an hour of inactivity and may take up to 10 seconds to boot up.
 [Webapp](https://pslab-remote.surge.sh) : Hosted on surge.sh
-
-[![Twitter Follow](https://img.shields.io/twitter/follow/pslabio.svg?style=social&label=Follow&maxAge=2592000?style=flat-square)](https://twitter.com/pslabio)
 
 ## Introduction to the Virtual Lab
 
