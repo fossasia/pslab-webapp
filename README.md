@@ -21,7 +21,7 @@ It can then be deployed in various test and measurement scenarios such as an int
 ## Introductory blog posts
 
 + [Designing a remote access framework with PSLab](http://blog.fossasia.org/designing-a-virtual-laboratory-with-pslab/)
-+ [Creating backend API methods suing Python Flask](http://blog.fossasia.org/designing-a-remote-laboratory-with-pslab-using-python-flask-framework/)
++ [Creating backend API methods using Python Flask Framework](http://blog.fossasia.org/designing-a-remote-laboratory-with-pslab-using-python-flask-framework/)
 + [Execute python function calls remotely](http://blog.fossasia.org/designing-a-remote-laboratory-with-pslab-execution-of-function-strings/)
 + [Deploying the API server and Webapp to separate domains automaticaly ](http://blog.fossasia.org/pslab-remote-lab-automatically-deploying-the-emberjs-webapp-and-flask-api-server-to-different-domains/)
 + [Creating better structured apps from user submitted scripts](http://blog.fossasia.org/enhancing-the-functionality-of-user-submitted-scripts-in-the-pslab-remote-framework/)
@@ -43,7 +43,7 @@ The frontend code resides in a subdirectory called `frontend` . It is Designed w
 ## Installing dependencies
 
 + Install all packages in requirements.txt
-+ navigate to the frontend directory, and run `npm install`
++ Change directory to the **frontend** sub-directory, and run `npm install`
 
 
 ## Running the app locally
