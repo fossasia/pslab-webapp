@@ -1,0 +1,44 @@
+This is the sign up API
+Call this API with email, name, and password string. status variable and descriptive message are returned
+---
+tags:
+  - User Sign Up/ Sign In/ Logout etc
+consumes:
+  - application/json
+produces:
+  - application/json
+parameters:
+  - name: inputName
+    type: string
+    description: username. does not have to be unique.
+    in: formData
+    required: true
+  - name: inputEmail
+    type: string
+    description: e-mail address. Will be your login ID
+    in: formData
+    required: true
+  - name: inputPassword
+    type: string
+    description: password string
+    in: formData
+    required: true
+
+responses:
+  200:
+    description: User created
+    schema:
+      id: signup
+      properties:
+        status:
+          type: boolean
+          description: true/false depending on sign-up result
+          default: true
+        message:
+          type: string
+          description: Sign-up message
+          default: "User a created successfully. e-mail:a@a.com !"
+  400:
+    description: Error, Parameters are incorrect
+
+

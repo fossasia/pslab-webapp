@@ -29,8 +29,7 @@ CORS(app,supports_credentials=True)
 
 app.secret_key = 'yet another secret key'
 
-#app.config.from_object(os.environ['APP_SETTINGS'])
-#print (os.environ['DATABASE_URL'])
+app.config.from_object('config')
 
 
 # for sqlite ,DATABASE_URL = 'sqlite:////tmp/test.db'
@@ -41,5 +40,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 
 db = SQLAlchemy(app)
 
-from app import views
+db.create_all()
+
+# from app import views
 
