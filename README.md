@@ -40,9 +40,24 @@ The frontend code resides in a subdirectory called `frontend` . It is Designed w
 
 ## Installing dependencies
 
-+ Install all packages in requirements.txt
-+ Change directory to the **frontend** sub-directory, and run `npm install`
-
+Setting up PSLab is really easy. The steps are:
+1. Ensure you have the following dependencies to setup PSLab:
+- Python3/2
+- Git
+- Nodejs
+2. Clone the pslab-webapp repositary via git.
+```shell
+ git clone https://github.com/fossasia/pslab-webapp.git && cd pslab-webapp/
+```
+3. Install all Python packages in requirements.txt
+```
+pip install -r requirements.txt
+```
+4. Install the frontend dependcies as well
+```
+cd frontend/
+npm install
+```
 
 ## Running the app locally
 
