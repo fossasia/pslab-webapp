@@ -1,8 +1,6 @@
-[Heroku App](https://pslab-stage.herokuapp.com/)
-
 # PSLab Remote Experiments
 
-[![Build Status](https://travis-ci.org/fossasia/pslab-remote.svg?branch=master)](https://travis-ci.org/fossasia/pslab-remote)
+[![Build Status](https://travis-ci.org/fossasia/pslab-webapp.svg?branch=master)](https://travis-ci.org/fossasia/pslab-webapp)
 [![Gitter](https://badges.gitter.im/fossasia/pslab.svg)](https://gitter.im/fossasia/pslab?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![Twitter Follow](https://img.shields.io/twitter/follow/pslabio.svg?style=social&label=Follow&maxAge=2592000?style=flat-square)](https://twitter.com/pslabio)
 
