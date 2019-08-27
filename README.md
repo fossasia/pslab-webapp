@@ -1,21 +1,31 @@
-# PSLab Remote Experiments
+# PSLab Webapp
+
+This repository holds the code for the PSLab Webapp to enable students to access the [Pocket Science Lab (PSLab)](https://pslab.io) open hardware platform and other equipment through the Internet.
 
 [![Build Status](https://travis-ci.org/fossasia/pslab-webapp.svg?branch=master)](https://travis-ci.org/fossasia/pslab-webapp)
-[![Gitter](https://badges.gitter.im/fossasia/pslab.svg)](https://gitter.im/fossasia/pslab?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![Mailing List](https://img.shields.io/badge/Mailing%20List-FOSSASIA-blue.svg)](https://groups.google.com/forum/#!forum/pslab-fossasia)
+[![Gitter](https://badges.gitter.im/fossasia/pslab.svg)](https://gitter.im/fossasia/pslab?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![Twitter Follow](https://img.shields.io/twitter/follow/pslabio.svg?style=social&label=Follow&maxAge=2592000?style=flat-square)](https://twitter.com/pslabio)
 
-[Backend API server](https://pslab-stage.herokuapp.com/) : Hosted on Heroku. The dyno is reaped after an hour of inactivity and may take up to 10 seconds to boot up.
-[Webapp](https://pslab-remote.surge.sh) : Hosted on surge.sh
+The goal of the PSLab Webapp is to create a virtual lab that can give students remote access to Pocket Science Labs and other equipment in laboratories via the internet without having to be physically present near the equipment. PSLab is a tiny pocket science lab that provides an array of equipment for doing science and engineering experiments. It can function like an oscilloscope, waveform generator, frequency counter, programmable voltage and current source and also as a data logger. Our website is at https://pslab.io
 
-## Introduction to the Virtual Lab
+## Buy
 
-A virtual lab interface gives students remote access to equipment in laboratories via the internet without having to be physically present near the equipment.
-The idea is that lab experiments can be made accessible to a larger audience which may not have the resources to set up the experiment at their place.
-Another use-case scenario is that the experiment setup must be placed at a specific location which may not be habitable.
+* You can get a Pocket Science Lab device from the [FOSSASIA Shop](https://fossasia.com).
+* More resellers are listed on the [PSLab website](https://pslab.io/shop/).
 
-The PSLab’s capabilities can be increased significantly by setting up a framework that allows remote data acquisition and control.
-It can then be deployed in various test and measurement scenarios such as an interactive environment monitoring station.
+## Communication
+
+* The PSLab [chat channel is on Gitter](https://gitter.im/fossasia/pslab).
+* Please also join us on the [PSLab Mailing List](https://groups.google.com/forum/#!forum/pslab-fossasia).
+
+## Development Goals of PSLab Webapp Virtual Lab
+
+A virtual lab interface can give students remote access to equipment in laboratories via the internet without having to be physically present near the equipment. The idea is that lab experiments can be made accessible to a larger audience which may not have the resources to set up the experiment at their place. Another use-case scenario is that the experiment setup must be placed at a specific location which may not be habitable. The capabilities of the Pocket Science Lab can be increased significantly by setting up a framework that allows remote data acquisition and control. It can then be deployed in various test and measurement scenarios such as an interactive environment monitoring station.
+
+## Deployments
+* [Backend API server](https://pslab-stage.herokuapp.com/) is hosted on Heroku. The dyno is reaped after an hour of inactivity and may take up to 10 seconds to boot up.
+* [Webapp Frontend ](https://pslab-remote.surge.sh) is hosted on surge.sh
 
 ## Introductory blog posts
 
