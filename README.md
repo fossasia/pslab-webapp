@@ -21,7 +21,7 @@ The goal of the PSLab Webapp is to create a virtual lab that can give students r
 
 ## Development Goals of PSLab Webapp Virtual Lab
 
-A virtual lab interface can give students remote access to equipment in laboratories via the internet without having to be physically present near the equipment. The idea is that lab experiments can be made accessible to a larger audience which may not have the resources to set up the experiment at their place. Another use-case scenario is that the experiment setup must be placed at a specific location which may not be habitable. The capabilities of the Pocket Science Lab can be increased significantly by setting up a framework that allows remote data acquisition and control. It can then be deployed in various test and measurement scenarios such as an interactive environment monitoring station.
+A virtual lab interface can give students remote access to equipment in laboratories via the internet without having to be physically present near the equipment. The idea is that lab experiments can be made accessible to a larger audience which may not have the resources to set up the experiment at their place. Another use-case scenario is that the experimental setup must be placed at a specific location which may not be habitable. The capabilities of the Pocket Science Lab can be increased significantly by setting up a framework that allows remote data acquisition and control. It can then be deployed in various test and measurement scenarios such as an interactive environment monitoring station.
 
 ## Deployments
 * [Backend API server](https://pslab-stage.herokuapp.com/) is hosted on Heroku. The dyno is reaped after an hour of inactivity and may take up to 10 seconds to boot up.
@@ -32,22 +32,22 @@ A virtual lab interface can give students remote access to equipment in laborato
 + [Designing a remote access framework with PSLab](http://blog.fossasia.org/designing-a-virtual-laboratory-with-pslab/)
 + [Creating backend API methods using Python Flask Framework](http://blog.fossasia.org/designing-a-remote-laboratory-with-pslab-using-python-flask-framework/)
 + [Execute python function calls remotely](http://blog.fossasia.org/designing-a-remote-laboratory-with-pslab-execution-of-function-strings/)
-+ [Deploying the API server and Webapp to separate domains automaticaly ](http://blog.fossasia.org/pslab-remote-lab-automatically-deploying-the-emberjs-webapp-and-flask-api-server-to-different-domains/)
-+ [Creating better structured apps from user submitted scripts](http://blog.fossasia.org/enhancing-the-functionality-of-user-submitted-scripts-in-the-pslab-remote-framework/)
++ [Deploying the API server and Webapp to separate domains automatically ](http://blog.fossasia.org/pslab-remote-lab-automatically-deploying-the-emberjs-webapp-and-flask-api-server-to-different-domains/)
++ [Creating better-structured apps from user-submitted scripts](http://blog.fossasia.org/enhancing-the-functionality-of-user-submitted-scripts-in-the-pslab-remote-framework/)
 + [Adding a graph component to the frontend](http://blog.fossasia.org/including-a-graph-component-in-the-remote-access-framework-for-pslab/)
 
 ## Structure
 
 ### Backend
 
-The virtual lab will be hosted using [Python-Flask](http://flask.pocoo.org/), which is a BSD Licensed microframework for Python based on Werkzeug and Jinja 2  .
-It will use sqlalchemy to interface with databases containing user credentials and data. At present, postgresql will be used.
+The virtual lab will be hosted using [Python-Flask](http://flask.pocoo.org/), which is a BSD Licensed microframework for Python based on Werkzeug and Jinja 2.
+It will use sqlalchemy to interface with databases containing user credentials and data. At present, PostgreSQL will be used.
 
 The repository has been integrated with Heroku, and modifications to the master branch are automatically deployed to pslab-stage.herokuapp.com after the CI build passes
 
 ### Frontend
 
-The frontend code resides in a subdirectory called `frontend` . It is Designed with EmberJS , and a production build is automatically deployed to pslab-remote.surge.sh by the CI if the build is successful.
+The frontend code resides in a subdirectory called `frontend`. It is Designed with EmberJS, and a production build is automatically deployed to pslab-remote.surge.sh by the CI if the build is successful.
 
 ## Installing dependencies
 
@@ -56,7 +56,7 @@ Setting up PSLab is really easy. The steps are:
 - Python3/2
 - Git
 - Nodejs
-2. Clone the pslab-webapp repositary via git.
+2. Clone the pslab-webapp repository via git.
 ```shell
  git clone https://github.com/fossasia/pslab-webapp.git && cd pslab-webapp/
 ```
@@ -64,7 +64,7 @@ Setting up PSLab is really easy. The steps are:
 ```
 pip install -r requirements.txt
 ```
-4. Install the frontend dependcies as well
+4. Install the frontend dependencies as well
 ```
 cd frontend/
 npm install
@@ -77,7 +77,7 @@ This launches the API server on default port 8000
 
 `cd frontend`
 `ember -s environment='development'`
-this launches the the emberjs webapp on port 4200
+this launches the emberjs webapp on port 4200
 
 navigate to localhost:4200 in your web browser
 
@@ -106,7 +106,7 @@ navigate to localhost:4200 in your web browser
   - [x] Plot data with the integrated JQplot library
 
 ## Old resources
-This project was moved from another repository, and in order to browse the various issues and PRs, the following links may help
+This project was moved from another repository, and to browse the various issues and PRs, the following links may help
 + [Initialize a virtual lab framework](https://github.com/fossasia/pslab-desktop-apps/pull/165)
 + [Sign-up process](https://github.com/fossasia/pslab-desktop-apps/pull/169)
 + [vlab sign-in process](https://github.com/fossasia/pslab-desktop-apps/pull/173)
