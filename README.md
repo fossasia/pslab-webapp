@@ -32,7 +32,7 @@ A virtual lab interface can give students remote access to equipment in laborato
 + [Designing a remote access framework with PSLab](http://blog.fossasia.org/designing-a-virtual-laboratory-with-pslab/)
 + [Creating backend API methods using Python Flask Framework](http://blog.fossasia.org/designing-a-remote-laboratory-with-pslab-using-python-flask-framework/)
 + [Execute python function calls remotely](http://blog.fossasia.org/designing-a-remote-laboratory-with-pslab-execution-of-function-strings/)
-+ [Deploying the API server and Webapp to separate domains automaticaly ](http://blog.fossasia.org/pslab-remote-lab-automatically-deploying-the-emberjs-webapp-and-flask-api-server-to-different-domains/)
++ [Deploying the API server and Webapp to separate domains automatically ](http://blog.fossasia.org/pslab-remote-lab-automatically-deploying-the-emberjs-webapp-and-flask-api-server-to-different-domains/)
 + [Creating better structured apps from user submitted scripts](http://blog.fossasia.org/enhancing-the-functionality-of-user-submitted-scripts-in-the-pslab-remote-framework/)
 + [Adding a graph component to the frontend](http://blog.fossasia.org/including-a-graph-component-in-the-remote-access-framework-for-pslab/)
 
@@ -40,10 +40,10 @@ A virtual lab interface can give students remote access to equipment in laborato
 
 ### Backend
 
-The virtual lab will be hosted using [Python-Flask](http://flask.pocoo.org/), which is a BSD Licensed microframework for Python based on Werkzeug and Jinja 2  .
-It will use sqlalchemy to interface with databases containing user credentials and data. At present, postgresql will be used.
+The virtual lab will be hosted using [Python-Flask](http://flask.pocoo.org/), which is a BSD Licensed microframework for Python based on Werkzeug and Jinja 2.
+It will use SQLAlchemy to interface with databases containing user credentials and data. At present, PostgreSQL will be used.
 
-The repository has been integrated with Heroku, and modifications to the master branch are automatically deployed to pslab-stage.herokuapp.com after the CI build passes
+The repository has been integrated with Heroku, and modifications to the master branch are automatically deployed to pslab-stage.herokuapp.com after the CI build passes.
 
 ### Frontend
 
@@ -55,8 +55,8 @@ Setting up PSLab is really easy. The steps are:
 1. Ensure you have the following dependencies to setup PSLab:
 - Python3/2
 - Git
-- Nodejs
-2. Clone the pslab-webapp repositary via git.
+- NodeJS
+2. Clone the pslab-webapp repository via git.
 ```shell
  git clone https://github.com/fossasia/pslab-webapp.git && cd pslab-webapp/
 ```
@@ -64,7 +64,7 @@ Setting up PSLab is really easy. The steps are:
 ```
 pip install -r requirements.txt
 ```
-4. Install the frontend dependcies as well
+4. Install the frontend dependencies as well
 ```
 cd frontend/
 npm install
