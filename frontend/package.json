@@ -33,7 +33,7 @@
     "ember-cli-scss-lint": "^2.2.0",
     "ember-cli-shims": "^1.1.0",
     "ember-cli-sri": "^2.1.0",
-    "ember-cli-surge": "^1.1.20",
+    "ember-cli-surge": "^1.4.4",
     "ember-cli-template-lint": "^0.7.3",
     "ember-cli-uglify": "^1.2.0",
     "ember-data": "~2.14.3",
